@@ -25,6 +25,43 @@ Output:
    7:3   warning  Property 'container-type' is not a widely available baseline feature            css/use-baseline
    8:3   warning  Property 'accent-color' is not a widely available baseline feature              css/use-baseline
   14:13  warning  Value 'clip' of property 'overflow' is not a widely available baseline feature  css/use-baseline
+  15:3   warning  Property 'view-transition-name' is not a widely available baseline feature      css/use-baseline
+  16:3   warning  Property 'font-language-override' is not a widely available baseline feature    css/use-baseline
+  21:17  warning  Type 'color-mix' is not a widely available baseline feature                     css/use-baseline
+  26:3   warning  Property 'font-stretch' is not a widely available baseline feature              css/use-baseline
+  29:11  warning  Selector 'has' is not a widely available baseline feature                       css/use-baseline
+  30:3   warning  Property 'outline' is not a widely available baseline feature                   css/use-baseline
+  34:3   warning  Property 'text-wrap' is not a widely available baseline feature                 css/use-baseline
+  42:3   warning  Property 'anchor-name' is not a widely available baseline feature               css/use-baseline
+
+✖ 12 problems (0 errors, 12 warnings)
+```
+
+### Suppress individual warnings
+
+If you're using a feature that doesn't meet your Baseline target, but you know that you're using it in a way that won't adversely affect the user experience for anyone on an unsupported browser, you can suppress the linter warning.
+
+For example, you may decide that view transitions are a progressive enhancement and it's ok to use a property like `view-transition-name`. So to suppress ESLint's warning, go into [src/test.css](src/test.css) and add the `eslint-disable-line` comment as shown below:
+
+```diff
+-view-transition-name: card-transition;
++view-transition-name: card-transition; /* eslint-disable-line css/use-baseline */
+view-transition-name: card-transition;
+```
+
+Now rerun ESLint:
+
+```sh
+npm run lint:css
+```
+
+And note that there is no longer a warning for `view-transition-name`:
+
+```sh
+   6:15  warning  Type 'color-mix' is not a widely available baseline feature                     css/use-baseline
+   7:3   warning  Property 'container-type' is not a widely available baseline feature            css/use-baseline
+   8:3   warning  Property 'accent-color' is not a widely available baseline feature              css/use-baseline
+  14:13  warning  Value 'clip' of property 'overflow' is not a widely available baseline feature  css/use-baseline
   16:3   warning  Property 'font-language-override' is not a widely available baseline feature    css/use-baseline
   21:17  warning  Type 'color-mix' is not a widely available baseline feature                     css/use-baseline
   26:3   warning  Property 'font-stretch' is not a widely available baseline feature              css/use-baseline
