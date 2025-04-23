@@ -35,11 +35,11 @@ src/test.css
 
 ### Baseline Newly available
 
-In [.stylelintrc.json](.stylelintrc.json) change the `available` option of the require-baseline rule to "newly":
+In [.stylelintrc.json](.stylelintrc.json) change the `available` option of the use-baseline rule to "newly":
 
 ```js
 "rules": {
-  "plugin/require-baseline": [
+  "plugin/use-baseline": [
     true,
     {
       "available": "newly"
@@ -68,11 +68,11 @@ src/test.css
 
 ### Baseline year
 
-In [.stylelintrc.json](.stylelintrc.json) change the `available` option of the require-baseline rule to a year in YYYY format:
+In [.stylelintrc.json](.stylelintrc.json) change the `available` option of the use-baseline rule to a year in YYYY format:
 
 ```js
 "rules": {
-  "plugin/require-baseline": [
+  "plugin/use-baseline": [
     true,
     {
       "available": 2023
