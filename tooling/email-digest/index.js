@@ -20,7 +20,7 @@ async function sendEmail () {
 
   // Begin the email body:
   let htmlBody = "<div style=\"font-family: 'Google Sans';\">";
-  htmlBody += "<div style=\"text-align: center;\">";
+  htmlBody += "<div style=\"text-align: center;\"><img src=\"https://web-platform-dx.github.io/web-features/assets/img/baseline-wordmark.png\" width=\"617\" height=\"135\" alt=\"Baseline\"><br>";
   htmlBody += "<h1 style=\"font-weight: 400; font-family: 'Google Sans';\">Weekly Baseline features digest</h1>"
   htmlBody += "<p style=\"font-family: 'Google Sans';\">This email is a digest of the latest features that became either Baseline Widely or Newly available in the last week.</p>";
   htmlBody += "</div>";
