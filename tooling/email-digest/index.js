@@ -50,7 +50,7 @@ async function sendEmail () {
   }
 
   // Send the email!
-  GmailApp.sendEmail(EMAIL_TO, "", gmailOptions);
+  GmailApp.sendEmail(EMAIL_TO, "Baseline weekly digest", "", gmailOptions);
 }
 
 async function getBaselineData(baselineStatus) {
