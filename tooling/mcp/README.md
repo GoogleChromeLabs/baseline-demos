@@ -21,6 +21,7 @@
       }
     }
     ```
+
 4. Open an MCP-supported client extension like Copilot Chat in Agent mode, which starts the MCP server
 5. Select a model like "Claude 3.7 Sonnet"
 6. Enter your Baseline-related prompt
