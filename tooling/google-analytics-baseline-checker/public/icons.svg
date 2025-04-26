@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <defs>
+    <!-- Baseline Widely available logo -->
+    <symbol id="baseline-widely-available" viewBox="0 0 540 300">
+      <path d="M420 30L390 60L480 150L390 240L330 180L300 210L390 300L540 150L420 30Z" fill="#C4EED0"/>
+      <path d="M150 0L30 120L60 150L150 60L210 120L240 90L150 0Z" fill="#C4EED0"/>
+      <path d="M390 0L420 30L150 300L0 150L30 120L150 240L390 0Z" fill="#1EA446"/>
+    </symbol>
+    <!-- Material Design upload icon -->
+    <symbol id="upload" viewBox="0 -960 960 960">
+      <path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+    </symbol>
+    <!-- Material Design plus icon -->
+    <symbol id="plus" viewBox="0 -960 960 960">
+      <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+    </symbol>
+  </defs>
+</svg>

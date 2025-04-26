@@ -1,0 +1,290 @@
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font: 18px/1.5 system-ui, sans-serif;
+    margin: 0;
+    --accent: #1c6ef3;
+  }
+
+  svg {
+    fill: currentColor;
+    vertical-align: bottom;
+  }
+
+  a {
+    color: var(--accent);
+  }
+}
+
+@layer components {
+  /*
+   * Container
+   * ----------------------------------------------------------------------- */
+
+   .Container {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0 1em;
+  }
+
+  /*
+   * Header
+   * ----------------------------------------------------------------------- */
+
+   .Header {
+    background: #f8f8f8;
+    padding: 2rem 2rem 3rem;
+    text-align: center;
+  }
+
+  .Header-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin: 2rem 0;
+    line-height: 1.1;
+    text-align: center;
+    text-wrap-style: balance;
+  }
+
+  .Header-logo {
+    width: 80px;
+    aspect-ratio: 9 / 5;
+  }
+
+  .Header-subTitle {
+    text-wrap-style: balance;
+  }
+
+  @media (min-width: 768px) {
+    .Header-title {
+      display: flex;
+      place-content: center;
+    }
+    .Header-titlePrefix {
+      border-right: 1px solid #ccc;
+      margin-right: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  /*
+   * Footer
+   * ----------------------------------------------------------------------- */
+
+   .Footer {
+    background: #f8f8f8;
+    display: flow-root;
+    padding-top: 3rem;
+  }
+
+  /*
+   * Instructions
+   * ----------------------------------------------------------------------- */
+
+   .Instructions {
+    contain: paint;
+    padding-left: 2em;
+  }
+
+  .Instructions-item {
+    margin-bottom: 1rem;
+    padding: 0 0 1rem .5rem;
+    position: relative;
+  }
+
+  .Instructions-item::marker {
+    font-weight: bold;
+  }
+
+  .Instructions-item::before {
+    content: '';
+    position: absolute;
+    background: #ddd;
+    height: 1px;
+    bottom: 0px;
+    left: -2em;
+    right: -2em;
+  }
+
+  .Instructions-em {
+    color: #333;
+    background: #ffc;
+    padding: 2px 5px;
+    font-weight: inherit;
+  }
+
+  .Instructions-icon {
+    background: #ddd;
+    border-radius: 50%;
+    outline: 2px solid #ddd;
+    margin: 0 4px;
+    padding: 2px;
+    width: 1.333em;
+    height: 1.333em;
+    vertical-align: -4px;
+  }
+
+  /*
+   * SubHeading
+   * ----------------------------------------------------------------------- */
+
+   .SubHeading {
+    font-size: 1.667rem;
+    font-weight: 300;
+    margin: 3rem 0 2rem;
+    text-align: center;
+  }
+
+  .SubHeading--flat {
+    margin-top: 0;
+  }
+
+  /*
+   * Note
+   * ----------------------------------------------------------------------- */
+
+   .Note {
+    color: #777;
+    font-size: 0.9em;
+    font-style: italic;
+    margin: 1.5em auto 4rem;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  /*
+   * Importer
+   * ----------------------------------------------------------------------- */
+
+   .Importer {
+    border: 3px dashed #ccc;
+    border-radius: 8px;
+    color: #888;
+    cursor: pointer;
+    display: block;
+    padding: 3em;
+    text-align: center;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .Importer-icon {
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  .Importer--active {
+    border-color: var(--accent);
+    background-color: color-mix(in hsl, var(--accent), transparent 93%);
+    color: var(--accent);
+  }
+
+  /*
+   * Steps
+   * ----------------------------------------------------------------------- */
+
+   .Steps {
+    display: grid;
+    grid-template-columns: auto auto;
+    place-content: center;
+  }
+
+  .Steps-name,
+  .Steps-desc {
+    margin: 0;
+    padding: .75em;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .Steps-name {
+    font-weight: bold;
+    padding-right: 0;
+  }
+
+  /*
+   * ReportSection
+   * ----------------------------------------------------------------------- */
+
+   .ReportSection {
+    padding: 1em;
+    margin: -1em;
+    border-radius: .5em;
+  }
+
+  /*
+   * Report
+   * ----------------------------------------------------------------------- */
+
+   .Report {
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+
+  .Report-meta {
+    margin-top: -1rem;
+    font-size: 0.9em;
+    font-style: italic;
+    text-align: center;
+  }
+
+  .Report-table {
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .Report-table th,
+  .Report-table td {
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .Report-table th {
+    background-color: #eee;
+    border-bottom: 2px solid #000;
+    font-weight: bold;
+  }
+
+  .Report-table th:last-child,
+  .Report-table td:last-child {
+    text-align: right;
+  }
+
+  .Report-table td:last-child {
+    background-repeat: no-repeat;
+    background-size: 10000% 100%;
+    background-image: linear-gradient(to left,
+      hsl(150deg 70% 45%) 0%,
+      hsl(45 100% 85%) 10%,
+      hsl(0deg 100% 65%));
+    background-position-x: var(--percent);
+  }
+
+  .Report-break td {
+    border-top: 2px solid #000;
+  }
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+ Copyright 2025 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -->
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Google Analytics Baseline Checker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="Header">
+      <div class="Container">
+        <svg class="Header-logo" title="Baseline Widely available logo">
+          <use href="icons.svg#baseline-widely-available"></use>
+        </svg>
+        <h1 class="Header-title">
+          <span class="Header-titlePrefix">Google Analytics</span>
+          <span class="Header-titleSuffix">Baseline Checker</span>
+        </h1>
+        <p class="Header-subTitle">
+          A tool to help Google Analytics users determine the best Baseline
+          version for their site, <strong>based on their users</strong>.
+        </p>
+      </div>
+    </header>
+    <div class="Container">
+      <h2 class="SubHeading">How it works</h2>
+      <dl class="Steps">
+        <dt class="Steps-name">Step 1:</dt>
+        <dd class="Steps-desc">
+          Export your browser usage data from Google Analytics (<a
+            href="#export-instructions"
+            >learn how</a
+          >).
+        </dd>
+        <dt class="Steps-name">Step 2:</dt>
+        <dd class="Steps-desc">
+          Import that data using the <a href="#import-tool">tool below</a> to
+          generate a report.
+        </dd>
+        <dt class="Steps-name">Step 3:</dt>
+        <dd class="Steps-desc">
+          Use this report to help you choose the best Baseline version for you.
+        </dd>
+      </dl>
+
+      <h2 id="import-tool" class="SubHeading">Import your Google Analytics data</h2>
+      <label id="drop-zone" class="Importer">
+        Drag & Drop file here, or click to
+        <svg class="Importer-icon" aria-label="Upload icon">
+          <use href="icons.svg#upload"></use>
+        </svg>
+        <input id="input" type="file" hidden />
+      </label>
+      <aside class="Note">
+        <strong>Note:</strong>
+        all data imported into this tool is processed entirely on device.
+      </aside>
+
+      <div id="report-section" class="ReportSection" hidden>
+        <h2 class="SubHeading SubHeading--flat">Baseline Report</h2>
+        <div id="report-container"></div>
+      </div>
+    </div>
+    <footer class="Footer">
+      <div class="Container">
+        <h2 id="export-instructions" class="SubHeading SubHeading--flat">
+          Google Analytics Export Instructions
+        </h2>
+        <ol class="Instructions">
+          <li class="Instructions-item">
+            Log into
+            <a href="https://analytics.google.com/">Google Analytics</a>.
+          </li>
+          <li class="Instructions-item">
+            Choose the
+            <a
+              href="https://support.google.com/analytics/answer/9679158?sjid=10172198536853481417-NC"
+              >account</a
+            >
+            from the dropdown menu at the top that corresponds to the website
+            you want to export browser data from.
+          </li>
+          <li class="Instructions-item">Select the "Explore" link from the left-hand sidebar.</li>
+          <li class="Instructions-item">
+            If you've already created a "Baseline export" exploration, select it
+            from the list of explorations and skip to step #12.
+          </li>
+          <li class="Instructions-item">
+            Select the "Blank" option to create a new
+            <a
+              href="https://support.google.com/analytics/answer/9327972?hl=en&ref_topic=9266525&sjid=10172198536853481417-NC#zippy=%2Cin-this-article"
+              >free-form exploration</a
+            >.
+          </li>
+          <li class="Instructions-item">
+            Under "Exploration name" enter a descriptive name like "Baseline
+            export".
+          </li>
+          <li class="Instructions-item">
+            Select a date range (the default "Last 28 days" range is
+            recommended).
+          </li>
+          <li class="Instructions-item">
+            Click the "add dimension"
+            <svg class="Instructions-icon" title="Add dimension">
+              <use href="icons.svg#plus"></use>
+            </svg>
+            button next to "Dimensions" and select the following five dimensions
+            (found under "Platform / device"), then click "Confirm" to add them
+            to your exploration: <strong class="Instructions-em">Browser</strong>,
+            <strong class="Instructions-em">Browser version</strong>, <strong class="Instructions-em">Device category</strong>,
+            <strong class="Instructions-em">Operating system</strong>, <strong class="Instructions-em">OS version</strong>.
+          </li>
+          <li class="Instructions-item">
+            Click the "add metrics"
+            <svg class="Instructions-icon" aria-label="Add metric">
+              <use href="icons.svg#plus"></use>
+            </svg>
+            button next to "Metrics" and select the
+            <strong class="Instructions-em">Active users</strong> (found under "Users"), then click
+            "Confirm" to add it to your exploration:
+          </li>
+          <li class="Instructions-item">
+            Under "Rows" in the next column, click or drag to add all five of
+            the dimensions chosen in step #8.
+          </li>
+          <li class="Instructions-item">
+            Under "Values" further down in the same column, click or drag to add
+            the <strong class="Instructions-em">Active users</strong> metric chosen in step #9. This
+            will generate the initial report table.
+          </li>
+          <li class="Instructions-item">
+            In the top right corner of the report click the "export data"
+            <svg class="Instructions-icon" aria-label="Upload icon">
+              <use href="icons.svg#upload"></use>
+            </svg>
+            button and choose "TSV" to save the file.
+          </li>
+          <li class="Instructions-item">
+            Once the file is saved, import the file into this tool using the
+            <a href="#import-tool">widget above</a>.
+          </li>
+        </ol>
+
+        <aside class="Note">
+          (Credits: export instruction adopted from
+          <a href="https://caniuse.com/ciu/import">caniuse.com/ciu/import</a>)
+        </aside>
+      </div>
+    </footer>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "google-analytics-baseline-checker",
+  "version": "1.0.0",
+  "private": true,
+  "author": {
+    "name": "Philip Walton",
+    "email": "philip@philipwalton.com",
+    "url": "http://philipwalton.com"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleChromeLabs/baseline-demos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GoogleChromeLabs/baseline-demos/issues"
+  },
+  "scripts": {
+    "start": "http-server public -c -1 -p 3000",
+    "deploy": "gsutil -m rsync -rd public gs://chrome-dev-demos/public/google-analytics-baseline-checker"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": false,
+    "quoteProps": "preserve",
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
