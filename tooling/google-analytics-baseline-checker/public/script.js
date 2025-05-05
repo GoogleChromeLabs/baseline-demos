@@ -258,7 +258,7 @@ function processData(rawData) {
       </p>
       <table class="Report-table">
         <tr>
-          <th>Baseline version</th>
+          <th>Baseline target</th>
           <th>% of users supporting</th>
         </tr>
         ${Object.keys(baselineYearCounts)
