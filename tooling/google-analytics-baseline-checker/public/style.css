@@ -27,6 +27,10 @@
     --accent: #1c6ef3;
   }
 
+  strong {
+    font-weight: 600;
+  }
+
   svg {
     fill: currentColor;
     vertical-align: bottom;
@@ -127,11 +131,11 @@
     right: -2em;
   }
 
-  .Instructions-em {
+  .Instructions-term {
     color: #333;
     background: #ffc;
     padding: 2px 5px;
-    font-weight: inherit;
+    font-style: normal;
   }
 
   .Instructions-icon {
@@ -171,6 +175,7 @@
     margin: 1.5em auto 4rem;
     max-width: 90%;
     text-align: center;
+    text-wrap-style: balance;
   }
 
   /*

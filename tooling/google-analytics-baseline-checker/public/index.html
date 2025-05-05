@@ -58,7 +58,9 @@
         </dd>
       </dl>
 
-      <h2 id="import-tool" class="SubHeading">Import your Google Analytics data</h2>
+      <h2 id="import-tool" class="SubHeading">
+        Import your Google Analytics data
+      </h2>
       <label id="drop-zone" class="Importer">
         Drag & Drop file here, or click to choose a file
         <svg class="Importer-icon" aria-label="Upload icon">
@@ -68,7 +70,8 @@
       </label>
       <aside class="Note">
         <strong>Note:</strong>
-        All data imported into this tool is processed entirely on device. It will not be stored remotely.
+        All data imported into this tool is processed entirely on device. No
+        data is processed or stored remotely.
       </aside>
 
       <div id="report-section" class="ReportSection" hidden>
@@ -95,10 +98,17 @@
             from the dropdown menu at the top that corresponds to the website
             you want to export browser data from.
           </li>
-          <li class="Instructions-item">Select the <strong>Explore</strong> link from the left-hand sidebar.</li>
           <li class="Instructions-item">
-            If you've already created a <strong>Baseline export</strong> exploration, select it
-            from the list of explorations and skip to step #12.
+            Select the
+            <svg class="Instructions-icon" title="Add dimension">
+              <use href="icons.svg#data_exploration"></use>
+            </svg>
+            <strong>Explore</strong> link from the left-hand sidebar.
+          </li>
+          <li class="Instructions-item">
+            If you've already created a
+            <strong>Baseline export</strong> exploration, select it from the
+            list of explorations and skip to step #12.
           </li>
           <li class="Instructions-item">
             Select the <strong>Blank</strong> option to create a new
@@ -108,48 +118,56 @@
             >.
           </li>
           <li class="Instructions-item">
-            Under <strong>Exploration name</strong> enter a descriptive name like <strong>Baseline
-            export</strong>.
+            Under <strong>Exploration name</strong> enter a descriptive name
+            like <strong>Baseline export</strong>.
           </li>
           <li class="Instructions-item">
-            Select a date range (the default <strong>Last 28 days</strong> range is
-            recommended).
+            Select a date range (the default <strong>Last 28 days</strong> range
+            is recommended).
           </li>
           <li class="Instructions-item">
-            Click the <strong>add dimension</strong>
+            Click the
             <svg class="Instructions-icon" title="Add dimension">
               <use href="icons.svg#plus"></use>
             </svg>
-            button next to <strong>Dimensions</strong> and select the following five dimensions
-            (found under <strong>Platform / device</strong>), then click <strong>Confirm</strong> to add them
-            to your exploration: <strong class="Instructions-em">Browser</strong>,
-            <strong class="Instructions-em">Browser version</strong>, <strong class="Instructions-em">Device category</strong>,
-            <strong class="Instructions-em">Operating system</strong>, <strong class="Instructions-em">OS version</strong>.
+            <strong>add dimension</strong> button next to
+            <strong>Dimensions</strong> and select the following five dimensions
+            (found under <strong>Platform / device</strong>), then click
+            <strong>Confirm</strong> to add them to your exploration:
+            <i class="Instructions-term">Browser</i>,
+            <i class="Instructions-term">Browser version</i>,
+            <i class="Instructions-term">Device category</i>,
+            <i class="Instructions-term">Operating system</i>,
+            <i class="Instructions-term">OS version</i>.
           </li>
           <li class="Instructions-item">
-            Click the <strong>add metrics</strong>
+            Click the
             <svg class="Instructions-icon" aria-label="Add metric">
               <use href="icons.svg#plus"></use>
             </svg>
-            button next to <strong>Metrics</strong> and select the
-            <strong class="Instructions-em">Active users</strong> (found under <strong>Users</strong>), then click
-            <strong>Confirm</strong> to add it to your exploration:
+            <strong>add metrics</strong> button next to
+            <strong>Metrics</strong> and select the
+            <i class="Instructions-term">Active users</i> (found under
+            <strong>Users</strong>), then click <strong>Confirm</strong> to add
+            it to your exploration:
           </li>
           <li class="Instructions-item">
-            Under <strong>Rows</strong> in the next column, click or drag to add all five of
-            the dimensions chosen in step #8.
+            Under <strong>Rows</strong> in the next column, click or drag to add
+            all five of the dimensions chosen in step #8.
           </li>
           <li class="Instructions-item">
-            Under <strong>Values</strong> further down in the same column, click or drag to add
-            the <strong class="Instructions-em">Active users</strong> metric chosen in step #9. This
-            will generate the initial report table.
+            Under <strong>Values</strong> further down in the same column, click
+            or drag to add the
+            <i class="Instructions-term">Active users</i> metric chosen in step
+            #9. This will generate the initial report table.
           </li>
           <li class="Instructions-item">
-            In the top right corner of the report click the <strong>export data</strong>
+            In the top right corner of the report click the
             <svg class="Instructions-icon" aria-label="Download icon">
               <use href="icons.svg#download"></use>
             </svg>
-            button and choose <strong>TSV</strong> to save the file.
+            <strong>export data</strong> button and choose
+            <strong>TSV</strong> to save the file.
           </li>
           <li class="Instructions-item">
             Once the file is saved, import the file into this tool using the
