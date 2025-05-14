@@ -278,7 +278,7 @@ function processData(rawData) {
       ${toPercent(baselineYearCounts['Unknown'] / total)}% of visitors had a
       browser or browser version that was not reported by Google Analytics.
       Since these may or may not have been compatible with various Baseline
-      versions, they've been excluded from Baseline percentage calculations.
+      targets, they've been excluded from Baseline percentage calculations.
     </aside>
   `;
 
