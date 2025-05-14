@@ -83,7 +83,7 @@ The default configuration of the [`browserslist-config-baseline`](https://github
 2. Replace the contents with
 
   ```diff
-  +extends browserslist-config-baseline/
+  +extends browserslist-config-baseline
   ```
 3. Run `npx browserslist` to see the browser versions included in the browserslist config
 4. Run `npm run build`
@@ -99,7 +99,7 @@ Note: Alternatively you can specify the browserslist target in `babel.config.jso
 ```diff
 {
   "presets": ["@babel/preset-env"],
-+ "targets": "extends browserslist-config-baseline/"
++ "targets": "extends browserslist-config-baseline"
 }
 ```
 

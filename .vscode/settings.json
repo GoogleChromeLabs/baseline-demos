@@ -1,0 +1,8 @@
+{
+  "eslint.enable": true,
+  "eslint.validate": [
+    "css",
+    "html",
+    "compat"
+  ]
+}
