@@ -183,3 +183,77 @@ Output:
 
 ✖ 12 problems (0 errors, 12 warnings)
 ```
+
+## eslint-plugin-compat
+
+[`eslint-plugin-compat`](https://github.com/amilajack/eslint-plugin-compat) is an ESLint plugin that validates the browser support of JavaScript features.
+
+### Baseline widely available
+
+This ESLint plugin relies on a browserslist config, which we can use with [browserslist-config-baseline](https://github.com/web-platform-dx/browserslist-config-baseline) to set a target of Baseline widely available.
+
+1. Open [.browserslistrc](.browserslistrc)
+2. Replace the contents with
+
+  ```diff
+  +extends browserslist-config-baseline
+  ```
+
+Run eslint:
+
+```sh
+npm run lint:js
+```
+
+Output:
+
+```sh
+   71:13  warning  PaymentRequest is not supported in Firefox 104, and_ff 137                                compat/compat
+  103:1   warning  Array.toReversed() is not supported in Firefox 104, Edge 107, Chrome 107                  compat/compat
+  107:1   warning  navigator.userActivation() is not supported in Safari 16.0, iOS Safari 16.0, Firefox 104  compat/compat
+  115:5   warning  Intl.Segmenter() is not supported in Firefox 104                                          compat/compat
+  126:1   warning  scheduler is not supported in Safari 16.0, iOS Safari 16.0                                compat/compat
+  128:1   warning  IdleDetector is not supported in Safari 16.0, iOS Safari 16.0, Firefox 104, Edge 107      compat/compat
+  130:1   warning  Atomics.waitAsync() is not supported in Safari 16.0, iOS Safari 16.0, Firefox 104         compat/compat
+
+✖ 7 problems (0 errors, 7 warnings)
+```
+
+> [!NOTE]
+> Unlike the other linters, this plugin precedes Baseline and so its warnings are still in terms of specific browser versions and not Baseline targets.
+
+### Baseline year
+
+1. Open [.browserslistrc](.browserslistrc)
+2. Replace the contents with
+
+  ```diff
+  -extends browserslist-config-baseline
+  +extends browserslist-config-baseline/2016
+  ```
+
+Run eslint:
+
+```sh
+npm run lint:js
+```
+
+Output:
+
+```sh
+   65:15  warning  String.padStart() is not supported in Edge 14, Chrome 53                                                        compat/compat
+   68:1   warning  fetch is not supported in Safari 10                                                                             compat/compat
+   71:13  warning  PaymentRequest is not supported in Safari 10, Firefox 49, Edge 14, Chrome 53, and_ff 137                        compat/compat
+   74:13  warning  Object.values() is not supported in Safari 10, iOS Safari 10.0-10.2, Chrome 53                                  compat/compat
+   87:1   warning  Object.fromEntries() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53        compat/compat
+   90:18  warning  IntersectionObserver is not supported in Safari 10, Firefox 49, Edge 14, Chrome 53                              compat/compat
+  103:1   warning  Array.toReversed() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53          compat/compat
+  107:1   warning  navigator.userActivation() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53  compat/compat
+  113:1   warning  AbortSignal is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                 compat/compat
+  115:5   warning  Intl.Segmenter() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53            compat/compat
+  126:1   warning  scheduler is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                   compat/compat
+  128:1   warning  IdleDetector is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                compat/compat
+  130:1   warning  Atomics is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                     compat/compat
+
+✖ 13 problems (0 errors, 13 warnings)
+```
