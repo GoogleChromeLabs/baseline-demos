@@ -14,6 +14,19 @@
  * limitations under the License.
  */
 
+const schema = {
+  metric: {
+    USERS: 'Active users',
+  },
+  dimension: {
+    BROWSER: 'Browser',
+    BROWSER_VERSION: 'Browser version',
+    DEVICE_CATEGORY: 'Device category',
+    OS: 'Operating system',
+    OS_VERSION: 'OS version',
+  },
+};
+
 function toPercent(num) {
   return (Math.round(num * 10000) / 100).toFixed(1);
 }
@@ -48,21 +61,36 @@ function parseData(data) {
   ];
 
   const lines = rawLines.filter((l) => l.match(/^\w/));
+  const columns = Object.fromEntries(
+    lines[0].split(/\t/).map((e, i) => [e, i])
+  );
+
+  // Validate that all required dimensions and metrics are present;
+  for (const type of Object.keys(schema)) {
+    for (const column of Object.values(schema[type])) {
+      if (!columns.hasOwnProperty(column)) {
+        const msg = `Oops! The ${type} '${column}' was not found in the imported TSV data.`;
+        alert(msg);
+        throw new Error(msg);
+      }
+    }
+  }
+
   return {
     property,
+    columns,
+    rows: lines.slice(1).map((l) => l.split(/\t/)),
     startDate: formatDate(dateRange[0]),
     endDate: formatDate(dateRange[1]),
-    columns: Object.fromEntries(lines[0].split(/\t/).map((e, i) => [e, i])),
-    rows: lines.slice(1).map((l) => l.split(/\t/)),
   };
 }
 
 function lookupBrowser(row, columns) {
-  let browser = row[columns['Browser']];
-  let browserVersion = row[columns['Browser version']];
-  let device = row[columns['Device category']];
-  let os = row[columns['Operating system']];
-  let osVersion = row[columns['OS version']];
+  let browser = row[columns[schema.dimension.BROWSER]];
+  let browserVersion = row[columns[schema.dimension.BROWSER_VERSION]];
+  let device = row[columns[schema.dimension.DEVICE_CATEGORY]];
+  let os = row[columns[schema.dimension.OS]];
+  let osVersion = row[columns[schema.dimension.OS_VERSION]];
 
   let normalizedBrowser;
   let normalizedVersion;
@@ -162,7 +190,7 @@ function processData(rawData) {
   let total = 0;
 
   for (const row of data.rows) {
-    const count = Number(row[data.columns['Active users']]);
+    const count = Number(row[data.columns[schema.metric.USERS]]);
     const match = lookupBrowser(row, data.columns);
 
     if (match.browser && match.version && match.data) {
