@@ -14,47 +14,8 @@
  * limitations under the License.
  */
 
-function isVersionGTE(version1, version2) {
-  const v1Parts = version1.split('.').map(Number);
-  const v2Parts = version2.split('.').map(Number);
-
-  const maxLength = Math.max(v1Parts.length, v2Parts.length);
-
-  for (let i = 0; i < maxLength; i++) {
-    const v1Part = v1Parts[i] || 0; // Treat missing parts as 0.
-    const v2Part = v2Parts[i] || 0; // Treat missing parts as 0.
-
-    if (v1Part > v2Part) {
-      return true;
-    } else if (v1Part < v2Part) {
-      return false;
-    }
-    // If parts are equal, continue to the next part.
-  }
-  // If all parts are equal, the versions are equal.
-  return true;
-}
-
-function getLargestVersion(version1, version2) {
-  return isVersionGTE(version1, version2) ? version1 : version2;
-}
-
-function assignLargestVersions(baseSet, compareSet) {
-  for (const browser of coreBrowsers) {
-    baseSet[browser] = getLargestVersion(baseSet[browser], compareSet[browser]);
-  }
-}
-
-function toDateString(date) {
-  return date.toISOString().slice(0, 10);
-}
-
 function toPercent(num) {
   return (Math.round(num * 10000) / 100).toFixed(1);
-}
-
-function stripLTEPrefix(dateString) {
-  return dateString.charAt(0) === '≤' ? dateString.slice(1) : dateString;
 }
 
 function formatDate(dateString) {
@@ -96,62 +57,6 @@ function parseData(data) {
   };
 }
 
-function initBaselineYearBrowsers() {
-  const WIDELY_AVAILABLE = 'Widely available';
-  const NEWLY_AVAILABLE = 'Newly available';
-  const initVersionSet = (b) => Object.fromEntries([...b].map((b) => [b, '0']));
-
-  const data = {
-    [WIDELY_AVAILABLE]: initVersionSet(coreBrowsers),
-    [NEWLY_AVAILABLE]: initVersionSet(coreBrowsers),
-    // Specific year data will be filled in next.
-  };
-
-  // Construct a mapping between years and the most-recent versions of all core browsers
-  // that support all features that become Baseline in that year.
-  for (const feature of Object.values(webFeatures.features)) {
-    if (feature.status.baseline) {
-      const today = new Date();
-      const newlyAvailableDate = new Date(
-        stripLTEPrefix(feature.status.baseline_low_date)
-      );
-      // Manually compute the "baseline_high_date" to catch cases where
-      // the web-features data hasn't been updated yet.
-      const widelyAvailableDate = new Date(newlyAvailableDate);
-      widelyAvailableDate.setMonth(widelyAvailableDate.getMonth() + 30);
-
-      const newlyAvailableYear = newlyAvailableDate.getUTCFullYear();
-      if (newlyAvailableYear < today.getUTCFullYear()) {
-        data[newlyAvailableYear] ??= initVersionSet(coreBrowsers);
-        assignLargestVersions(data[newlyAvailableYear], feature.status.support);
-      }
-
-      if (toDateString(today) >= toDateString(widelyAvailableDate)) {
-        assignLargestVersions(data[WIDELY_AVAILABLE], feature.status.support);
-      } else {
-        assignLargestVersions(data[NEWLY_AVAILABLE], feature.status.support);
-      }
-    }
-  }
-  return data;
-}
-
-function getBrowserData(browser, majorVersion, minorVersion) {
-  if (allBrowsers[browser]?.releases[`${majorVersion}.${minorVersion}`]) {
-    return {
-      browser: browser,
-      version: `${majorVersion}.${minorVersion}`,
-      data: allBrowsers[browser].releases[`${majorVersion}.${minorVersion}`],
-    };
-  } else {
-    return {
-      browser: browser,
-      version: majorVersion,
-      data: allBrowsers[browser]?.releases[majorVersion],
-    };
-  }
-}
-
 function lookupBrowser(row, columns) {
   let browser = row[columns['Browser']];
   let browserVersion = row[columns['Browser version']];
@@ -165,8 +70,7 @@ function lookupBrowser(row, columns) {
   // All browsers on iOS are actually Safari, so ignore the browser version
   // and default to the iOS version instead as it's more accurate.
   if (os === 'iOS') {
-    normalizedBrowser =
-      browser === 'Safari (in-app)' ? 'webview_ios' : 'safari_ios';
+    normalizedBrowser = 'safari_ios';
     normalizedVersion = osVersion;
   } else {
     if (browser === 'Chrome' && device === 'desktop') {
@@ -214,14 +118,45 @@ function lookupBrowser(row, columns) {
   const [majorVersion, minorVersion] = (
     normalizedVersion ?? browserVersion
   ).split('.');
-  return getBrowserData(normalizedBrowser, majorVersion, minorVersion);
+
+  if (browserMapping[normalizedBrowser]?.[`${majorVersion}.${minorVersion}`]) {
+    return {
+      browser: normalizedBrowser,
+      version: `${majorVersion}.${minorVersion}`,
+      data: browserMapping[normalizedBrowser]?.[
+        `${majorVersion}.${minorVersion}`
+      ],
+    };
+  } else {
+    return {
+      browser: normalizedBrowser,
+      version: majorVersion,
+      data: browserMapping[normalizedBrowser]?.[majorVersion],
+    };
+  }
 }
 
 function processData(rawData) {
-  let baselineYearCounts = Object.fromEntries(
-    Object.keys(baselineYearBrowsers).map((y) => [y, 0])
-  );
-  baselineYearCounts['Unknown'] = 0;
+  // This only looks at Safari because Safari is a one of the Core baseline
+  // browsers, so there couldn't have been a Baseline year without a Safari
+  // release. Looking through all Browsers is unnecessary, and Safari has the
+  // fewest number of releases, so it's fastest to iterate over.
+  const baselineYears = Object.values(browserMapping.safari)
+    .map((e) => e.year)
+    .filter(Number);
+
+  const minYear = Math.min(...baselineYears);
+  const maxYear = Math.max(...baselineYears);
+
+  // Initialize all Baseline target counts;
+  const baselineTargetCounts = {};
+  for (let i = minYear; i <= maxYear; i++) {
+    baselineTargetCounts[i] = 0;
+  }
+  baselineTargetCounts['Widely Available'] = 0;
+  baselineTargetCounts['Newly Available'] = 0;
+
+  let unknownCount = 0;
 
   const data = parseData(rawData);
   let total = 0;
@@ -230,24 +165,31 @@ function processData(rawData) {
     const count = Number(row[data.columns['Active users']]);
     const match = lookupBrowser(row, data.columns);
 
-    let {browser, version} = match;
-    if (!coreBrowsers.has(browser) && allBrowsers[match.browser]?.upstream) {
-      browser = allBrowsers[match.browser].upstream;
-      version = match.data?.engine_version ?? match.version;
-    }
-
-    if (browser && version && match.data) {
+    if (match.browser && match.version && match.data) {
       total += count;
 
-      for (const [year, data] of Object.entries(baselineYearBrowsers)) {
-        if (isVersionGTE(version, data[browser])) {
-          baselineYearCounts[year] += count;
+      for (const target of Object.keys(baselineTargetCounts)) {
+        if (target === 'Newly Available') {
+          if (match.data.supports === 'newly') {
+            baselineTargetCounts[target] += count;
+          }
+        } else if (target === 'Widely Available') {
+          if (
+            match.data.supports === 'widely' ||
+            match.data.supports === 'newly'
+          ) {
+            baselineTargetCounts[target] += count;
+          }
+        } else {
+          if (target <= match.data.year) {
+            baselineTargetCounts[target] += count;
+          }
         }
       }
     } else {
       // Uncomment to debug which rows could not be matched.
       // console.log(row);
-      baselineYearCounts['Unknown'] += count;
+      unknownCount += count;
     }
   }
 
@@ -261,10 +203,9 @@ function processData(rawData) {
           <th>Baseline target</th>
           <th>% of users supporting</th>
         </tr>
-        ${Object.keys(baselineYearCounts)
-          .filter((i) => i !== 'Unknown')
+        ${Object.keys(baselineTargetCounts)
           .map((year) => {
-            const percent = toPercent(baselineYearCounts[year] / total);
+            const percent = toPercent(baselineTargetCounts[year] / total);
             return `<tr ${year[0] === 'W' ? ' class="Report-break"' : ''}>
               <td>${year}</td>
               <td style="--percent: ${percent}%">${percent}%</td>
@@ -275,10 +216,10 @@ function processData(rawData) {
     </div>
     <aside class="Note">
       <strong>Note:</strong> In this dataset,
-      ${toPercent(baselineYearCounts['Unknown'] / total)}% of visitors had a
-      browser or browser version that was not reported by Google Analytics.
-      Since these may or may not have been compatible with various Baseline
-      targets, they've been excluded from Baseline percentage calculations.
+      ${toPercent(unknownCount / total)}% of visitors had a browser or browser
+      version that was not reported by Google Analytics. Since these may or may
+      not have been compatible with various Baseline targets, they've been
+      excluded from Baseline percentage calculations.
     </aside>
   `;
 
@@ -298,17 +239,9 @@ function processData(rawData) {
   resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
-const [bcdBrowsers, otherBrowsers, webFeatures] = await Promise.all([
-  fetchJSON('https://unpkg.com/@mdn/browser-compat-data/data.json'),
-  fetchJSON(
-    'https://unpkg.com/baseline-browser-mapping/dist/data/downstream-browsers.json'
-  ),
-  fetchJSON('https://unpkg.com/web-features/data.json'),
-]);
-
-const allBrowsers = {...bcdBrowsers.browsers, ...otherBrowsers.browsers};
-const coreBrowsers = new Set(Object.keys(webFeatures.browsers));
-const baselineYearBrowsers = initBaselineYearBrowsers();
+const browserMapping = await fetchJSON(
+  'https://web-platform-dx.github.io/baseline-browser-mapping/with_downstream/all_versions_object_with_supports.json'
+);
 
 function handleImport(file) {
   const reader = new FileReader();
