@@ -23,17 +23,17 @@ node index.js
 Output:
 
 ```
-chrome 106
-chrome_android 106
-edge 106
-firefox 104
-firefox_android 104
-safari 16
-safari_ios 16
-opera 92
-opera_android 72
-samsunginternet_android 20.0
-webview_android 106
-ya_android 22.11
-qq_android 14.2
+chrome 107 (2022-10-27)
+chrome_android 107 (2022-10-27)
+edge 107 (2022-10-27)
+firefox 104 (2022-08-23)
+firefox_android 104 (2022-08-23)
+safari 16 (2022-09-12)
+safari_ios 16 (2022-09-12)
+opera 93 (2022-11-17)
+opera_android 73 (2023-01-17)
+samsunginternet_android 21.0 (2023-05-19)
+webview_android 107 (2022-10-25)
+ya_android 23.1 (2023-01-10)
+qq_android 14.2 (2023-10-14)
 ```

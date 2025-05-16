@@ -39,7 +39,7 @@ The output will be stripped of all newer JavaScript syntax, for example arrow fu
 File | Size (KB)
 -- | --
 src/test.js | 1.3
-lib/test.js | 13.2
+lib/test.js | 11.8
 
 ## Pseudo-Baseline config
 
@@ -154,7 +154,7 @@ Now let's see the effect of an even older Baseline year on bundle size:
 File | Size (KB)
 -- | --
 src/test.js | 1.3
-lib/test.js | 11.7
+lib/test.js | 10.4
 
 The output file is much larger now that many more polyfills are required.
 
