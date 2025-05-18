@@ -292,4 +292,18 @@
   .Report-break td {
     border-top: 2px solid #000;
   }
+
+  /*
+   * Video
+   * ----------------------------------------------------------------------- */
+
+  .Video {
+    margin: 2em 0;
+  }
+
+  .Video iframe {
+    border: 1px solid #ccc;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
 }
