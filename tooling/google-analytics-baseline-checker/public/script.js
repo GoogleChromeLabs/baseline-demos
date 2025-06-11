@@ -283,25 +283,6 @@ document.getElementById('input').addEventListener('change', ({target}) => {
   }
 });
 
-// Add smooth scrolling anchor links.
-document.addEventListener(
-  'click',
-  (e) => {
-    if (e.target.nodeName.toLowerCase() === 'a') {
-      const url = new URL(e.target.href);
-      if (url.hash.startsWith('#') && url.origin === location.origin) {
-        const targetElement = document.querySelector(url.hash);
-        if (targetElement) {
-          e.preventDefault();
-          history.pushState({}, null, url.href);
-          targetElement.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }
-      }
-    }
-  },
-  true
-);
-
 const dropZone = document.getElementById('drop-zone');
 
 // --- Prevent default browser behavior for drag events ---

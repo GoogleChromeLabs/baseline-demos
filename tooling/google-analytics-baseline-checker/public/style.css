@@ -21,6 +21,10 @@
     box-sizing: border-box;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font: 18px/1.5 system-ui, sans-serif;
     margin: 0;
