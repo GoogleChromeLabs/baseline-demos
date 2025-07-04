@@ -1,0 +1,42 @@
+{
+  "name": "rollup-browserslist-baseline-config",
+  "version": "1.0.0",
+  "description": "Shows you how to use browserslist-config-baseline in a Rollup project.",
+  "main": "src/main.jsx",
+  "scripts": {
+    "clean": "npx rimraf dist",
+    "build": "npm run clean && npx rollup -c",
+    "start": "npm run build && node http.js"
+  },
+  "keywords": [
+    "rollup",
+    "baseline",
+    "browserslist-config-baseline"
+  ],
+  "author": "Jeremy L. Wagner <jlwagner@google.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@web/rollup-plugin-html": "^2.3.0",
+    "@web/rollup-plugin-import-meta-assets": "^2.3.0",
+    "autoprefixer": "^10.4.21",
+    "browserslist-config-baseline": "^0.4.0",
+    "express": "^5.1.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.44.1",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "browserslist": "extends browserslist-config-baseline",
+  "dependencies": {
+    "core-js": "^3.43.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
