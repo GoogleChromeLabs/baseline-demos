@@ -42,10 +42,13 @@
     "rollup": "^4.44.1",
     "rollup-plugin-postcss": "^4.0.2"
   },
-  "browserslist": "extends browserslist-config-baseline",
   "dependencies": {
     "core-js": "^3.43.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
+  },
+  "browserslist": "extends browserslist-config-baseline",
+  "browserslist-config-baseline": {
+    "logConfigToConsole": true
   }
 }

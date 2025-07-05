@@ -19,7 +19,15 @@ const plugins = [
   postcss({
     extract: true
   }),
-  html(),
+  html({
+    output: {
+      dir: "dist"
+    },
+    minify: isProd,
+    publicPath: "/",
+    extractAssets: true,
+    bundleAssetsFromCss: true
+  }),
   resolve(),
   commonjs(),
   babel({
@@ -40,7 +48,9 @@ export default {
   input: "src/index.html",
   output: {
     dir: "dist",
-    format: "es"
+    format: "es",
+    assetFileNames: isProd ? "assets/[name].[hash:8].[ext]" : "assets/[name].[ext]",
+    chunkFileNames: isProd ? "[name].[hash:8].js" : "[name].js"
   },
   plugins
 }
