@@ -1,13 +1,13 @@
 /* eslint-disable */
 
 module.exports = {
+  exclude: 'node_modules/**',
   presets: [
     [
       "@babel/preset-env", {
         modules: false,
         useBuiltIns: "usage",
-        corejs: "3.43.0",
-        debug: true
+        corejs: "3.43.0"
       }
     ],
     [

@@ -1,3 +1,6 @@
+/* eslint-disable */
+
+// Vendors
 import { rollupPluginHTML as html } from "@web/rollup-plugin-html";
 import { babel } from "@rollup/plugin-babel";
 import postcss from "rollup-plugin-postcss";
@@ -7,32 +10,37 @@ import commonjs from "@rollup/plugin-commonjs";
 import replace from "@rollup/plugin-replace";
 import terser from "@rollup/plugin-terser";
 
+// Build helpers
+const mode = process.env.NODE_ENV === "production" ? "production" : "development";
+const isProd = mode === "production";
+
+// Construct Rollup plugins
+const plugins = [
+  postcss({
+    extract: true
+  }),
+  html(),
+  resolve(),
+  commonjs(),
+  babel({
+    babelHelpers: "bundled"
+  }),
+  importMetaAssets()
+];
+
+if (isProd) {
+  plugins.push(terser(), replace({
+    "process.env.NODE_ENV": JSON.stringify("production"),
+    preventAssignment: true
+  }));
+}
+
+// Rollup config
 export default {
   input: "src/index.html",
   output: {
     dir: "dist",
     format: "es"
   },
-  jsx: {
-    preset: "react-jsx"
-  },
-  plugins: [
-    resolve({
-      runtime: "automatic",
-      extensions: [".js", ".jsx"]
-    }),
-    commonjs(),
-    babel({
-      extensions: [".js", ".jsx"]
-    }),
-    replace({
-       preventAssignment: false,
-       'process.env.NODE_ENV': '"development"'
-    }),
-    postcss({
-      extract: true
-    }),
-    html(),
-    importMetaAssets()
-  ]
+  plugins
 }
