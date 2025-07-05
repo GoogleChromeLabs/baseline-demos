@@ -28,6 +28,13 @@ Then navigate into the directory containing this demo:
 cd baseline-demos/tooling/rollup-browserslist-baseline-config
 ```
 
+**Optional:** if you use `nvm`, do the following in the root directory:
+
+```
+nvm i
+nvm use
+```
+
 Install npm packages:
 
 ```
@@ -40,7 +47,7 @@ To see the app, run this:
 npm start
 ```
 
-Then navigate to [http://localhost:8080](http://localhost:8080() on your local machine. This demo is just for illustrative purposes, and the big thing you'll want to do is see how various Baseline targets provided by `browserslist-baseline-config` influence things like code size and the targeted environments.
+Then navigate to [http://localhost:8080](http://localhost:8080) on your local machine. This demo is just for illustrative purposes, and the big thing you'll want to do is see how various Baseline targets provided by `browserslist-baseline-config` influence things like code size and the targeted environments.
 
 ## See how changing your Baseline target changes your code
 
