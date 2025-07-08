@@ -26,7 +26,6 @@
     "@html-eslint/parser": "^0.42.0",
     "autoprefixer": "^10.4.21",
     "babel-loader": "^10.0.0",
-    "browserslist-config-baseline": "^0.4.0",
     "core-js": "^3.43.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
@@ -47,6 +46,5 @@
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
-  },
-  "browserslist": "extends browserslist-config-baseline"
+  }
 }
