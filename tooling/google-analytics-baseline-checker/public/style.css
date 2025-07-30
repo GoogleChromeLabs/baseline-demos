@@ -182,6 +182,10 @@
     text-wrap-style: balance;
   }
 
+  .Note-subHead {
+    margin: 0 auto 2rem;
+  }
+
   /*
    * Importer
    * ----------------------------------------------------------------------- */
@@ -215,6 +219,7 @@
    .Steps {
     display: grid;
     grid-template-columns: auto auto;
+    margin-bottom: 4rem;
     place-content: center;
   }
 

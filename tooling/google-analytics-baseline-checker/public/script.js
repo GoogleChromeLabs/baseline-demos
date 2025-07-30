@@ -33,11 +33,9 @@ function toPercent(num) {
 
 function formatDate(dateString) {
   return new Date(
-    [
-      dateString.slice(0, 4),
-      dateString.slice(4, 6),
-      dateString.slice(6, 8),
-    ].join('-')
+    Number(dateString.slice(0, 4)),
+    Number(dateString.slice(4, 6) - 1),
+    Number(dateString.slice(6, 8))
   ).toLocaleDateString();
 }
 
@@ -281,6 +279,11 @@ document.getElementById('input').addEventListener('change', ({target}) => {
   if (target.files.length > 0) {
     handleImport(target.files[0]);
   }
+});
+
+document.getElementById('example-report').addEventListener('click', (event) => {
+  event.preventDefault();
+  fetchData('web-dev-baseline-export.tsv').then(processData);
 });
 
 const dropZone = document.getElementById('drop-zone');
