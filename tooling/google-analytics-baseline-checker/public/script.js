@@ -59,6 +59,15 @@ function parseData(data) {
   ];
 
   const lines = rawLines.filter((l) => l.match(/^\w/));
+
+  if (lines[0].includes(',')) {
+    const msg =
+      `Oops! It looks like you're trying to import CVS ` +
+      `instead of TSV. Re-export the data as TSV and try again.`;
+    alert(msg);
+    throw new Error(msg);
+  }
+
   const columns = Object.fromEntries(
     lines[0].split(/\t/).map((e, i) => [e, i])
   );
@@ -67,7 +76,9 @@ function parseData(data) {
   for (const type of Object.keys(schema)) {
     for (const column of Object.values(schema[type])) {
       if (!columns.hasOwnProperty(column)) {
-        const msg = `Oops! The ${type} '${column}' was not found in the imported TSV data.`;
+        const msg =
+          `Oops! The ${type} '${column}' was not found ` +
+          `in the imported TSV data.`;
         alert(msg);
         throw new Error(msg);
       }
