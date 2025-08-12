@@ -3,20 +3,24 @@ template.innerHTML = `
 <style>
 * { margin: 0}
 aside {
+  background: #fff;
   border: 0;
   border-top: 1px solid #eee;
   box-shadow: 0 0 1em #0001;
   font-size: 0.9em;
   gap: 1em;
   height: auto;
+  inset: 0;
   padding: 1em;
+  position: fixed;
   text-wrap-style: pretty;
   top: unset;
   translate: 0px 100%;
   transition: translate .2s ease, display .2s allow-discrete;
   width: auto;
+  z-index: 1000;
 }
-aside:popover-open {
+aside.is-open {
   display: grid;
   translate: 0px 0px;
 }
@@ -39,13 +43,13 @@ button:hover {
   background: #ddd;
 }
 </style>
-<aside popover="manual" id="cdd-cookie-consent">
+<aside class="is-open">
   <p>
     Chrome.dev uses cookies from Google to deliver and
     enhance the quality of its services and to analyze traffic.
     <a href="https://policies.google.com/technologies/cookies">Learn more.</a>
   </p>
-  <button popovertarget="cdd-cookie-consent">Ok, Got it.</button>
+  <button>Ok, Got it.</button>
 </aside>`;
 
 class CookieBanner extends HTMLElement {
@@ -55,13 +59,12 @@ class CookieBanner extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
   connectedCallback() {
-    const popover = this.shadowRoot.querySelector('[popover]');
-    popover.showPopover();
-    popover.addEventListener('toggle', (event) => {
-      if (event.newState === 'closed') {
-        localStorage.setItem('cdd-cookie-consent', '1');
-        popover.ontransitionend = () => this.remove();
-      }
+    const banner = this.shadowRoot.querySelector('aside');
+    const button = this.shadowRoot.querySelector('button');
+    button.addEventListener('click', (event) => {
+      banner.classList.remove('is-open');
+      banner.ontransitionend = () => this.remove();
+      localStorage.setItem('cdd-cookie-consent', '1');
     });
   }
 }
