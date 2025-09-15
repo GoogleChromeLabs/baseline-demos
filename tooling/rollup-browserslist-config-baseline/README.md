@@ -1,6 +1,6 @@
-# Baseline demo: `browserslist-config-baseline` with Rollup
+# Rollup
 
-This demo shows how a (very) simple React app can be built with [Rollup](https://rollupjs.org/) while using the [`browserslist-config-baseline` config](https://www.npmjs.com/package/browserslist-config-baseline) to specify a Baseline-based [Browserslist](https://browsersl.ist/) target.
+This demo shows how a (very) simple React app can be built with [Rollup](https://rollupjs.org/) while using the built-in Baseline support in [Browserslist](https://browsersl.ist/) to specify a Baseline target.
 
 This demo uses:
 
@@ -11,8 +11,7 @@ This demo uses:
   - [`core-js`](https://www.npmjs.com/package/core-js)
 - [PostCSS](https://postcss.org/)
   - [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
-- [Browserslist](https://browsersl.ist/)
-  - [`browserslist-config-baseline`](https://www.npmjs.com/package/browserslist-config-baseline)
+- [Browserslist](https://browsersl.ist/) with built-in Baseline support
 
 ## Setup
 
@@ -47,74 +46,60 @@ To see the app, run this:
 npm start
 ```
 
-Then navigate to [http://localhost:8080](http://localhost:8080) on your local machine. This demo is just for illustrative purposes, and the big thing you'll want to do is see how various Baseline targets provided by `browserslist-baseline-config` influence things like code size and the targeted environments.
+Then navigate to [http://localhost:8080](http://localhost:8080) on your local machine. This demo is just for illustrative purposes, and the big thing you'll want to do is see how various Baseline targets influence things like code size and the targeted environments.
 
 ## See how changing your Baseline target changes your code
 
-`browserslist-config-baseline` can specify a number of Baseline-based configs through the Browserslist `extends` syntax. In `package.json`, you can target Baseline Widely available like so:
+Browserslist now has built-in support for Baseline targets. In `package.json`, you can target Baseline widely available like so:
 
 ```js
-"browserslist": "extends browserslist-config-baseline"
+"browserslist": "baseline widely available"
 ```
 
 However, you can specify a year (back to 2016) as a fixed target using the following format:
 
 ```js
-"browserslist": "extends browserslist-config-baseline/2020"
+"browserslist": "baseline 2020"
 ```
 
-This project defaults to the Widely available target. Try building the project:
+This project defaults to the Baseline widely available target. Try building the project to see different bundle sizes based on your Baseline target.
 
 ```
 npm run build
 ```
 
-`package.json` specifies another key for `browserslist-config-baseline` to influence the console output. That key is `browserslist-config-baseline`, which takes an object of options. The specified option is `logConfigToConsole`, which is specified as `true` so that the target browsers are logged to the console.
+Check the output in the `dist/` folder to see the bundle size and examine the generated JavaScript and CSS.
 
 ### Baseline Widely available
 
-The default Browserslist config for this project is `extends browserslist-config-baseline`, which targets Baseline Widely available. When building the project initially using this target, here's the list of browsers that gets passed to Browserslist:
+The default Browserslist config for this project is `baseline widely available`, which targets Baseline Widely available. When building the project initially using this target, you can see the modern browsers that get targeted by running:
 
 ```
-Your browserslist config from browserslist-config-baseline is:
-[
-  'Chrome >= 108',
-  'ChromeAndroid >= 108',
-  'Edge >= 108',
-  'Firefox >= 108',
-  'FirefoxAndroid >= 108',
-  'Safari >= 16',
-  'iOS >= 16'
-]
+npx browserslist
 ```
+
+This will show you the list of browsers that Baseline widely available supports, focusing on recent versions of major browsers where widely supported features are available.
 
 ### Baseline 2016
 
 Now try changing the Browserslist in `package.json` to use the 2016 target:
 
 ```js
-"browserslist": "extends browserslist-config-baseline/2016"
+"browserslist": "baseline 2016"
 ```
+
+You can see how the list of browsers changes by running:
+
+```
+npx browserslist
+```
+
+This will show you the much older browser versions that were current when Baseline 2016 was established, requiring more polyfills and transformations.
 
 Now rebuild:
 
 ```
 npm run build
-```
-
-Notice how the list of browsers passed to Browserslist changes:
-
-```
-Your browserslist config from browserslist-config-baseline is:
-[
-  'Chrome >= 53',
-  'ChromeAndroid >= 53',
-  'Edge >= 14',
-  'Firefox >= 49',
-  'FirefoxAndroid >= 49',
-  'Safari >= 10',
-  'iOS >= 10'
-]
 ```
 
 As you might guess, these changes have an effect on output size:

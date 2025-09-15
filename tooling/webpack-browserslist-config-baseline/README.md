@@ -1,6 +1,6 @@
-# Baseline demo: `browserslist-config-baseline` with webpack
+# webpack
 
-This demo shows how a (very) simple React app can be built with [webpack](https://webpack.js.org/) while using the [`browserslist-config-baseline` config](https://www.npmjs.com/package/browserslist-config-baseline) to specify a Baseline-based [Browserslist](https://browsersl.ist/) target.
+This demo shows how a (very) simple React app can be built with [webpack](https://webpack.js.org/) while using the built-in Baseline support in [Browserslist](https://browsersl.ist/) to specify a Baseline target.
 
 This demo uses:
 
@@ -11,8 +11,7 @@ This demo uses:
   - [`core-js`](https://www.npmjs.com/package/core-js)
 - [PostCSS](https://postcss.org/)
   - [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
-- [Browserslist](https://browsersl.ist/)
-  - [`browserslist-config-baseline`](https://www.npmjs.com/package/browserslist-config-baseline)
+- [Browserslist](https://browsersl.ist/) with built-in Baseline support
 
 ## Setup
 
@@ -47,20 +46,20 @@ To see the app, run this:
 npm start
 ```
 
-Then navigate to [http://localhost:8080](http://localhost:8080) on your local machine. This demo is just for illustrative purposes, and the big thing you'll want to do is see how various Baseline targets provided by `browserslist-baseline-config` influence things like code size and the targeted environments.
+Then navigate to [http://localhost:8080](http://localhost:8080) on your local machine. This demo is just for illustrative purposes, and the big thing you'll want to do is see how various Baseline targets influence things like code size and the targeted environments.
 
 ## See how changing your Baseline target changes your code
 
-`browserslist-config-baseline` can specify a number of Baseline-based configs through the Browserslist `extends` syntax. In `package.json`, you can target Baseline Widely available like so:
+Browserslist now has built-in support for Baseline targets. In `package.json`, you can target Baseline Widely available like so:
 
 ```js
-"browserslist": "extends browserslist-config-baseline"
+"browserslist": "baseline widely available"
 ```
 
 However, you can specify a year (back to 2016) as a fixed target using the following format:
 
 ```js
-"browserslist": "extends browserslist-config-baseline/2020"
+"browserslist": "baseline 2020"
 ```
 
 This project defaults to the Widely available target. Try building the project:
@@ -77,9 +76,9 @@ When building the project initially using the Baseline Widely available target, 
 
 ```
 Using targets: {
-  "chrome": "108",
-  "edge": "108",
-  "firefox": "108",
+  "chrome": "111",
+  "edge": "111",
+  "firefox": "111",
   "ios": "16",
   "safari": "16"
 }
@@ -92,9 +91,9 @@ Using polyfills with `usage-global` method:
 
 [/private/var/www/baseline-demos/tooling/webpack-browserslist-baseline-config/src/js/App.jsx]
 The corejs3 polyfill added the following polyfills:
-  es.iterator.constructor { "chrome":"108", "edge":"108", "firefox":"108", "ios":"16", "safari":"16" }
-  es.iterator.filter { "chrome":"108", "edge":"108", "firefox":"108", "ios":"16", "safari":"16" }
-  es.iterator.map { "chrome":"108", "edge":"108", "firefox":"108", "ios":"16", "safari":"16" }
+  es.iterator.constructor { "chrome":"111", "edge":"111", "firefox":"111", "ios":"16", "safari":"16" }
+  es.iterator.filter { "chrome":"111", "edge":"111", "firefox":"111", "ios":"16", "safari":"16" }
+  es.iterator.map { "chrome":"111", "edge":"111", "firefox":"111", "ios":"16", "safari":"16" }
 ```
 
 Here are the plugins that get used by Babel:
@@ -128,7 +127,7 @@ Using plugins:
 Now try changing the Browserslist in `package.json` to use the 2016 target:
 
 ```js
-"browserslist": "extends browserslist-config-baseline/2016"
+"browserslist": "baseline 2016"
 ```
 
 Now rebuild:
@@ -144,8 +143,8 @@ Using targets: {
   "chrome": "53",
   "edge": "14",
   "firefox": "49",
-  "ios": "10",
-  "safari": "10"
+  "ios": "11",
+  "safari": "11"
 }
 ```
 
@@ -155,23 +154,23 @@ See how the polyfills that get injected by `core-js` with this target changes:
 [/private/var/www/baseline-demos/tooling/webpack-browserslist-baseline-config/src/js/App.jsx]
 The corejs3 polyfill added the following polyfills:
   es.array.filter { "edge":"14" }
-  es.iterator.constructor { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
-  es.iterator.filter { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
+  es.iterator.constructor { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
+  es.iterator.filter { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
   es.object.to-string { "edge":"14", "firefox":"49" }
   es.array.includes { "firefox":"49" }
   es.string.includes { "edge":"14" }
   es.array.map { "firefox":"49" }
-  es.iterator.map { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
+  es.iterator.map { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
   es.symbol { "edge":"14", "firefox":"49" }
-  es.symbol.description { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
+  es.symbol.description { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
   es.array.iterator { "chrome":"53", "edge":"14", "firefox":"49" }
-  web.dom-collections.iterator { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
-  es.array.push { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
+  web.dom-collections.iterator { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
+  es.array.push { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
   es.regexp.to-string { "edge":"14" }
   es.array.from { "edge":"14", "firefox":"49" }
-  es.regexp.exec { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
+  es.regexp.exec { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
   es.regexp.test { "edge":"14" }
-  es.error.cause { "chrome":"53", "edge":"14", "firefox":"49", "ios":"10", "safari":"10" }
+  es.error.cause { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
 ```
 
 Also note how the Babel plugins change based on the older target:
