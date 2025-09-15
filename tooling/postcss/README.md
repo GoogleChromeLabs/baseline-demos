@@ -41,7 +41,7 @@ Compare the output against the source file at [src/test.css](src/test.css). Ther
 
 1. Open `.browserslistrc` and replace the contents with:
     ```
-    extends browserslist-config-baseline/2024
+    baseline 2024
     ```
 2. Run the build script:
     ```sh
@@ -49,7 +49,7 @@ Compare the output against the source file at [src/test.css](src/test.css). Ther
     ```
 3. Open the output file at [dist/test.css](dist/test.css)
 
-`browserslist-config-baseline` was pre-installed as part of the setup step above. It enables you to specify Baseline years as your browserslist target.
+Browserslist now has built-in support for Baseline targets. This enables you to specify Baseline years as your browserslist target.
 
 As you can see in the output file, none of the previous transformations have been applied because the corresponding features are included in the Baseline 2024 feature set.
 
@@ -57,7 +57,7 @@ As you can see in the output file, none of the previous transformations have bee
 
 1. Open `.browserslistrc` and replace the contents with:
     ```
-    extends browserslist-config-baseline
+    baseline widely available
     ```
 2. Run the build script:
     ```sh
@@ -95,7 +95,7 @@ Now, the only feature that is not currently widely available and has fallbacks p
     ```
 2. Open `.browserslistrc` and replace the contents with:
     ```
-    extends browserslist-config-baseline
+    baseline widely available
     ```
 3. Run the build script:
     ```sh

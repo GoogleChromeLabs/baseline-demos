@@ -1,7 +1,7 @@
 {
   "name": "webpack-browserslist-baseline-config",
   "version": "1.0.0",
-  "description": "Shows you how to use browserslist-baseline-config with webpack",
+  "description": "Shows you how to use built-in Baseline support with browserslist and webpack",
   "main": "index.js",
   "scripts": {
     "clean": "npx rimraf dist",
@@ -13,8 +13,7 @@
   "keywords": [
     "webpack",
     "baseline",
-    "browserslist",
-    "browserslist-baseline-config"
+    "browserslist"
   ],
   "author": "Jeremy L. Wagner <jlwagner@google.com>",
   "license": "Apache-2.0",
@@ -26,7 +25,6 @@
     "@html-eslint/parser": "^0.42.0",
     "autoprefixer": "^10.4.21",
     "babel-loader": "^10.0.0",
-    "browserslist-config-baseline": "^0.4.0",
     "core-js": "^3.43.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
@@ -48,5 +46,5 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
-  "browserslist": "extends browserslist-config-baseline"
+  "browserslist": "baseline widely available"
 }

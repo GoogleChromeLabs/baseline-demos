@@ -8,21 +8,21 @@ Compilers are tools that take cutting edge features that you author in source co
 
 ### [Babel](./babel)
 
-Learn how to use `browserslist-config-baseline` with `babel-preset-env` to compile JavaScript features depending on their Baseline status.
+Learn how to use built-in Baseline support in browserslist with `babel-preset-env` to compile JavaScript features depending on their Baseline status.
 
 ### [PostCSS](./postcss)
 
-Learn how to use `browserslist-config-baseline` with `postcss-preset-env` to compile CSS features depending on their Baseline status.
+Learn how to use built-in Baseline support in browserslist with `postcss-preset-env` to compile CSS features depending on their Baseline status.
 
 ## Bundlers
 
-## [webpack](./webpack-browserslist-config-baseline)
+## [webpack](./webpack)
 
-Learn how to use `browserslist-config-baseline` with Babel and other tools with webpack as your bundler.
+Learn how to use built-in Baseline support in browserslist with Babel and other tools with webpack as your bundler.
 
-## [Rollup](./rollup-browserslist-config-baseline)
+## [Rollup](./rollup)
 
-Learn how to use `browserslist-config-baseline` with Babel and other tools with Rollup as your bundler.
+Learn how to use built-in Baseline support in browserslist with Babel and other tools with Rollup as your bundler.
 
 ## Linters
 
