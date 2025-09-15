@@ -24,7 +24,7 @@ git clone git@github.com:GoogleChromeLabs/baseline-demos.git
 Then navigate into the directory containing this demo:
 
 ```
-cd baseline-demos/tooling/rollup-browserslist-config-baseline
+cd baseline-demos/tooling/rollup
 ```
 
 **Optional:** if you use `nvm`, do the following in the root directory:

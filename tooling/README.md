@@ -16,11 +16,11 @@ Learn how to use built-in Baseline support in browserslist with `postcss-preset-
 
 ## Bundlers
 
-## [webpack](./webpack-browserslist-config-baseline)
+## [webpack](./webpack)
 
 Learn how to use built-in Baseline support in browserslist with Babel and other tools with webpack as your bundler.
 
-## [Rollup](./rollup-browserslist-config-baseline)
+## [Rollup](./rollup)
 
 Learn how to use built-in Baseline support in browserslist with Babel and other tools with Rollup as your bundler.
 

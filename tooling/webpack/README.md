@@ -24,7 +24,7 @@ git clone git@github.com:GoogleChromeLabs/baseline-demos.git
 Then navigate into the directory containing this demo:
 
 ```
-cd baseline-demos/tooling/webpack-browserslist-config-baseline
+cd baseline-demos/tooling/webpack
 ```
 
 **Optional:** if you use `nvm`, do the following in the root directory:
@@ -89,7 +89,7 @@ Here are the polyfills that get injected by `core-js` with this target:
 ```
 Using polyfills with `usage-global` method:
 
-[/private/var/www/baseline-demos/tooling/webpack-browserslist-baseline-config/src/js/App.jsx]
+[/private/var/www/baseline-demos/tooling/webpack/src/js/App.jsx]
 The corejs3 polyfill added the following polyfills:
   es.iterator.constructor { "chrome":"111", "edge":"111", "firefox":"111", "ios":"16", "safari":"16" }
   es.iterator.filter { "chrome":"111", "edge":"111", "firefox":"111", "ios":"16", "safari":"16" }
@@ -151,7 +151,7 @@ Using targets: {
 See how the polyfills that get injected by `core-js` with this target changes:
 
 ```
-[/private/var/www/baseline-demos/tooling/webpack-browserslist-baseline-config/src/js/App.jsx]
+[/private/var/www/baseline-demos/tooling/webpack/src/js/App.jsx]
 The corejs3 polyfill added the following polyfills:
   es.array.filter { "edge":"14" }
   es.iterator.constructor { "chrome":"53", "edge":"14", "firefox":"49", "ios":"11", "safari":"11" }
