@@ -182,20 +182,33 @@ Output:
 ✖ 12 problems (0 errors, 12 warnings)
 ```
 
-## eslint-plugin-compat
 
-[`eslint-plugin-compat`](https://github.com/amilajack/eslint-plugin-compat) is an ESLint plugin that validates the browser support of JavaScript features.
+## eslint-plugin-baseline-js
 
-### Baseline widely available
+[`eslint-plugin-baseline-js`](https://github.com/3ru/eslint-plugin-baseline-js) is an ESLint plugin for JavaScript Baseline.
 
-This ESLint plugin relies on a browserslist config, which we can use with [browserslist-config-baseline](https://github.com/web-platform-dx/browserslist-config-baseline) to set a target of Baseline widely available.
+### Widely available
 
-1. Open [.browserslistrc](.browserslistrc)
-2. Replace the contents with
+In [eslint.config.mjs](eslint.config.mjs), import the plugin and configure the `use-baseline` rule as needed:
 
-  ```diff
-  +extends browserslist-config-baseline
-  ```
+```js
+import js from "eslint-plugin-baseline-js";
+
+export default [
+  // {...}
+  {
+    files: ["**/*.{js,ts,jsx,tsx}"],
+    plugins: { "baseline-js": js },
+    rules: {
+      "baseline-js/use-baseline": ["warn", {
+        available: "widely",
+        includeWebApis: { preset: "auto" },
+        includeJsBuiltins: { preset: "auto" }
+      }],
+    },
+  }
+];
+```
 
 Run eslint:
 
@@ -206,52 +219,41 @@ npm run lint:js
 Output:
 
 ```sh
-   71:13  warning  PaymentRequest is not supported in Firefox 104, and_ff 137                                compat/compat
-  103:1   warning  Array.toReversed() is not supported in Firefox 104, Edge 107, Chrome 107                  compat/compat
-  107:1   warning  navigator.userActivation() is not supported in Safari 16.0, iOS Safari 16.0, Firefox 104  compat/compat
-  115:5   warning  Intl.Segmenter() is not supported in Firefox 104                                          compat/compat
-  126:1   warning  scheduler is not supported in Safari 16.0, iOS Safari 16.0                                compat/compat
-  128:1   warning  IdleDetector is not supported in Safari 16.0, iOS Safari 16.0, Firefox 104, Edge 107      compat/compat
-  130:1   warning  Atomics.waitAsync() is not supported in Safari 16.0, iOS Safari 16.0, Firefox 104         compat/compat
+   71:17  warning  Feature 'payment-request' is not a widely available Baseline feature            baseline-js/use-baseline
+  107:11  warning  Feature 'user-activation' is not a widely available Baseline feature            baseline-js/use-baseline
+  109:7   warning  Feature 'array-fromasync' is not a widely available Baseline feature            baseline-js/use-baseline
+  111:8   warning  Feature 'array-group' is not a widely available Baseline feature                baseline-js/use-baseline
+  113:13  warning  Feature 'abortsignal-any' is not a widely available Baseline feature            baseline-js/use-baseline
+  115:10  warning  Feature 'intl-segmenter' is not a widely available Baseline feature             baseline-js/use-baseline
+  120:7   warning  Feature 'is-error' is not a widely available Baseline feature                   baseline-js/use-baseline
+  124:6   warning  Feature 'math-sum-precise' is not a widely available Baseline feature           baseline-js/use-baseline
+  128:14  warning  Feature 'idle-detection' is not a widely available Baseline feature             baseline-js/use-baseline
+  130:1   warning  Feature 'atomics-wait-async' is not a widely available Baseline feature         baseline-js/use-baseline
+  132:5   warning  Feature 'numeric-factory-functions' is not a widely available Baseline feature  baseline-js/use-baseline
 
-✖ 7 problems (0 errors, 7 warnings)
+✖ 11 problems (0 errors, 11 warnings)
 ```
 
-> [!NOTE]
-> Unlike the other linters, this plugin precedes Baseline and so its warnings are still in terms of specific browser versions and not Baseline targets.
+### Baseline newly available
+
+In [eslint.config.mjs](eslint.config.mjs) change the `available` option to "newly":
+
+```js
+rules: {
+  "baseline-js/use-baseline": ["warn", {
+    "available": "newly"
+  }],
+}
+```
 
 ### Baseline year
 
-1. Open [.browserslistrc](.browserslistrc)
-2. Replace the contents with
+In [eslint.config.mjs](eslint.config.mjs) change the `available` option to a year in YYYY format:
 
-  ```diff
-  -extends browserslist-config-baseline
-  +extends browserslist-config-baseline/2016
-  ```
-
-Run eslint:
-
-```sh
-npm run lint:js
-```
-
-Output:
-
-```sh
-   65:15  warning  String.padStart() is not supported in Edge 14, Chrome 53                                                        compat/compat
-   68:1   warning  fetch is not supported in Safari 10                                                                             compat/compat
-   71:13  warning  PaymentRequest is not supported in Safari 10, Firefox 49, Edge 14, Chrome 53, and_ff 137                        compat/compat
-   74:13  warning  Object.values() is not supported in Safari 10, iOS Safari 10.0-10.2, Chrome 53                                  compat/compat
-   87:1   warning  Object.fromEntries() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53        compat/compat
-   90:18  warning  IntersectionObserver is not supported in Safari 10, Firefox 49, Edge 14, Chrome 53                              compat/compat
-  103:1   warning  Array.toReversed() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53          compat/compat
-  107:1   warning  navigator.userActivation() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53  compat/compat
-  113:1   warning  AbortSignal is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                 compat/compat
-  115:5   warning  Intl.Segmenter() is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53            compat/compat
-  126:1   warning  scheduler is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                   compat/compat
-  128:1   warning  IdleDetector is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                compat/compat
-  130:1   warning  Atomics is not supported in Safari 10, iOS Safari 10.0-10.2, Firefox 49, Edge 14, Chrome 53                     compat/compat
-
-✖ 13 problems (0 errors, 13 warnings)
+```js
+rules: {
+  "baseline-js/use-baseline": ["warn", {
+    "available": 2020
+  }],
+}
 ```

@@ -1,7 +1,7 @@
 import globals from "globals";
 import css from "@eslint/css";
 import html from "@html-eslint/eslint-plugin";
-import compat from "eslint-plugin-compat";
+import js from "eslint-plugin-baseline-js";
 
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -33,12 +33,14 @@ export default [
     },
   },
   {
-    ...compat.configs["flat/recommended"],
-    settings: {
-      "lintAllEsApis": true,
-    },
+    files: ["**/*.{js,ts,jsx,tsx}"],
+    plugins: { "baseline-js": js },
     rules: {
-      "compat/compat": ["warn"],
+      "baseline-js/use-baseline": ["warn", {
+        available: "widely",
+        includeWebApis: { preset: "auto" },
+        includeJsBuiltins: { preset: "auto" }
+      }],
     },
   },
 ];
