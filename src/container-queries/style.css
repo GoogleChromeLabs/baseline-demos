@@ -1,0 +1,283 @@
+@layer reset, theme, layout, components;
+
+@layer components {
+  product-detail {
+    border: clamp(1px, 0.5cqi, 0.25lh) solid;
+    border-color: var(--product-border, var(--blue));
+    container: component / inline-size;
+    opacity: var(--show-items, 1);
+    transition: 
+      opacity 250ms, 
+      block-size 250ms,
+      border 200ms,
+      display 250ms allow-discrete
+    ;
+  
+    @starting-style { 
+      opacity: 0; 
+      block-size: 0;
+    }
+    
+    &[hidden] {
+      display: none;
+      opacity: 0;
+      block-size: 0;
+    }
+
+    &:has(button[data-toggle=add][aria-pressed=true]) {
+      --border-color: var(--pink);
+      --btn-bg: var(--pink);
+      --product-border: var(--pink);
+    }
+  
+    article {
+      block-size: 100%;
+      display: grid;
+      font-size: clamp(0.9rem, 0.8rem + 0.5cqi, 1rem);
+      gap: var(--gap);
+      grid-template: 
+        'image' auto 
+        'title' auto
+        'summary' auto
+        'button' auto 
+        / auto
+      ;
+      padding: var(--gap);
+
+      @container (inline-size > 40ch) {
+        --image-ratio: 1;
+        grid-template: 
+          'image title' auto
+          'image summary' 1fr
+          'image button' auto
+          / minmax(50px, min(20%, 500px)) 1fr
+        ; 
+      }
+
+      @container (inline-size > 50ch) {
+        grid-template: 
+          'image title title' auto
+          'image summary button' 1fr
+          / minmax(50px, min(20%, 500px)) 1fr fit-content(20%)
+        ; 
+      }
+
+      /* use gap instead */
+      > * { margin-block: 0; }
+    }
+  
+    img { 
+      aspect-ratio: var(--image-ratio, 16/9);
+      contain: size;
+      grid-area: image;
+      place-self: stretch;
+      object-fit: cover;
+    }
+    h3 { grid-area: title; }
+    p { grid-area: summary; }
+    button { 
+      background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--blue) var(--btn-color-1-position, 20%), var(--pink) var(--btn-color-2-position, 80%)));
+      color: Canvas;
+      border-color: var(--border-color, var(--blue));
+      grid-area: button; 
+      place-self: end;
+
+      &:active {
+        --btn-angle: 25deg;
+        --btn-color-1-position: 25%;
+        --btn-color-2-position: 100%;
+      }
+    }
+  }
+
+  product-list {
+    --item-min: 16ch;
+    gap: calc(var(--gap) / 2);      
+
+    @container (width > 20em) {  
+      &[data-layout=large] {
+        --item-min: 25ch;
+        gap: var(--gap);
+      }
+      
+      &:not([data-layout=list]) { 
+        /* avoid auto-fit safari bug */
+        grid-template-columns: repeat(auto-fit, minmax(var(--item-min, 16ch), 1fr));    
+      }
+    }
+  }
+  
+  shopping-cart {
+    --product-border: var(--pink);
+    
+    opacity: var(--show-items, 1);
+    overflow: clip;
+    min-block-size: 0;
+    transition: 
+      opacity 250ms, 
+      display 250ms allow-discrete
+    ;
+    --show-items: 0;
+
+    @starting-style { opacity: 0; }
+
+    &[data-expanded=false] {
+      display: none;
+    }
+
+    &[data-expanded=true] {
+      --show-items: 1;
+    }
+  
+    &:has(product-detail:not([hidden])) {
+      --empty-list: none;
+    }
+  }
+  
+  empty-list {
+    background: maroon;
+    color: CanvasText;
+    color-scheme: dark;
+    display: var(--empty-list, grid);
+    padding: var(--gap);
+    place-content: center;
+  }
+}
+
+@layer layout {
+  main {
+    align-content: start;
+    container-type: inline-size;
+    display: grid;
+    grid-template: 
+      'controls' auto
+      'cart' var(--cart-area, 0fr)
+      'list' auto
+      / minmax(min-content, 1fr);
+    transition: grid-template 250ms, gap 250ms;
+
+    @media (width > 30em) {
+      grid-template: 
+        'controls controls' auto
+        'list cart' 1fr
+        / 2fr var(--cart-area, 0fr);      
+    }
+    
+    &:has([data-expanded=true]) {
+      --cart-area: 1fr;
+      gap: var(--gap);
+    }
+  }  
+
+  page-controls {
+    display: grid;
+    grid-area: controls;
+    grid-template-columns: 1fr auto;
+  }
+
+  #layout-select {
+    display: none;
+    @media (width > 20em) { display: block; }
+  }
+
+  main > product-list { grid-area: list; }
+  main > shopping-cart { grid-area: cart; }
+
+  section,
+  product-list,
+  shopping-cart {
+    align-content: start;
+    container-type: inline-size;
+    display: grid;
+  }
+}
+
+@layer theme {
+  html { 
+    /* 
+      Sizing…
+      Since these aren't registered properties,
+      they will inherit and then resolve where used. 
+    */
+    --gap: round(up, 2cqi, 0.25lh); 
+    --body-text: clamp(1rem, 0.875rem + 0.5cqi, 1.25rem);
+    --list-title: clamp(1.2em, 1em + 0.75vi, 1.5em);
+    --item-title: clamp(1.125em, 1em + 0.675cqi, 1.25em);
+
+    /* Colors */
+    color-scheme: light dark;
+    --canvas: Canvas;
+    --canvas-text: CanvasText;
+
+    --pink-dark: #B6236C;
+    --pink-light: #FE84B4;
+    --blue-dark: #205769;
+    --blue-light: #8EC6DA;
+    
+    --pink: light-dark(var(--pink-dark), var(--pink-light));
+    --pink-bg: color-mix(in oklab,
+      light-dark(var(--pink-light), var(--pink-dark)),
+      Canvas
+    );
+
+    --blue: light-dark(var(--blue-dark), var(--blue-light));
+    --blue-bg: color-mix(in oklab,
+      light-dark(var(--blue-light), var(--blue-dark)),
+      Canvas
+    );
+
+    /* from https://modernfontstacks.com/ */
+    /* old style, industrial, slab */
+    --serif: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+    --sans: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+    --slab: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+    font-family: var(--sans);
+  }
+  
+  body { 
+    padding: var(--gap); 
+    font-size: var(--body-text);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--serif);
+  }
+  
+  h2 { font-size: var(--list-title); }
+  h3 { font-size: var(--item-title); }
+}
+
+@layer reset {
+  * { box-sizing: border-box; }
+  html {
+    block-size: 100%; 
+    interpolate-size: allow-keywords;
+  }
+  body { 
+    margin: 0;
+    min-block-size: 100%; 
+  }
+
+  picture { display: contents; }
+  img { display: block; }
+  img, svg {
+    block-size: auto;
+    inline-size: 100%;
+  }
+
+  input, button, textarea, select { 
+    font: inherit; 
+  }
+
+  button {
+    &[aria-pressed],
+    &[aria-expanded] {
+      border-color: gray;
+    }
+    
+    &[aria-pressed=true],
+    &[aria-expanded=true] {
+      border-color: AccentColor;
+    }
+  }
+}
