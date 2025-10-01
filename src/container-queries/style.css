@@ -259,10 +259,17 @@
   }
 
   picture { display: contents; }
-  img { display: block; }
-  img, svg {
+  img { 
     block-size: auto;
+    display: block;
     inline-size: 100%;
+  }
+
+  svg { 
+    --icon-size: 2.2em; 
+    block-size: var(--icon-size); 
+    inline-size: var(--icon-size);
+    vertical-align: middle;
   }
 
   input, button, textarea, select { 
@@ -280,4 +287,13 @@
       border-color: AccentColor;
     }
   }
+
+  .bag-lines { 
+    fill: var(--canvas);
+  }
+
+  .bag-bg { 
+    fill: var(--canvas-text);
+  }
+
 }
