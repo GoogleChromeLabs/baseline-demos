@@ -87,6 +87,7 @@
       border-color: var(--border-color, var(--blue));
       grid-area: button;
       place-self: end;
+      transition: background-color 250ms ease-out;
 
       &:active {
         --btn-angle: 25deg;
