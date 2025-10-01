@@ -10,7 +10,7 @@
     <h1>Buy Our Things, Please</h1>
     <main>
       <page-controls>
-        <div id="layout-select">          
+        <div id="layout-select">
           <label for="product-layout">View products as…</label>
           <select name="product-layout" id="product-layout" aria-controls="main-list">
             <option value="small">small grid</option>
@@ -28,56 +28,65 @@
         <product-list>
           <product-detail data-product="1">
             <article>
-              <img src="images/product-1.avif" alt="" />
+              <img src="images/product-1.avif" alt=""/>
               <h3>Chocolate donut with sprinkles</h3>
               <p>A classic raised donut, generously dipped in rich chocolate glaze and topped with a colorful scattering of sprinkles.</p>
-              
-              <button data-toggle="remove">Remove from bag</button>
+
+              <button data-toggle="remove">
+                <svg class="icon"><use xlink:href="#bag"/></svg>
+                <span class="button-label"> Remove from bag</span></button>
             </article>
           </product-detail>
           <product-detail data-product="2">
             <article>
-              <img src="images/product-2.avif" alt="" />
+              <img src="images/product-2.avif" alt=""/>
               <h3>Vanilla frosted with stripes</h3>
               <p>A sweet and airy donut, blanketed in creamy vanilla frosting and finished with elegant, contrasting stripes of glaze.</p>
-              
-              <button data-toggle="remove">Remove from bag</button>
+
+              <button data-toggle="remove">
+                <svg class="icon"><use xlink:href="#bag"/></svg>
+                <span class="button-label"> Remove from bag</span></button>
             </article>
           </product-detail>
           <product-detail data-product="3">
             <article>
-              <img src="images/product-3.avif" alt="" />
+              <img src="images/product-3.avif" alt=""/>
               <h3>Vanilla frosted donut with sprinkles</h3>
               <p>A delightful donut with smooth, sweet vanilla frosting, made extra festive with a coat of bright sprinkles.</p>
-              
-              <button data-toggle="remove">Remove from bag</button>
+              <button data-toggle="remove">
+                <svg class="icon"><use xlink:href="#bag"/></svg>
+                <span class="button-label"> Remove from bag</span></button>
             </article>
           </product-detail>
           <product-detail data-product="4">
             <article>
-              <img src="images/product-4.avif" alt="" />
+              <img src="images/product-4.avif" alt=""/>
               <h3>Sprinkle donut stack</h3>
               <p>A spectacular, towering creation of multiple light and fluffy donuts, each layered with glaze and blanketed in sprinkles.</p>
-              
-              <button data-toggle="remove">Remove from bag</button>
+              <button data-toggle="remove">
+                <svg class="icon"><use xlink:href="#bag"/></svg>
+                <span class="button-label"> Remove from bag</span>
+              </button>
             </article>
           </product-detail>
           <product-detail data-product="5">
             <article>
-              <img src="images/product-5.avif" alt="" />
+              <img src="images/product-5.avif" alt=""/>
               <h3>Cookie with Sprinkles</h3>
               <p>A chewy or crisp butter cookie, decorated with a vibrant mix of rainbow sprinkles baked right into the dough or pressed on top.</p>
-              
-              <button data-toggle="remove">Remove from bag</button>
+              <button data-toggle="remove">
+                <svg class="icon"><use xlink:href="#bag"/></svg>
+                <span class="button-label"> Remove from bag</span></button>
             </article>
           </product-detail>
           <product-detail data-product="6">
             <article>
-              <img src="images/product-6.avif" alt="" />
+              <img src="images/product-6.avif" alt=""/>
               <h3>Dessert jar</h3>
               <p>A portable, layered treat featuring alternating textures of creamy mousse, cake, cookie crumbles, or fruit, all packed into a convenient jar.</p>
-              
-              <button data-toggle="remove">Remove from bag</button>
+              <button data-toggle="remove">
+                <svg class="icon"><use xlink:href="#bag"/></svg>
+                <span class="button-label"> Remove from bag</span></button>
             </article>
           </product-detail>
           <empty-list>
@@ -91,72 +100,66 @@
         <product-list id="main-list" data-layout="large">
           <product-detail data-product="1">
             <article>
-              <img src="images/product-1.avif" alt="" />
+              <img src="images/product-1.avif" alt=""/>
               <h3>Chocolate donut with sprinkles</h3>
               <p>A classic raised donut, generously dipped in rich chocolate glaze and topped with a colorful scattering of sprinkles.</p>
-              
               <button data-toggle="add" aria-pressed="false">
-                <svg class="icon"><use xlink:href="#bag" /></svg>
+                <svg class="icon"><use xlink:href="#bag"/></svg>
                 <span class="button-label"> Add to bag </span>
               </button>
             </article>
           </product-detail>
           <product-detail data-product="2">
             <article>
-              <img src="images/product-2.avif" alt="" />
+              <img src="images/product-2.avif" alt=""/>
               <h3>Vanilla frosted with stripes</h3>
               <p>A sweet and airy donut, blanketed in creamy vanilla frosting and finished with elegant, contrasting stripes of glaze.</p>
-              
               <button data-toggle="add" aria-pressed="true">
-                <svg class="icon"><use xlink:href="#bag" /></svg>
+                <svg class="icon"><use xlink:href="#bag"/></svg>
                 <span class="button-label"> Add to bag </span>
               </button>
             </article>
           </product-detail>
           <product-detail data-product="3">
             <article>
-              <img src="images/product-3.avif" alt="" />
+              <img src="images/product-3.avif" alt=""/>
               <h3>Vanilla frosted donut with sprinkles</h3>
               <p>A delightful donut with smooth, sweet vanilla frosting, made extra festive with a coat of bright sprinkles.</p>
-              
               <button data-toggle="add" aria-pressed="true">
-                <svg class="icon"><use xlink:href="#bag" /></svg>
+                <svg class="icon"><use xlink:href="#bag"/></svg>
                 <span class="button-label"> Add to bag </span>
               </button>
             </article>
           </product-detail>
           <product-detail data-product="4">
             <article>
-              <img src="images/product-4.avif" alt="" />
+              <img src="images/product-4.avif" alt=""/>
               <h3>Sprinkle donut stack</h3>
               <p>A spectacular, towering creation of multiple light and fluffy donuts, each layered with glaze and blanketed in sprinkles.</p>
-              
               <button data-toggle="add" aria-pressed="false">
-                <svg class="icon"><use xlink:href="#bag" /></svg>
+                <svg class="icon"><use xlink:href="#bag"/></svg>
                 <span class="button-label"> Add to bag </span>
               </button>
             </article>
           </product-detail>
           <product-detail data-product="5">
             <article>
-              <img src="images/product-5.avif" alt="" />
+              <img src="images/product-5.avif" alt=""/>
               <h3>Cookie with sprinkles</h3>
               <p>A chewy or crisp butter cookie, decorated with a vibrant mix of rainbow sprinkles baked right into the dough or pressed on top.</p>
-              
               <button data-toggle="add" aria-pressed="true">
-                <svg class="icon"><use xlink:href="#bag" /></svg>
+                <svg class="icon"><use xlink:href="#bag"/></svg>
                 <span class="button-label"> Add to bag </span>
               </button>
             </article>
           </product-detail>
           <product-detail data-product="6">
             <article>
-              <img src="images/product-6.avif" alt="" />
+              <img src="images/product-6.avif" alt=""/>
               <h3>Dessert jar</h3>
               <p>A portable, layered treat featuring alternating textures of creamy mousse, cake, cookie crumbles, or fruit, all packed into a convenient jar.</p>
-              
               <button data-toggle="add" aria-pressed="true">
-                <svg class="icon"><use xlink:href="#bag" /></svg>
+                <svg class="icon"><use xlink:href="#bag"/></svg>
                 <span class="button-label"> Add to bag </span>
               </button>
             </article>
@@ -164,14 +167,14 @@
         </product-list>
       </section>
     </main>
-     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
       <symbol id="bag" viewBox="0 0 92.79 81.73">
         <path id="bag-bg" class="bag-bg" d="M14.57,1.39c.01.06-4.33,4.25-4.33,4.25L.73,11.75v68.23h77.35l12.96-9.75.53-68.84H14.57Z"/>
         <path id="bag-outline" class="bag-lines" d="M91.04,0L15.58.04c-1.26-.01-1.69.04-2.5.76l-5.07,4.5L.55,10.12l-.09.07c-.08.07-.48.45-.46,1.06v69.64c0,.4.27.83.85.83h77.09c.14,0,.89-.12,1.23-.37l13.01-9.79c.39-.29.62-.75.62-1.24V1.75c0-.97-.79-1.75-1.75-1.75ZM15.58,2.5h72.73s-4.3,3.91-4.3,3.91l-6.03,3.59s-.03,0-.05,0H15.58V2.5ZM83.17,9.82v53.09c-.27.77-2.19,5.71-3.98,10.33V12.19l3.98-2.37ZM89.34,70.25l-8.78,6.35,4.37-10.91,4.41,4.56ZM85.67,62.61V8.25l4.62-4.18v63.47l-4.62-4.93ZM13.08,10h-2.89v-3.3l2.89-2.62v5.92ZM76.69,12.5v66.73H2.48V12.5h74.21ZM5.34,10l2.35-1.52v1.52h-2.35Z"/>
         <rect id="plus" class="bag-lines bag-plus" x="17.19" y="41.35" width="45.56" height="9.03" rx="4.51" ry="4.51" transform="translate(85.84 5.89) rotate(90)"/>
         <rect id="minus" class="bag-lines bag-minus" x="17.19" y="41.35" width="45.56" height="9.03" rx="4.51" ry="4.51"/>
       </symbol>
-    </svg> 
+    </svg>
     <script src="./script.js"></script>
   </body>
 </html>

@@ -27,6 +27,11 @@
       --border-color: var(--pink);
       --btn-bg: var(--pink);
       --product-border: var(--pink);
+      
+    }
+
+    &:has(button[data-toggle=add][aria-pressed=true]),
+    &:has(button[data-toggle=remove]) {
       --bag-lines-plus: transparent;
     }
 
@@ -210,6 +215,12 @@
     align-content: start;
     container-type: inline-size;
     display: grid;
+  }
+
+  [data-toggle] {
+    align-items: center;
+    display: flex;
+    gap: calc(var(--gap) / 2);
   }
 }
 
