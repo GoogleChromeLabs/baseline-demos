@@ -61,7 +61,7 @@
         grid-template:
           'image title title' auto
           'image summary button' 1fr
-          / minmax(50px, min(20%, 500px)) 1fr fit-content(20%);
+          / minmax(50px, min(20%, 500px)) 1fr minmax(var(--icon-size), max(20%, 10ch));
       }
 
       /* use gap instead */
@@ -86,11 +86,17 @@
       grid-area: summary;
     }
 
+    .product-action {
+      container: action / inline-size;
+      display: flex;
+      grid-area: button;
+      justify-content: end;
+    }
+
     button {
       background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--blue) var(--btn-color-1-position, 20%), var(--pink) var(--btn-color-2-position, 80%)));
       color: Canvas;
       border-color: var(--border-color, var(--blue));
-      grid-area: button;
       place-self: end;
       transition: background-color 250ms ease-out;
 
@@ -100,7 +106,7 @@
         --btn-color-2-position: 100%;
       }
 
-      @container (inline-size < 300px) {
+      @container (inline-size <= 180px) {
         .button-label {
           display: none;
         }
@@ -109,6 +115,7 @@
   }
 
   product-list {
+    --icon-size: 2.2em;
     --item-min: 16ch;
     gap: calc(var(--gap) / 2);
 
@@ -310,7 +317,6 @@
   }
 
   svg {
-    --icon-size: 2.2em;
     block-size: var(--icon-size);
     inline-size: var(--icon-size);
     vertical-align: middle;
