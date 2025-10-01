@@ -27,6 +27,7 @@
       --border-color: var(--pink);
       --btn-bg: var(--pink);
       --product-border: var(--pink);
+      --bag-lines-plus: transparent;
     }
 
     article {
@@ -325,6 +326,10 @@
 
   .bag-lines {
     fill: var(--canvas);
+  }
+
+  .bag-plus {
+    fill: var(--bag-lines-plus, var(--canvas));
   }
 
   .bag-bg {
