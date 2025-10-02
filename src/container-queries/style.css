@@ -7,10 +7,10 @@
     container: component / inline-size;
     opacity: var(--show-items, 1);
     transition:
-      opacity 250ms,
-      block-size 250ms,
+      opacity var(--fast),
+      block-size var(--fast),
       border 200ms,
-      display 250ms allow-discrete;
+      display var(--fast) allow-discrete;
 
     @starting-style {
       opacity: 0;
@@ -98,7 +98,7 @@
       color: Canvas;
       border-color: var(--border-color, var(--blue));
       place-self: end;
-      transition: background-color 250ms ease-out;
+      transition: background-color var(--fast) ease-out;
 
       &:active {
         --btn-angle: 25deg;
@@ -139,8 +139,8 @@
     overflow: clip;
     min-block-size: 0;
     transition:
-      opacity 250ms,
-      display 250ms allow-discrete;
+      opacity var(--fast), 
+      display var(--fast) allow-discrete;
     --show-items: 0;
 
     @starting-style {
@@ -179,7 +179,7 @@
       'controls' auto
       'cart' var(--cart-area, 0fr) 'list' auto
       / minmax(min-content, 1fr);
-    transition: grid-template 250ms, gap 250ms;
+    transition: grid-template var(--fast), gap var(--fast);
 
     @media (width > 30em) {
       grid-template:
@@ -242,6 +242,9 @@
     --body-text: clamp(1rem, 0.875rem + 0.5cqi, 1.25rem);
     --list-title: clamp(1.2em, 1em + 0.75vi, 1.5em);
     --item-title: clamp(1.125em, 1em + 0.675cqi, 1.25em);
+
+    /* Transition Timing */
+    --fast: 250ms;
 
     /* Colors */
     color-scheme: light dark;
