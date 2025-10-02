@@ -6,15 +6,20 @@
     border-color: var(--product-border, var(--blue));
     container: component / inline-size;
     opacity: var(--show-items, 1);
+    translate: var(--translate-product, 0 0);
     transition:
       opacity var(--fast),
-      block-size var(--fast),
       border 200ms,
+      translate var(--fast),
       display var(--fast) allow-discrete;
 
     @starting-style {
-      opacity: 0;
-      block-size: 0;
+      --show-items: 0;
+      --translate-product: -100vw -10rem;
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      --translate-product: 0 0;
     }
 
     &[hidden] {
