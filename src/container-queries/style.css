@@ -25,9 +25,8 @@
 
     &:has(button[data-toggle=add][aria-pressed=true]) {
       --border-color: var(--pink);
-      --btn-bg: var(--pink);
+      --btn-bg: linear-gradient(var(--btn-angle, 45deg), var(--pink-dark) var(--btn-color-1-position, 0%), var(--pink) var(--btn-color-2-position, 80%));
       --product-border: var(--pink);
-      
     }
 
     &:has(button[data-toggle=add][aria-pressed=true]),
@@ -101,6 +100,7 @@
       place-self: end;
       /*prevents layout shift when label appears*/
       min-block-size: 2lh;
+      transition: background var(--fast), border-color var(--fast);
 
       .button-label {
         display: var(--label-display);
