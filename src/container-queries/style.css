@@ -32,7 +32,6 @@
     &:has(button[data-toggle=add][aria-pressed=true]),
     &:has(button[data-toggle=remove]) {
       --bag-lines-plus: transparent;
-      --label-display: none;
     }
 
     article {
@@ -98,22 +97,19 @@
       color: Canvas;
       border-color: var(--border-color, var(--blue));
       place-self: end;
-      /*prevents layout shift when label appears*/
-      min-block-size: 2lh;
       transition: background var(--fast), border-color var(--fast);
 
       .button-label {
-        display: var(--label-display);
-        opacity: var(--show-label, 1);
-        transition: opacity var(--slow), display var(--slow) allow-discrete;
-
-      @starting-style {
-          opacity: 0;
-        }
-      }
-      @container (inline-size <= 180px) {
-        .button-label {
-          --label-display: none;
+        display: inline-block;
+        
+          @container (inline-size <=170px) {
+          block-size: 1px;
+          clip: rect(1px, 1px, 1px, 1px);
+          clip-path: inset(1px 1px 1px 1px);
+          inline-size: 1px;
+          overflow: hidden;
+          pointer-events: none;
+          position: absolute;
         }
       }
     }
