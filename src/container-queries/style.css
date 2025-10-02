@@ -99,6 +99,8 @@
       color: Canvas;
       border-color: var(--border-color, var(--blue));
       place-self: end;
+      /*prevents layout shift when label appears*/
+      min-block-size: 2lh;
 
       .button-label {
         display: var(--label-display);
