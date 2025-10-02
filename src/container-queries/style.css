@@ -105,11 +105,10 @@
       .button-label {
         display: var(--label-display);
         opacity: var(--show-label, 1);
-        transition: opacity var(--slow), inline-size var(--slow), display var(--slow) allow-discrete;
+        transition: opacity var(--slow), display var(--slow) allow-discrete;
 
       @starting-style {
           opacity: 0;
-          inline-size: 0;
         }
       }
       @container (inline-size <= 180px) {
