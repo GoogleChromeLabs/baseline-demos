@@ -33,6 +33,7 @@
     &:has(button[data-toggle=add][aria-pressed=true]),
     &:has(button[data-toggle=remove]) {
       --bag-lines-plus: transparent;
+      --label-display: none;
     }
 
     article {
@@ -98,17 +99,20 @@
       color: Canvas;
       border-color: var(--border-color, var(--blue));
       place-self: end;
-      transition: background-color var(--fast) ease-out;
 
-      &:active {
-        --btn-angle: 25deg;
-        --btn-color-1-position: 25%;
-        --btn-color-2-position: 100%;
+      .button-label {
+        display: var(--label-display);
+        opacity: var(--show-label, 1);
+        transition: opacity var(--slow), inline-size var(--slow), display var(--slow) allow-discrete;
+
+      @starting-style {
+          opacity: 0;
+          inline-size: 0;
+        }
       }
-
       @container (inline-size <= 180px) {
         .button-label {
-          display: none;
+          --label-display: none;
         }
       }
     }
@@ -245,6 +249,7 @@
 
     /* Transition Timing */
     --fast: 250ms;
+    --slow: 500ms;
 
     /* Colors */
     color-scheme: light dark;
@@ -292,6 +297,48 @@
   h3 {
     font-size: var(--item-title);
   }
+
+  /* Animations */
+  .gradient-in {
+    animation: gradient-in linear var(--fast) forwards;
+  }
+
+  .gradient-out {
+    animation: gradient-out ease-out var(--fast) forwards;
+  }
+
+    @keyframes gradient-in {
+     from {
+      --bag-lines-plus: var(--transparent);
+      --btn-angle: 45deg;
+      --btn-color-1-position: 20%;
+      --btn-color-2-position: 80%;
+     }
+
+     to {
+        --bag-lines-plus: var(--canvas);
+        --btn-angle: 25deg;
+        --btn-color-1-position: 25%;
+        --btn-color-2-position: 100%;
+      }
+    }
+
+    @keyframes gradient-out {
+      from {
+      --bag-lines-plus: var(--canvas);
+      --btn-angle: 45deg;
+      --btn-color-1-position: 20%;
+      --btn-color-2-position: 80%;
+      }
+
+      to {
+        --bag-lines-plus: transparent;
+        --btn-bg: var(--pink);
+        --btn-angle: 25deg;
+        --btn-color-1-position: 25%;
+        --btn-color-2-position: 100%;
+      }
+    }
 }
 
 @layer reset {

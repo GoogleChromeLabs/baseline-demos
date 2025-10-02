@@ -74,8 +74,12 @@ const pressToggle = (btn) => {
 
   if(wasPressed && action === 'add' || action === 'remove'){
     removeProductFromCart(productId);
+    productId.classList.add('gradient-in');
+    productId.classList.remove('gradient-out');
   } else {
     addProductToCart(productId);
+    productId.classList.add('gradient-out');
+    productId.classList.remove('gradient-in');
   }
 }
 
