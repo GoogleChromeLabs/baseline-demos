@@ -1,5 +1,17 @@
 @layer reset, theme, layout, components;
 
+@property --gradient-stop-1 {
+  syntax: "<color>";
+  initial-value: oklch(42.867% 0.064 223.04);
+  inherits: true;
+}
+
+@property --gradient-stop-2 {
+  syntax: "<color>";
+  initial-value: oklch(45.8% 0.18983 356.4);
+  inherits: true;
+}
+
 @layer components {
   product-detail {
     border: clamp(1px, 0.5cqi, 0.25lh) solid;
@@ -25,13 +37,17 @@
     &[hidden] {
       display: none;
       opacity: 0;
-      block-size: 0;
+      block-size: 0; 
     }
 
     &:has(button[data-toggle=add][aria-pressed=true]) {
       --border-color: var(--pink);
-      --btn-bg: linear-gradient(var(--btn-angle, 45deg), var(--pink-dark) var(--btn-color-1-position, 0%), var(--pink) var(--btn-color-2-position, 80%));
       --product-border: var(--pink);
+      animation: gradient-out linear var(--slow) forwards;
+    }
+
+    &:has(button[data-toggle=add][aria-pressed=false]) {
+      animation: gradient-in linear var(--slow) forwards;
     }
 
     &:has(button[data-toggle=add][aria-pressed=true]),
@@ -98,13 +114,19 @@
     }
 
     button {
-      background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--blue) var(--btn-color-1-position, 20%), var(--pink) var(--btn-color-2-position, 80%)));
+      background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
       color: Canvas;
       border-color: var(--border-color, var(--blue));
       place-self: end;
-      transition: background var(--fast), border-color var(--fast);
+      transition: background var(--slow),border-color var(--fast);
+
+      &:active {
+        animation: gradient-in var(--fast) linear forwards;
+      }
+      
 
       .button-label {
+        color: oklch(100% 0.053 272);
         display: inline-block;
         
           @container (inline-size <=170px) {
@@ -147,9 +169,10 @@
     transition:
       opacity var(--fast), 
       display var(--fast) allow-discrete;
-    --show-items: 0;
+    
 
     @starting-style {
+      --show-items: 0;
       opacity: 0;
     }
 
@@ -300,45 +323,35 @@
     font-size: var(--item-title);
   }
 
-  /* Animations */
-  .gradient-in {
-    animation: gradient-in linear var(--fast) forwards;
-  }
-
-  .gradient-out {
-    animation: gradient-out ease-out var(--fast) forwards;
-  }
+  /* Keyframes */
 
     @keyframes gradient-in {
      from {
       --bag-lines-plus: var(--transparent);
-      --btn-angle: 45deg;
       --btn-color-1-position: 20%;
       --btn-color-2-position: 80%;
      }
 
      to {
         --bag-lines-plus: var(--canvas);
-        --btn-angle: 25deg;
         --btn-color-1-position: 25%;
         --btn-color-2-position: 100%;
+        --gradient-stop-1: oklch(45.8% 0.18983 356.4);
+        --gradient-stop-2: oklch(42.867% 0.064 223.04);
       }
     }
 
     @keyframes gradient-out {
       from {
       --bag-lines-plus: var(--canvas);
-      --btn-angle: 45deg;
-      --btn-color-1-position: 20%;
-      --btn-color-2-position: 80%;
       }
 
       to {
         --bag-lines-plus: transparent;
-        --btn-bg: var(--pink);
-        --btn-angle: 25deg;
         --btn-color-1-position: 25%;
         --btn-color-2-position: 100%;
+        --gradient-stop-1: oklch(45.8% 0.18983 356.4);
+        --gradient-stop-2: oklch(45.8% 0.18983 356.4);
       }
     }
 }
@@ -400,6 +413,7 @@
 
   .bag-plus {
     fill: var(--bag-lines-plus, var(--canvas));
+    transition: fill var(--fast) linear;
   }
 
   .bag-bg {
