@@ -37,7 +37,6 @@
     &[hidden] {
       display: none;
       opacity: 0;
-      block-size: 0; 
     }
 
     &:has(button[data-toggle=add][aria-pressed=true]) {
