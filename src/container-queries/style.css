@@ -29,7 +29,7 @@
       --show-items: 0;
       --translate-product: -100vw -10rem;
     }
-    
+
     @media (prefers-reduced-motion: reduce) {
       --translate-product: 0 0;
     }
@@ -117,18 +117,18 @@
       color: Canvas;
       border-color: var(--border-color, var(--blue));
       place-self: end;
-      transition: background var(--slow),border-color var(--fast);
+      transition: background var(--slow), border-color var(--fast);
 
       &:active {
         animation: gradient-in var(--fast) linear forwards;
       }
-      
+
 
       .button-label {
         color: oklch(100% 0.053 272);
         display: inline-block;
-        
-          @container (inline-size <=170px) {
+
+        @container (inline-size <=170px) {
           block-size: 1px;
           clip: rect(1px, 1px, 1px, 1px);
           clip-path: inset(1px 1px 1px 1px);
@@ -145,6 +145,7 @@
     --icon-size: 2.2em;
     --item-min: 16ch;
     gap: calc(var(--gap) / 2);
+    padding: var(--gap);
 
     @container (width > 20em) {
       &[data-layout=large] {
@@ -161,14 +162,13 @@
 
   shopping-cart {
     --product-border: var(--pink);
-
     opacity: var(--show-items, 1);
     overflow: clip;
     min-block-size: 0;
     transition:
-      opacity var(--fast), 
+      opacity var(--fast),
       display var(--fast) allow-discrete;
-    
+
 
     @starting-style {
       --show-items: 0;
@@ -186,9 +186,18 @@
     &:has(product-detail:not([hidden])) {
       --empty-list: none;
     }
+
+    & product-list {
+      background-color: color-mix(in oklab, var(--blue-bg), var(--pink-bg));
+      border: 10px solid;
+      border-image-slice: 1;
+      border-image-source: repeating-linear-gradient(45deg, var(--pink-light), var(--pink-light) 10px, var(--pink-dark) 10px, var(--pink-dark) 20px);
+      border-width: 5px;
+    }
   }
 
   empty-list {
+    align-self: start;
     background: maroon;
     color: CanvasText;
     color-scheme: dark;
@@ -324,35 +333,35 @@
 
   /* Keyframes */
 
-    @keyframes gradient-in {
-     from {
+  @keyframes gradient-in {
+    from {
       --bag-lines-plus: var(--transparent);
       --btn-color-1-position: 20%;
       --btn-color-2-position: 80%;
-     }
-
-     to {
-        --bag-lines-plus: var(--canvas);
-        --btn-color-1-position: 25%;
-        --btn-color-2-position: 100%;
-        --gradient-stop-1: oklch(45.8% 0.18983 356.4);
-        --gradient-stop-2: oklch(42.867% 0.064 223.04);
-      }
     }
 
-    @keyframes gradient-out {
-      from {
+    to {
       --bag-lines-plus: var(--canvas);
-      }
-
-      to {
-        --bag-lines-plus: transparent;
-        --btn-color-1-position: 25%;
-        --btn-color-2-position: 100%;
-        --gradient-stop-1: oklch(45.8% 0.18983 356.4);
-        --gradient-stop-2: oklch(45.8% 0.18983 356.4);
-      }
+      --btn-color-1-position: 25%;
+      --btn-color-2-position: 100%;
+      --gradient-stop-1: oklch(45.8% 0.18983 356.4);
+      --gradient-stop-2: oklch(42.867% 0.064 223.04);
     }
+  }
+
+  @keyframes gradient-out {
+    from {
+      --bag-lines-plus: var(--canvas);
+    }
+
+    to {
+      --bag-lines-plus: transparent;
+      --btn-color-1-position: 25%;
+      --btn-color-2-position: 100%;
+      --gradient-stop-1: oklch(45.8% 0.18983 356.4);
+      --gradient-stop-2: oklch(45.8% 0.18983 356.4);
+    }
+  }
 }
 
 @layer reset {
