@@ -113,33 +113,11 @@
     }
 
     button {
-      background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
-      color: Canvas;
-      border-color: var(--border-color, var(--blue));
       place-self: end;
-      transition: background var(--slow), border-color var(--fast);
-
-      &:active {
-        animation: gradient-in var(--fast) linear forwards;
-      }
-
-
-      .button-label {
-        color: oklch(100% 0.053 272);
-        display: inline-block;
-
-        @container (inline-size <=170px) {
-          block-size: 1px;
-          clip: rect(1px, 1px, 1px, 1px);
-          clip-path: inset(1px 1px 1px 1px);
-          inline-size: 1px;
-          overflow: hidden;
-          pointer-events: none;
-          position: absolute;
-        }
-      }
     }
   }
+
+
 
   product-list {
     --icon-size: 2.2em;
@@ -189,10 +167,10 @@
 
     & product-list {
       background-color: color-mix(in oklab, var(--blue-bg), var(--pink-bg));
-      border: 10px solid;
+      border: solid;
       border-image-slice: 1;
       border-image-source: repeating-linear-gradient(45deg, var(--pink-light), var(--pink-light) 10px, var(--pink-dark) 10px, var(--pink-dark) 20px);
-      border-width: 5px;
+      border-width: 3px;
     }
   }
 
@@ -205,9 +183,50 @@
     padding: var(--gap);
     place-content: center;
   }
+
+    button {
+      background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
+      color: Canvas;
+      border-color: var(--border-color, var(--blue));
+      transition: background var(--slow), border-color var(--fast), scale var(--fast) linear;
+
+      &:hover,
+      &:focus {
+        transform: scale(.97);
+      }
+  
+      &:active {
+        animation: gradient-in var(--fast) linear forwards;
+      }
+  
+  
+      .button-label {
+        color: oklch(100% 0.053 272);
+        display: inline-block;
+  
+        @container (inline-size <=170px) {
+          block-size: 1px;
+          clip: rect(1px, 1px, 1px, 1px);
+          clip-path: inset(1px 1px 1px 1px);
+          inline-size: 1px;
+          overflow: hidden;
+          pointer-events: none;
+          position: absolute;
+        }
+      }
+    }
 }
 
 @layer layout {
+
+  header {
+    display: grid;
+    gap: calc(var(--gap) / 2);
+
+    h1, p {
+      margin: 0;
+    }
+  }
   main {
     align-content: start;
     container-type: inline-size;
@@ -232,17 +251,28 @@
   }
 
   page-controls {
+    align-items: center;
+    border: clamp(1px, 0.5cqi, 0.25lh) solid var(--blue);
     display: grid;
     grid-area: controls;
     grid-template-columns: 1fr auto;
+    margin-block-start: var(--gap);
+    padding: .5lh 1lh;
   }
 
   #layout-select {
     display: none;
 
     @media (width > 20em) {
-      display: block;
+      display: grid;
+      inline-size: fit-content;
+      gap: .5em;
     }
+  }
+
+  button[aria-controls=cart] {
+    --btn-bg: var(--pink);
+    padding: .25em .5em;
   }
 
   main>product-list {
@@ -313,8 +343,13 @@
   }
 
   body {
+    background-color: var(--blue-bg);
     padding: var(--gap);
     font-size: var(--body-text);
+  }
+
+  header {
+    font-family: var(--serif);
   }
 
   h1,
@@ -426,6 +461,11 @@
 
   .bag-bg {
     fill: var(--canvas-text);
+  }
+
+  :focus-visible {
+    outline: medium dotted canvasText;
+    outline-offset: 0.25em;
   }
 
 }
