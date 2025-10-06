@@ -22,16 +22,18 @@
     transition:
       opacity var(--fast),
       border 200ms,
-      translate var(--fast),
       display var(--fast) allow-discrete;
 
-    @starting-style {
-      --show-items: 0;
-      --translate-product: -100vw -10rem;
-    }
+    shopping-cart & {
+      transition: translate var(--fast), display var(--fast) allow-discrete;
 
-    @media (prefers-reduced-motion: reduce) {
-      --translate-product: 0 0;
+      @starting-style {
+        --translate-product: -100vw -10rem;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        --translate-product: 0 0;
+      }
     }
 
     &[hidden] {
@@ -184,37 +186,37 @@
     place-content: center;
   }
 
-    button {
-      background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
-      color: Canvas;
-      border-color: var(--border-color, var(--blue));
-      transition: background var(--slow), border-color var(--fast), scale var(--fast) linear;
+  button {
+    background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
+    color: Canvas;
+    border-color: var(--border-color, var(--blue));
+    transition: background var(--slow), border-color var(--fast), scale var(--fast) linear;
 
-      &:hover,
-      &:focus {
-        transform: scale(.97);
-      }
-  
-      &:active {
-        animation: gradient-in var(--fast) linear forwards;
-      }
-  
-  
-      .button-label {
-        color: oklch(100% 0.053 272);
-        display: inline-block;
-  
-        @container (inline-size <=170px) {
-          block-size: 1px;
-          clip: rect(1px, 1px, 1px, 1px);
-          clip-path: inset(1px 1px 1px 1px);
-          inline-size: 1px;
-          overflow: hidden;
-          pointer-events: none;
-          position: absolute;
-        }
+    &:hover,
+    &:focus {
+      transform: scale(.97);
+    }
+
+    &:active {
+      animation: gradient-in var(--fast) linear forwards;
+    }
+
+
+    .button-label {
+      color: oklch(100% 0.053 272);
+      display: inline-block;
+
+      @container (inline-size <=170px) {
+        block-size: 1px;
+        clip: rect(1px, 1px, 1px, 1px);
+        clip-path: inset(1px 1px 1px 1px);
+        inline-size: 1px;
+        overflow: hidden;
+        pointer-events: none;
+        position: absolute;
       }
     }
+  }
 }
 
 @layer layout {
@@ -223,10 +225,12 @@
     display: grid;
     gap: calc(var(--gap) / 2);
 
-    h1, p {
+    h1,
+    p {
       margin: 0;
     }
   }
+
   main {
     align-content: start;
     container-type: inline-size;
