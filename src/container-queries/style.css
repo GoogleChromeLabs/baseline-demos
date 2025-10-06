@@ -229,6 +229,10 @@
     p {
       margin: 0;
     }
+
+    .tagline {
+      font-style: italic;
+    }
   }
 
   main {
@@ -465,4 +469,19 @@
     outline-offset: 0.25em;
   }
 
+  :any-link {
+    color: var(--pink);
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-decoration-thickness: var(--underline-thickness,
+      0.1em);
+    text-decoration-skip-ink: auto;
+    text-underline-offset: 0.15em;
+    transition: text-decoration-thickness var(--fast) ease-out;
+
+    &:hover,
+    &:focus {
+        --underline-thickness: 0.2em;
+      }
+    }
 }
