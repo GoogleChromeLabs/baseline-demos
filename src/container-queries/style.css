@@ -372,11 +372,6 @@
     from {
       --btn-color-1-position: 20%;
       --btn-color-2-position: 80%;
-
-      .main-product-list {
-        --bag-lines-plus: var(--transparent);
-      }
-      
     }
 
     to {
@@ -384,29 +379,15 @@
       --btn-color-2-position: 100%;
       --gradient-stop-1: oklch(45.8% 0.18983 356.4);
       --gradient-stop-2: oklch(42.867% 0.064 223.04);
-
-      .main-product-list {
-        --bag-lines-plus: var(--canvas);
-      }
     }
   }
 
   @keyframes gradient-out {
-    from {
-      .main-product-list {
-        --bag-lines-plus: var(--canvas);
-      }
-    }
-
     to {
       --btn-color-1-position: 25%;
       --btn-color-2-position: 100%;
       --gradient-stop-1: oklch(45.8% 0.18983 356.4);
       --gradient-stop-2: oklch(45.8% 0.18983 356.4);
-
-    .main-product-list {
-        --bag-lines-plus: transparent;
-      }
     }
   }
 }
