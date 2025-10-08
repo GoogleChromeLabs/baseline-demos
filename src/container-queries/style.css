@@ -14,6 +14,7 @@
 
 @layer components {
   product-detail {
+    --btn-text-color: oklch(100% 0.053 272);
     border: clamp(1px, 0.5cqi, 0.25lh) solid;
     border-color: var(--product-border, var(--blue));
     container: component / inline-size;
@@ -25,7 +26,7 @@
       display var(--fast) allow-discrete;
 
     shopping-cart & {
-      transition: translate var(--fast), display var(--fast) allow-discrete;
+      transition: translate var(--faster), display var(--faster) allow-discrete;
 
       @starting-style {
         --translate-product: -100vw -10rem;
@@ -171,9 +172,13 @@
       background-color: color-mix(in oklab, var(--blue-bg), var(--pink-bg));
       border: solid;
       border-image-slice: 1;
-      border-image-source: repeating-linear-gradient(45deg, var(--pink-light), var(--pink-light) 10px, var(--pink-dark) 10px, var(--pink-dark) 20px);
+      border-image-source: var(--product-list-border, repeating-linear-gradient(45deg, var(--pink-light), var(--pink-light) 10px, var(--pink-dark) 10px, var(--pink-dark) 20px));
       border-width: 3px;
     }
+
+      @media (forced-colors: active) {
+        --product-list-border: none;
+      }
   }
 
   empty-list {
@@ -188,8 +193,8 @@
 
   button {
     background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
-    color: Canvas;
-    border-color: var(--border-color, var(--blue));
+    color: var(--btn-text-color, CanvasText);
+    border: 2px solid var(--border-color, var(--blue));
     transition: background var(--slow), border-color var(--fast), scale var(--fast) linear;
 
     &:hover,
@@ -203,7 +208,6 @@
 
 
     .button-label {
-      color: oklch(100% 0.053 272);
       display: inline-block;
 
       @container (inline-size <=170px) {
@@ -243,7 +247,10 @@
       'controls' auto
       'cart' var(--cart-area, 0fr) 'list' auto
       / minmax(min-content, 1fr);
-    transition: grid-template var(--fast), gap var(--fast);
+    
+    @media (prefers-reduced-motion: no-preference) {
+      transition: grid-template var(--fast), gap var(--fast);
+    }
 
     @media (width > 30em) {
       grid-template:
@@ -279,7 +286,8 @@
   }
 
   button[aria-controls=cart] {
-    --btn-bg: var(--pink);
+    --btn-text-color: canvasText;
+    --btn-bg: var(--action);
     padding: .25em .5em;
   }
 
@@ -319,6 +327,7 @@
     --item-title: clamp(1.125em, 1em + 0.675cqi, 1.25em);
 
     /* Transition Timing */
+    --faster: 100ms;
     --fast: 250ms;
     --slow: 500ms;
 
@@ -331,6 +340,7 @@
     --pink-light: #FE84B4;
     --blue-dark: #205769;
     --blue-light: #8EC6DA;
+    --action: light-dark(var(--pink-light), var(--pink-dark));
 
     --pink: light-dark(var(--pink-dark), var(--pink-light));
     --pink-bg: color-mix(in oklab,
