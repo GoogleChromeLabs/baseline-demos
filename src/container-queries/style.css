@@ -37,13 +37,7 @@
       }
     }
 
-    &[hidden] {
-      display: none;
-      opacity: 0;
-    }
-
     &:has(button[data-toggle=add][aria-pressed=true]) {
-      --border-color: var(--pink);
       --product-border: var(--pink);
       animation: gradient-out linear var(--slow) forwards;
     }
@@ -120,17 +114,17 @@
     }
   }
 
-
-
   product-list {
     --icon-size: 2.2em;
-    --item-min: 16ch;
+    --item-min: 25ch;
     gap: calc(var(--gap) / 2);
-    padding: var(--gap);
+
+    &[data-layout=small] {
+      --item-min: 16ch;
+    }
 
     @container (width > 20em) {
       &[data-layout=large] {
-        --item-min: 25ch;
         gap: var(--gap);
       }
 
@@ -143,42 +137,45 @@
 
   shopping-cart {
     --product-border: var(--pink);
+    background-color: color-mix(in oklab, var(--blue-bg), var(--pink-bg));
+    border: var(--border-width, 0) solid;
+    border-image-slice: 1;
+    border-image-source: var(--product-list-border, repeating-linear-gradient(45deg, var(--pink-light), var(--pink-light) 10px, var(--pink-dark) 10px, var(--pink-dark) 20px));
     opacity: var(--show-items, 1);
     overflow: clip;
-    min-block-size: 0;
+    margin-block-start: calc(var(--border-width) * -1);
     transition:
-      opacity var(--fast),
+      opacity var(--faster) var(--opacity-delay, 0s),
+      border-width var(--fast),
+      padding-inline var(--fast),
       display var(--fast) allow-discrete;
 
-
     @starting-style {
+      --border-width: 0;
       --show-items: 0;
       opacity: 0;
+      padding: 0;
     }
 
     &[data-expanded=false] {
+      --show-items: 0;
       display: none;
     }
 
     &[data-expanded=true] {
+      --opacity-delay: var(--faster);
       --show-items: 1;
+      --border-width: 3px;
+      padding-inline: var(--gap);
     }
 
     &:has(product-detail:not([hidden])) {
       --empty-list: none;
     }
 
-    & product-list {
-      background-color: color-mix(in oklab, var(--blue-bg), var(--pink-bg));
-      border: solid;
-      border-image-slice: 1;
-      border-image-source: var(--product-list-border, repeating-linear-gradient(45deg, var(--pink-light), var(--pink-light) 10px, var(--pink-dark) 10px, var(--pink-dark) 20px));
-      border-width: 3px;
+    @media (forced-colors: active) {
+      --product-list-border: none;
     }
-
-      @media (forced-colors: active) {
-        --product-list-border: none;
-      }
   }
 
   empty-list {
@@ -202,15 +199,20 @@
       transform: scale(.97);
     }
 
-    &:active {
+    &[aria-pressed=true],
+    &[aria-expanded=true] {
+      --border-color: var(--pink);
       animation: gradient-in var(--fast) linear forwards;
     }
 
+    &[aria-expanded=false] {
+      --btn-bg: var(--pink-bg);
+    }
 
     .button-label {
       display: inline-block;
 
-      @container (inline-size <=170px) {
+      @container (inline-size <= 10em) {
         block-size: 1px;
         clip: rect(1px, 1px, 1px, 1px);
         clip-path: inset(1px 1px 1px 1px);
@@ -224,7 +226,6 @@
 }
 
 @layer layout {
-
   header {
     display: grid;
     gap: calc(var(--gap) / 2);
@@ -243,11 +244,13 @@
     align-content: start;
     container-type: inline-size;
     display: grid;
+    gap: 0;
     grid-template:
       'controls' auto
-      'cart' var(--cart-area, 0fr) 'list' auto
+      'cart' var(--cart-block, 0fr)
+      'list' auto
       / minmax(min-content, 1fr);
-    
+
     @media (prefers-reduced-motion: no-preference) {
       transition: grid-template var(--fast), gap var(--fast);
     }
@@ -256,12 +259,21 @@
       grid-template:
         'controls controls' auto
         'list cart' 1fr
-        / 2fr var(--cart-area, 0fr);
+        / 1fr var(--cart-area, 0);
     }
 
     &:has([data-expanded=true]) {
-      --cart-area: 1fr;
+      --cart-block: 1fr;
+      --cart-area: calc(15em + 1cqi);
       gap: var(--gap);
+    }
+
+    > product-list {
+      grid-area: list;
+    }
+
+    > shopping-cart {
+      grid-area: cart;
     }
   }
 
@@ -286,17 +298,7 @@
   }
 
   button[aria-controls=cart] {
-    --btn-text-color: canvasText;
-    --btn-bg: var(--action);
     padding: .25em .5em;
-  }
-
-  main>product-list {
-    grid-area: list;
-  }
-
-  main>shopping-cart {
-    grid-area: cart;
   }
 
   section,
@@ -316,10 +318,10 @@
 
 @layer theme {
   html {
-    /* 
+    /*
       Sizing…
       Since these aren't registered properties,
-      they will inherit and then resolve where used. 
+      they will inherit and then resolve where used.
     */
     --gap: round(up, 2cqi, 0.25lh);
     --body-text: clamp(1rem, 0.875rem + 0.5cqi, 1.25rem);
@@ -384,8 +386,21 @@
     font-size: var(--item-title);
   }
 
-  /* Keyframes */
+  /* bag svg */
+  .bag-lines {
+    fill: var(--canvas);
+  }
 
+  .bag-plus {
+    fill: var(--bag-lines-plus, var(--canvas));
+    transition: fill var(--fast) linear;
+  }
+
+  .bag-bg {
+    fill: var(--canvas-text);
+  }
+
+  /* Keyframes */
   @keyframes gradient-in {
     from {
       --btn-color-1-position: 20%;
@@ -418,6 +433,7 @@
   html {
     block-size: 100%;
     interpolate-size: allow-keywords;
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -449,7 +465,6 @@
   }
 
   button {
-
     &[aria-pressed],
     &[aria-expanded] {
       border-color: gray;
@@ -461,17 +476,9 @@
     }
   }
 
-  .bag-lines {
-    fill: var(--canvas);
-  }
-
-  .bag-plus {
-    fill: var(--bag-lines-plus, var(--canvas));
-    transition: fill var(--fast) linear;
-  }
-
-  .bag-bg {
-    fill: var(--canvas-text);
+  [hidden] {
+    display: none !important;
+    opacity: 0;
   }
 
   :focus-visible {
