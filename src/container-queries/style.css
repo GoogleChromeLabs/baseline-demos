@@ -19,21 +19,24 @@
     border-color: var(--product-border, var(--blue));
     container: component / inline-size;
     opacity: var(--show-items, 1);
-    translate: var(--translate-product, 0 0);
     transition:
+      border var(--faster),
+      block-size var(--faster),
       opacity var(--fast),
-      border 200ms,
-      display var(--fast) allow-discrete;
+      display var(--fast) allow-discrete
+    ;
 
     shopping-cart & {
-      transition: translate var(--faster), display var(--faster) allow-discrete;
-
       @starting-style {
-        --translate-product: -100vw -10rem;
+        opacity: 0;
+        border: 0;
+        block-size: 0;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        --translate-product: 0 0;
+      &[hidden] {
+        block-size: 0;
+        border: 0;
+        overflow: clip;
       }
     }
 
@@ -81,7 +84,7 @@
       }
 
       /* use gap instead */
-      >* {
+      > * {
         margin-block: 0;
       }
     }
