@@ -132,7 +132,7 @@
 
       &:not([data-layout=list]) {
         /* avoid auto-fit safari bug */
-        grid-template-columns: repeat(auto-fit, minmax(var(--item-min, 16ch), 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(var(--item-min, 16ch), 1fr));
       }
     }
   }
