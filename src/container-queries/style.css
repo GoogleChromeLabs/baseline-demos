@@ -14,7 +14,6 @@
 
 @layer components {
   product-detail {
-    --btn-text-color: oklch(100% 0.053 272);
     border: clamp(1px, 0.5cqi, 0.25lh) solid;
     border-color: var(--product-border, var(--blue));
     container: component / inline-size;
@@ -42,11 +41,11 @@
 
     &:has(button[data-toggle=add][aria-pressed=true]) {
       --product-border: var(--pink);
-      animation: gradient-out linear var(--slow) forwards;
+      animation: gradient-in linear var(--slow) forwards;
     }
 
     &:has(button[data-toggle=add][aria-pressed=false]) {
-      animation: gradient-in linear var(--slow) forwards;
+      animation: gradient-out linear var(--slow) forwards;
     }
 
     &:has(button[data-toggle=add][aria-pressed=true]),
@@ -194,6 +193,7 @@
   button {
     background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
     color: var(--btn-text-color, CanvasText);
+    color-scheme: dark;
     border: 2px solid var(--border-color, var(--blue));
     transition: background var(--slow), border-color var(--fast), scale var(--fast) linear;
 
@@ -208,9 +208,9 @@
       animation: gradient-in var(--fast) linear forwards;
     }
 
-    &[aria-expanded=false] {
-      --btn-bg: var(--pink-bg);
-    }
+     &[aria-expanded=false] {
+      animation: gradient-out linear var(--slow) forwards;
+    } 
 
     .button-label {
       display: inline-block;
