@@ -208,7 +208,7 @@
       animation: gradient-in var(--fast) linear forwards;
     }
 
-     &[aria-expanded=false] {
+    &[aria-expanded=false] {
       animation: gradient-out linear var(--slow) forwards;
     } 
 
