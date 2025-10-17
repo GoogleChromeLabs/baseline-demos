@@ -1,0 +1,507 @@
+@layer reset, theme, layout, components;
+
+@property --gradient-stop-1 {
+  syntax: "<color>";
+  initial-value: oklch(42.867% 0.064 223.04);
+  inherits: true;
+}
+
+@property --gradient-stop-2 {
+  syntax: "<color>";
+  initial-value: oklch(45.8% 0.18983 356.4);
+  inherits: true;
+}
+
+@layer components {
+  product-detail {
+    border: clamp(1px, 0.5cqi, 0.25lh) solid;
+    border-color: var(--product-border, var(--blue));
+    container: component / inline-size;
+    opacity: var(--show-items, 1);
+    transition:
+      border var(--faster),
+      block-size var(--faster),
+      opacity var(--fast),
+      display var(--fast) allow-discrete
+    ;
+
+    shopping-cart & {
+      @starting-style {
+        opacity: 0;
+        border: 0;
+        block-size: 0;
+      }
+
+      &[hidden] {
+        block-size: 0;
+        border: 0;
+        overflow: clip;
+      }
+    }
+
+    &:has(button[data-toggle=add][aria-pressed=true]) {
+      --product-border: var(--pink);
+      animation: gradient-in linear var(--slow) forwards;
+    }
+
+    &:has(button[data-toggle=add][aria-pressed=false]) {
+      animation: gradient-out linear var(--slow) forwards;
+    }
+
+    &:has(button[data-toggle=add][aria-pressed=true]),
+    &:has(button[data-toggle=remove]) {
+      --bag-lines-plus: transparent;
+    }
+
+    article {
+      block-size: 100%;
+      display: grid;
+      font-size: clamp(0.9rem, 0.8rem + 0.5cqi, 1rem);
+      gap: var(--gap);
+      grid-template:
+        'image' auto 'title' auto
+        'summary' auto
+        'button' auto / auto
+      ;
+      padding: var(--gap);
+
+      @container (inline-size > 40ch) {
+        --image-ratio: 1;
+        grid-template:
+          'image title' auto
+          'image summary' 1fr
+          'image button' auto
+          / minmax(50px, min(20%, 500px)) 1fr
+        ;
+      }
+
+      @container (inline-size > 50ch) {
+        grid-template:
+          'image title title' auto
+          'image summary button' 1fr
+          / minmax(50px, min(20%, 500px)) 1fr minmax(var(--icon-size), max(20%, 10ch));
+      }
+
+      /* use gap instead */
+      > * {
+        margin-block: 0;
+      }
+    }
+
+    img {
+      aspect-ratio: var(--image-ratio, 16/9);
+      contain: size;
+      grid-area: image;
+      place-self: stretch;
+      object-fit: cover;
+    }
+
+    h3 {
+      grid-area: title;
+    }
+
+    p {
+      grid-area: summary;
+    }
+
+    .product-action {
+      container: action / inline-size;
+      display: flex;
+      grid-area: button;
+      justify-content: end;
+    }
+
+    button {
+      place-self: end;
+    }
+  }
+
+  product-list {
+    --icon-size: 2.2em;
+    --item-min: 25ch;
+    gap: calc(var(--gap) / 2);
+
+    &[data-layout=small] {
+      --item-min: 16ch;
+    }
+
+    @container (width > 20em) {
+      &[data-layout=large] {
+        gap: var(--gap);
+      }
+
+      &:not([data-layout=list]) {
+        /* avoid auto-fit safari bug */
+        grid-template-columns: repeat(auto-fill, minmax(var(--item-min, 16ch), 1fr));
+      }
+    }
+  }
+
+  shopping-cart {
+    --product-border: var(--pink);
+    background-color: color-mix(in oklab, var(--blue-bg), var(--pink-bg));
+    border: var(--border-width, 0) solid;
+    border-image-slice: 1;
+    border-image-source: var(--product-list-border, repeating-linear-gradient(45deg, var(--pink-light), var(--pink-light) 10px, var(--pink-dark) 10px, var(--pink-dark) 20px));
+    opacity: var(--show-items, 1);
+    overflow: clip;
+    margin-block-start: calc(var(--border-width) * -1);
+    transition:
+      opacity var(--faster) var(--opacity-delay, 0s),
+      border-width var(--fast),
+      padding-inline var(--fast),
+      display var(--fast) allow-discrete;
+
+    @starting-style {
+      --border-width: 0;
+      --show-items: 0;
+      opacity: 0;
+      padding: 0;
+    }
+
+    &[data-expanded=false] {
+      --show-items: 0;
+      display: none;
+    }
+
+    &[data-expanded=true] {
+      --opacity-delay: var(--faster);
+      --show-items: 1;
+      --border-width: 3px;
+      padding-inline: var(--gap);
+    }
+
+    &:has(product-detail:not([hidden])) {
+      --empty-list: none;
+    }
+
+    @media (forced-colors: active) {
+      --product-list-border: none;
+    }
+  }
+
+  empty-list {
+    align-self: start;
+    background: maroon;
+    color: CanvasText;
+    color-scheme: dark;
+    display: var(--empty-list, grid);
+    padding: var(--gap);
+    place-content: center;
+  }
+
+  button {
+    background: var(--btn-bg, linear-gradient(var(--btn-angle, 45deg), var(--gradient-stop-1) var(--btn-color-1-position, 20%), var(--gradient-stop-2) var(--btn-color-2-position, 80%)));
+    color: var(--btn-text-color, CanvasText);
+    color-scheme: dark;
+    border: 2px solid var(--border-color, var(--blue));
+    transition: background var(--slow), border-color var(--fast), scale var(--fast) linear;
+
+    &:hover,
+    &:focus {
+      transform: scale(.97);
+    }
+
+    &[aria-pressed=true],
+    &[aria-expanded=true] {
+      --border-color: var(--pink);
+      animation: gradient-in var(--fast) linear forwards;
+    }
+
+    &[aria-expanded=false] {
+      animation: gradient-out linear var(--slow) forwards;
+    } 
+
+    .button-label {
+      display: inline-block;
+
+      @container (inline-size <= 10em) {
+        block-size: 1px;
+        clip: rect(1px, 1px, 1px, 1px);
+        clip-path: inset(1px 1px 1px 1px);
+        inline-size: 1px;
+        overflow: hidden;
+        pointer-events: none;
+        position: absolute;
+      }
+    }
+  }
+}
+
+@layer layout {
+  header {
+    display: grid;
+    gap: calc(var(--gap) / 2);
+
+    h1,
+    p {
+      margin: 0;
+    }
+
+    .tagline {
+      font-style: italic;
+    }
+  }
+
+  main {
+    align-content: start;
+    container-type: inline-size;
+    display: grid;
+    gap: 0;
+    grid-template:
+      'controls' auto
+      'cart' var(--cart-block, 0fr)
+      'list' auto
+      / minmax(min-content, 1fr);
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: grid-template var(--fast), gap var(--fast);
+    }
+
+    @media (width > 30em) {
+      grid-template:
+        'controls controls' auto
+        'list cart' 1fr
+        / 1fr var(--cart-area, 0);
+    }
+
+    &:has([data-expanded=true]) {
+      --cart-block: 1fr;
+      --cart-area: calc(15em + 1cqi);
+      gap: var(--gap);
+    }
+
+    > product-list {
+      grid-area: list;
+    }
+
+    > shopping-cart {
+      grid-area: cart;
+    }
+  }
+
+  page-controls {
+    align-items: center;
+    border: clamp(1px, 0.5cqi, 0.25lh) solid var(--blue);
+    display: grid;
+    grid-area: controls;
+    grid-template-columns: 1fr auto;
+    margin-block-start: var(--gap);
+    padding: .5lh 1lh;
+  }
+
+  #layout-select {
+    display: none;
+
+    @media (width > 20em) {
+      display: grid;
+      inline-size: fit-content;
+      gap: .5em;
+    }
+  }
+
+  button[aria-controls=cart] {
+    padding: .25em .5em;
+  }
+
+  section,
+  product-list,
+  shopping-cart {
+    align-content: start;
+    container-type: inline-size;
+    display: grid;
+  }
+
+  [data-toggle] {
+    align-items: center;
+    display: flex;
+    gap: calc(var(--gap) / 2);
+  }
+}
+
+@layer theme {
+  html {
+    /*
+      Sizing…
+      Since these aren't registered properties,
+      they will inherit and then resolve where used.
+    */
+    --gap: round(up, 2cqi, 0.25lh);
+    --body-text: clamp(1rem, 0.875rem + 0.5cqi, 1.25rem);
+    --list-title: clamp(1.2em, 1em + 0.75vi, 1.5em);
+    --item-title: clamp(1.125em, 1em + 0.675cqi, 1.25em);
+
+    /* Transition Timing */
+    --faster: 100ms;
+    --fast: 250ms;
+    --slow: 500ms;
+
+    /* Colors */
+    color-scheme: light dark;
+    --canvas: Canvas;
+    --canvas-text: CanvasText;
+
+    --pink-dark: #B6236C;
+    --pink-light: #FE84B4;
+    --blue-dark: #205769;
+    --blue-light: #8EC6DA;
+    --action: light-dark(var(--pink-light), var(--pink-dark));
+
+    --pink: light-dark(var(--pink-dark), var(--pink-light));
+    --pink-bg: color-mix(in oklab,
+        light-dark(var(--pink-light), var(--pink-dark)),
+        Canvas);
+
+    --blue: light-dark(var(--blue-dark), var(--blue-light));
+    --blue-bg: color-mix(in oklab,
+        light-dark(var(--blue-light), var(--blue-dark)),
+        Canvas);
+
+    /* from https://modernfontstacks.com/ */
+    /* old style, industrial, slab */
+    --serif: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+    --sans: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+    --slab: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+    font-family: var(--sans);
+  }
+
+  body {
+    background-color: var(--blue-bg);
+    padding: var(--gap);
+    font-size: var(--body-text);
+  }
+
+  header {
+    font-family: var(--serif);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--serif);
+  }
+
+  h2 {
+    font-size: var(--list-title);
+  }
+
+  h3 {
+    font-size: var(--item-title);
+  }
+
+  /* bag svg */
+  .bag-lines {
+    fill: var(--canvas);
+  }
+
+  .bag-plus {
+    fill: var(--bag-lines-plus, var(--canvas));
+    transition: fill var(--fast) linear;
+  }
+
+  .bag-bg {
+    fill: var(--canvas-text);
+  }
+
+  /* Keyframes */
+  @keyframes gradient-in {
+    from {
+      --btn-color-1-position: 20%;
+      --btn-color-2-position: 80%;
+    }
+
+    to {
+      --btn-color-1-position: 25%;
+      --btn-color-2-position: 100%;
+      --gradient-stop-1: oklch(45.8% 0.18983 356.4);
+      --gradient-stop-2: oklch(42.867% 0.064 223.04);
+    }
+  }
+
+  @keyframes gradient-out {
+    to {
+      --btn-color-1-position: 25%;
+      --btn-color-2-position: 100%;
+      --gradient-stop-1: oklch(45.8% 0.18983 356.4);
+      --gradient-stop-2: oklch(45.8% 0.18983 356.4);
+    }
+  }
+}
+
+@layer reset {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    block-size: 100%;
+    interpolate-size: allow-keywords;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    margin: 0;
+    min-block-size: 100%;
+  }
+
+  picture {
+    display: contents;
+  }
+
+  img {
+    block-size: auto;
+    display: block;
+    inline-size: 100%;
+  }
+
+  svg {
+    block-size: var(--icon-size);
+    inline-size: var(--icon-size);
+    vertical-align: middle;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    &[aria-pressed],
+    &[aria-expanded] {
+      border-color: gray;
+    }
+
+    &[aria-pressed=true],
+    &[aria-expanded=true] {
+      border-color: AccentColor;
+    }
+  }
+
+  [hidden] {
+    display: none !important;
+    opacity: 0;
+  }
+
+  :focus-visible {
+    outline: medium dotted canvasText;
+    outline-offset: 0.25em;
+  }
+
+  :any-link {
+    color: var(--pink);
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-decoration-thickness: var(--underline-thickness,
+      0.1em);
+    text-decoration-skip-ink: auto;
+    text-underline-offset: 0.15em;
+    transition: text-decoration-thickness var(--fast) ease-out;
+
+    &:hover,
+    &:focus {
+        --underline-thickness: 0.2em;
+      }
+    }
+}
