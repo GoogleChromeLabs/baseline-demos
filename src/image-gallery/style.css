@@ -1,0 +1,196 @@
+.gallery {
+  display: grid;
+  gap: 0.2em;
+  grid-template-columns: repeat(auto-fit, minmax(16em, 1fr));
+}
+
+dialog {
+  --btn-bg-color: var(--color-base);
+
+  background-color: transparent;
+  border: thin;
+  max-block-size: 80vh;
+  max-inline-size: 80vw;
+  opacity: var(--dialog-opacity, 0);
+  padding: 0;
+  scale: var(--dialog-scale, 0);
+
+  @media (prefers-reduced-motion: reduce) {
+    --dialog-scale: 1;
+  }
+
+  transition: display var(--fast) var(--ease) allow-discrete,
+    opacity var(--fast) var(--ease),
+    overlay var(--fast) var(--ease) allow-discrete,
+    scale var(--fast) var(--ease);
+
+  &::backdrop {
+    background-color: var(--backdrop-bg, oklch(0.2 0.6 200 / 0.8));
+    opacity: var(--dialog-opacity, 0);
+    transition: background-color var(--fast), display var(--fast) allow-discrete,
+      opacity var(--fast), overlay var(--fast) allow-discrete;
+  }
+
+  &[open] {
+    --dialog-opacity: 1;
+    --dialog-scale: 1;
+
+    display: grid;
+    grid-template: 
+      'dialog-close' auto
+      'dialog-image' auto
+      'dialog-credit' auto / 1fr;
+  }
+
+  @starting-style {
+    &[open] {
+      --dialog-opacity: 0;
+      --dialog-scale: 0;
+
+      @media (prefers-reduced-motion: reduce) {
+        --dialog-scale: 1;
+      }
+    }
+
+    &[open]::backdrop {
+      --backdrop-bg: transparent;
+      --dialog-opacity: 0;
+    }
+  }
+
+  #dialog-image {
+    grid-area: dialog-close / dialog-close / dialog-credit / dialog-credit;
+  }
+
+  #dialog-credit {
+    backdrop-filter: blur(1em) brightness(60%);
+    color: white;
+    grid-area: dialog-credit;
+    margin: 0;
+    padding: 0.5em;
+  }
+}
+
+[data-img] {
+  aspect-ratio: 1 / 1;
+  grid-area: image-start / image-start / caption-end / caption-end;
+  object-fit: cover;
+}
+
+li {
+  display: grid;
+  grid-template:
+    "image" 1fr
+    "button" auto / 1fr;
+}
+
+button {
+  --btn-filter: blur(1em);
+
+  backdrop-filter: var(--btn-filter);
+  border-color: oklch(from var(--color-contrast) l c h / 0.5);
+  border-style: solid;
+  border-width: var(--border-size, 1px) 0 0 0;
+  text-shadow: 0.05rem 0.05rem 0.2rem var(--text-shadow-color, transparent);
+  transition: backdrop-filter var(--fast) var(--ease),
+    outline var(--fast) var(--ease), text-shadow var(--fast) var(--ease);
+
+  @media (min-resolution: 2x) {
+    --border-size: 0.5px;
+  }
+
+  &:hover,
+  &:focus {
+    --btn-filter: blur(0.75em) saturate(350%);
+    --text-shadow-color: oklch(from var(--color-base) 10% c h);
+  }
+}
+
+.show {
+  grid-area: button;
+}
+
+/* Presentational styles */
+
+html {
+  --color-base: oklch(0.4 0.2 210);
+  --color-contrast: oklch(
+    from var(--color-base) calc(l + 0.6) calc(c - 0.15) h
+  );
+  --fast: 0.35s;
+  --ease: cubic-bezier(0.5, 0.75, 0.75, 1.25);
+
+  background-color: var(--color-base);
+  color: var(--color-contrast);
+  font-size: calc(0.75em + 1vw);
+  font-family: "Varta", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+  margin: 0;
+}
+
+:any-link {
+  color: var(--action-color, var(--color-contrast)); 
+  text-decoration-color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--link-underline-thickness, 1px);
+  text-underline-offset: 0.25em;
+  transition: 
+    color var(--fast) var(--ease),
+    text-decoration-color var(--fast) var(--ease),
+    text-decoration-thickness var(--fast) var(--ease);
+
+  &:is(:hover, :focus) {
+    --action-color: oklch(from var(--color-base) 90% c h);
+    --link-underline-thickness: 3px;
+  }
+}
+
+img {
+  block-size: auto;
+  inline-size: 100%;
+  max-block-size: inherit;
+}
+
+button {
+  appearance: none;
+  background-color: var(--btn-bg-color, transparent);
+  color: var(--action-color, var(--color-contrast));
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: var(--btn-padding, 0.5em);
+  outline: 2px var(--outline-color, transparent) solid;
+  outline-offset: -2px;
+
+  span {
+    font-weight: 670;
+  }
+
+  &:focus {
+    --outline-color: white;
+  }
+}
+
+.close {
+  --btn-padding: 0.25em 0.5em;
+
+  grid-area: dialog-close;
+  place-self: start end;
+}
