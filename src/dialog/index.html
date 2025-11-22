@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baseline Dialog Demo</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&amp;family=Hedvig+Letters+Serif:opsz@12..24&amp;display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <article>
+      <h1 data-heading="main"> <code>&#60;dialog&#62;</code> and <code>popover</code>: Baseline layered UI patterns
+      </h1>
+      <section>
+        <h2 data-heading> Less JS, More Jumping Spiders
+        </h2>
+        <ul class="gallery">
+          <li class="gallery-item">
+            <img src='images/spider-1.avif' alt='Macro close-up of brown jumping spider on the edge of a leaf.'>
+            <button data-button="show-dialog icon favorite">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                fill="currentColor">
+                <path
+                  d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                </path>
+              </svg>
+              <span class="visually-hidden">Save as Favorite </span>
+            </button>
+          </li>
+          <li class="gallery-item">
+            <img src='images/spider-2.avif' alt='Macro close-up of brown jumping spider on a leaf.'>
+            <button data-button="show-dialog icon favorite">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                fill="currentColor">
+                <path
+                  d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                </path>
+              </svg>
+              <span class="visually-hidden">Save as Favorite </span>
+            </button>
+          </li>
+          <li class="gallery-item">
+            <img src='images/spider-3.avif' alt='Close-up of white jumping spider on bright red background.'>
+            <button data-button="show-dialog icon favorite">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                fill="currentColor">
+                <path
+                  d="M12.0006 18.26L4.94715 22.2082L6.52248 14.2799L0.587891 8.7918L8.61493 7.84006L12.0006 0.5L15.3862 7.84006L23.4132 8.7918L17.4787 14.2799L19.054 22.2082L12.0006 18.26Z">
+                </path>
+              </svg>
+              <span class="visually-hidden">Save as Favorite </span>
+            </button>
+          </li>
+        </ul>
+      </section>
+    </article>
+
+    <dialog aria-labelledby="dialog-title" aria-describedby="description">
+      <form method="dialog">
+        <button data-button="close icon" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
+              aria-hidden="true" fill="currentColor">
+            <path
+              d="M10.5859 12L2.79297 4.20706L4.20718 2.79285L12.0001 10.5857L19.793 2.79285L21.2072 4.20706L13.4143 12L21.2072 19.7928L19.793 21.2071L12.0001 13.4142L4.20718 21.2071L2.79297 19.7928L10.5859 12Z">
+            </path>
+          </svg>
+          <span class="visually-hidden">Close</span>
+        </button>
+      </form>
+      <h2 id="dialog-title" data-heading="dialog">Yay! You found a favorite!
+      </h2>
+      <p id="description">Sign up with your e-mail address to start adding to your favorites list.</p>
+      <form id="dialog-form" data-layout="dialog-form">
+        <div data-field>
+          <label for="email">Enter your email</label>
+          <button id="popover-trigger" data-button="popover-trigger icon" type="button" popovertarget="privacy-popover">
+            <span class="visually-hidden">How we handle your e-mail</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false"
+              aria-hidden="true">
+              <path
+                d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM11 7H13V9H11V7ZM11 11H13V17H11V11Z">
+              </path>
+            </svg>
+
+          </button>
+            <p id="privacy-popover" popover data-popover> As with all of your information, we promise not to sell your e-mail address. </p>
+        </div>
+        <input type="email" id="email" autofocus required autocomplete="email" />
+        <div class="form-action">
+          <button data-button> Sign Up </button>
+          <button id="close" data-button type="button"> Cancel </button>
+        </div>
+      </form>
+    </dialog>
+  </main>
+  <aside>
+    <p>Photo credits, in order: <a
+        href="https://unsplash.com/photos/brown-jumping-spider-on-green-leaf-bdHfhlThd_k">Erik Karits</a>, <a
+        href="https://unsplash.com/photos/closeup-photo-of-brown-and-black-spider-on-leaf-P5SObFf8e5Q">Wynand Uys</a>,
+      and <a href="https://unsplash.com/photos/a-close-up-of-a-spider-on-a-red-surface-yZlthNy4AF0">Brian
+        Wangenheim</a>, via Unsplash.</p>
+  </aside>
+  <script src="./script.js"></script>
+</body>
+
+</html>
