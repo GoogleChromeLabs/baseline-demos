@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "http-server public -c -1 -p 3000",
-    "deploy": "gsutil -m rsync -rd public gs://chrome-dev-demos/public/google-analytics-baseline-checker"
+    "deploy": "gcloud storage rsync --recursive --delete-unmatched-destination-objects public gs://chrome-dev-demos/public/google-analytics-baseline-checker"
   },
   "prettier": {
     "arrowParens": "always",
