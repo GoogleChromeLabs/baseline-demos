@@ -315,4 +315,37 @@
     width: 100%;
     aspect-ratio: 16 / 9;
   }
+
+  /*
+   * AuthSection
+   * ----------------------------------------------------------------------- */
+
+  .AuthSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem auto;
+  }
+
+  .Button {
+    background-color: var(--accent);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75em 1.5em;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+
+  .Button:hover {
+    background-color: color-mix(in hsl, var(--accent), black 15%);
+  }
+
+  .Button:active {
+    background-color: color-mix(in hsl, var(--accent), black 30%);
+  }
 }

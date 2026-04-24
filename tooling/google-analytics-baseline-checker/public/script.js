@@ -297,6 +297,39 @@ document.getElementById('example-report').addEventListener('click', (event) => {
   fetchData('web-dev-baseline-export.tsv').then(processData);
 });
 
+let tokenClient;
+let accessToken;
+
+function initAuth() {
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: '1026410574114-eeif42b98jkibmalak6nmdrruasar17b.apps.googleusercontent.com',
+    scope: 'https://www.googleapis.com/auth/analytics.readonly',
+    callback: (response) => {
+      if (response.error !== undefined) {
+        console.error('Auth error:', response);
+        document.getElementById('auth-status').innerText = `Error: ${response.error}`;
+        document.getElementById('auth-status').hidden = false;
+        return;
+      }
+      accessToken = response.access_token;
+      console.log('Token received:', accessToken);
+      document.getElementById('auth-status').innerText = 'Connected to Google Analytics!';
+      document.getElementById('auth-status').hidden = false;
+      document.getElementById('auth-button').innerText = 'Connected';
+      document.getElementById('auth-button').disabled = true;
+
+      // TODO: Fetch data using accessToken when API supports required dimensions.
+    },
+  });
+}
+
+document.getElementById('auth-button').addEventListener('click', () => {
+  if (!tokenClient) {
+    initAuth();
+  }
+  tokenClient.requestAccessToken();
+});
+
 const dropZone = document.getElementById('drop-zone');
 
 // --- Prevent default browser behavior for drag events ---

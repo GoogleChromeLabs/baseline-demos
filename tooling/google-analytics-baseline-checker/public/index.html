@@ -32,6 +32,7 @@
       href="https://web-platform-dx.github.io/web-features/assets/img/wide-sq-192.png"
       sizes="192x192"
     />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body>
     <header class="Header">
@@ -77,6 +78,11 @@
         Or view an <a id="example-report" href="#">example report</a> based on
         <a download href="web-dev-baseline-export.tsv">data from web.dev</a>.
       </p>
+      <div class="AuthSection">
+        <button id="auth-button" class="Button">Connect to Google Analytics</button>
+        <p id="auth-status" class="Note Note-inline" hidden></p>
+      </div>
+
       <label id="drop-zone" class="Importer">
         Drag & Drop file here, or click to choose a file
         <svg class="Importer-icon" aria-label="Upload icon">
