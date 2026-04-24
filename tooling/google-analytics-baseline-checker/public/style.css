@@ -324,8 +324,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     margin: 2rem auto;
+  }
+
+  #auth-status {
+    margin-bottom: 0;
   }
 
   .Button {
@@ -359,6 +363,28 @@
     width: 100%;
     max-width: 300px;
     margin-top: 0.5rem;
+  }
+
+  /* State Management */
+  .AuthSection #auth-status,
+  .AuthSection .Select,
+  .AuthSection #generate-report-button {
+    display: none;
+  }
+
+  .AuthSection.has-error #auth-status,
+  .AuthSection.is-loading #auth-status,
+  .AuthSection.is-connected #auth-status {
+    display: block;
+  }
+
+  .AuthSection.has-properties .Select,
+  .AuthSection.has-properties #generate-report-button {
+    display: block;
+  }
+
+  .AuthSection.is-connected .GoogleButton {
+    display: none;
   }
 
   /*

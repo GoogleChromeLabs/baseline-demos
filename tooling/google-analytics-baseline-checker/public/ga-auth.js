@@ -22,18 +22,17 @@ function initAuth() {
     client_id: '1026410574114-eeif42b98jkibmalak6nmdrruasar17b.apps.googleusercontent.com',
     scope: 'https://www.googleapis.com/auth/analytics.readonly',
     callback: (response) => {
+      const authSection = document.querySelector('.AuthSection');
       if (response.error !== undefined) {
         console.error('Auth error:', response);
+        authSection.classList.add('has-error');
         document.getElementById('auth-status').innerText = `Error: ${response.error}`;
-        document.getElementById('auth-status').hidden = false;
         return;
       }
       accessToken = response.access_token;
       console.log('Token received:', accessToken);
+      authSection.classList.add('is-connected');
       document.getElementById('auth-status').innerText = 'Connected to Google Analytics!';
-      document.getElementById('auth-status').hidden = false;
-      document.getElementById('auth-button').innerText = 'Connected';
-      document.getElementById('auth-button').disabled = true;
 
       loadProperties();
     },
@@ -70,6 +69,9 @@ async function fetchProperties(accountId) {
 
 async function loadProperties() {
   const statusEl = document.getElementById('auth-status');
+  const authSection = document.querySelector('.AuthSection');
+  
+  authSection.classList.add('is-loading');
   statusEl.innerText = 'Loading properties...';
   
   try {
@@ -87,12 +89,13 @@ async function loadProperties() {
       }
     }
     
+    authSection.classList.remove('is-loading');
+    authSection.classList.add('has-properties');
     statusEl.innerText = 'Connected to Google Analytics!';
-    selectEl.hidden = false;
-    document.getElementById('date-range-select').hidden = false;
-    document.getElementById('generate-report-button').hidden = false;
   } catch (error) {
     console.error('Error loading properties:', error);
+    authSection.classList.remove('is-loading');
+    authSection.classList.add('has-error');
     statusEl.innerText = `Error loading properties: ${error.message}`;
   }
 }
