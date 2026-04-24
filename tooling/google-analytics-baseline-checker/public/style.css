@@ -348,4 +348,16 @@
   .Button:active {
     background-color: color-mix(in hsl, var(--accent), black 30%);
   }
+
+  .Select {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 1rem;
+    padding: 0.5em;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 0.5rem;
+  }
 }

@@ -318,9 +318,64 @@ function initAuth() {
       document.getElementById('auth-button').innerText = 'Connected';
       document.getElementById('auth-button').disabled = true;
 
-      // TODO: Fetch data using accessToken when API supports required dimensions.
+      loadProperties();
     },
   });
+}
+
+async function fetchAccounts() {
+  const response = await fetch('https://analyticsadmin.googleapis.com/v1alpha/accounts', {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to fetch accounts: ${response.status} ${errorData.error?.message || response.statusText}`);
+  }
+  const data = await response.json();
+  return data.accounts || [];
+}
+
+async function fetchProperties(accountId) {
+  const response = await fetch(`https://analyticsadmin.googleapis.com/v1alpha/properties?filter=parent:${accountId}`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  });
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to fetch properties for ${accountId}: ${response.status} ${errorData.error?.message || response.statusText}`);
+  }
+  const data = await response.json();
+  return data.properties || [];
+}
+
+async function loadProperties() {
+  const statusEl = document.getElementById('auth-status');
+  statusEl.innerText = 'Loading properties...';
+  
+  try {
+    const accounts = await fetchAccounts();
+    const selectEl = document.getElementById('property-select');
+    selectEl.innerHTML = '<option value="">Select a GA property...</option>';
+    
+    for (const account of accounts) {
+      const properties = await fetchProperties(account.name);
+      for (const property of properties) {
+        const option = document.createElement('option');
+        option.value = property.name;
+        option.innerText = `${account.displayName} > ${property.displayName}`;
+        selectEl.appendChild(option);
+      }
+    }
+    
+    statusEl.innerText = 'Connected to Google Analytics!';
+    selectEl.hidden = false;
+  } catch (error) {
+    console.error('Error loading properties:', error);
+    statusEl.innerText = `Error loading properties: ${error.message}`;
+  }
 }
 
 document.getElementById('auth-button').addEventListener('click', () => {
