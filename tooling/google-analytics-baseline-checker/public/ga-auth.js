@@ -89,9 +89,59 @@ async function loadProperties() {
     
     statusEl.innerText = 'Connected to Google Analytics!';
     selectEl.hidden = false;
+    document.getElementById('date-range-select').hidden = false;
+    document.getElementById('generate-report-button').hidden = false;
   } catch (error) {
     console.error('Error loading properties:', error);
     statusEl.innerText = `Error loading properties: ${error.message}`;
+  }
+}
+
+async function fetchReportData(propertyId, days) {
+  const statusEl = document.getElementById('auth-status');
+  statusEl.innerText = 'Fetching report data...';
+  
+  const endDate = new Date().toISOString().slice(0, 10);
+  const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  
+  try {
+    const response = await fetch(`https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        dimensions: [
+          {"name": "browser"},
+          {"name": "deviceCategory"},
+          {"name": "operatingSystem"},
+          {"name": "operatingSystemVersion"}
+        ],
+        metrics: [
+          {"name": "activeUsers"}
+        ],
+        dateRanges: [
+          {
+            "startDate": startDate,
+            "endDate": endDate
+          }
+        ]
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to fetch report data: ${response.status} ${errorData.error?.message || response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('Report data received:', data);
+    statusEl.innerText = 'Report data fetched successfully! Check console for details.';
+    
+  } catch (error) {
+    console.error('Error fetching report data:', error);
+    statusEl.innerText = `Error fetching report data: ${error.message}`;
   }
 }
 
@@ -100,4 +150,19 @@ document.getElementById('auth-button').addEventListener('click', () => {
     initAuth();
   }
   tokenClient.requestAccessToken();
+});
+
+document.getElementById('generate-report-button').addEventListener('click', () => {
+  const propertySelect = document.getElementById('property-select');
+  const dateRangeSelect = document.getElementById('date-range-select');
+  
+  const propertyId = propertySelect.value;
+  const days = parseInt(dateRangeSelect.value, 10);
+  
+  if (!propertyId) {
+    alert('Please select a property first.');
+    return;
+  }
+  
+  fetchReportData(propertyId, days);
 });
