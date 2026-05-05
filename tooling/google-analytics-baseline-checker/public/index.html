@@ -72,9 +72,33 @@
           <span>Sign in with Google</span>
         </button>
         <p id="auth-status" class="Note Note-inline"></p>
-        <select id="property-select" class="Select">
-          <option value="">Select a GA property...</option>
-        </select>
+        <div id="property-flow-selector" class="PropertyFlowSelector">
+          <div class="Pane AccountPane">
+            <div class="PaneHeader">
+              <span class="PaneTitle">Account</span>
+              <div class="SearchBox">
+                <svg class="SearchIcon" viewBox="0 0 24 24"><use href="icons.svg#search"></use></svg>
+                <input type="text" id="account-search" class="SearchInput" placeholder="Search accounts...">
+              </div>
+            </div>
+            <ul id="account-list" class="SelectorList">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+          <div class="Pane PropertyPane">
+            <div class="PaneHeader">
+              <span class="PaneTitle">Property</span>
+              <div class="SearchBox">
+                <svg class="SearchIcon" viewBox="0 0 24 24"><use href="icons.svg#search"></use></svg>
+                <input type="text" id="property-search" class="SearchInput" placeholder="Search properties...">
+              </div>
+            </div>
+            <ul id="property-list" class="SelectorList">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+        </div>
+        <input type="hidden" id="selected-property-id" name="propertyId">
         <select id="date-range-select" class="Select">
           <option value="30">Last 30 days</option>
           <option value="60">Last 60 days</option>

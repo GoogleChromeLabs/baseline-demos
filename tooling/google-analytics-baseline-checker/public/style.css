@@ -367,6 +367,7 @@
 
   /* State Management */
   .AuthSection #auth-status,
+  .AuthSection .PropertyFlowSelector,
   .AuthSection .Select,
   .AuthSection #generate-report-button {
     display: none;
@@ -376,6 +377,10 @@
   .AuthSection.is-loading #auth-status,
   .AuthSection.is-connected #auth-status {
     display: block;
+  }
+
+  .AuthSection.has-properties .PropertyFlowSelector {
+    display: grid;
   }
 
   .AuthSection.has-properties .Select,
@@ -421,5 +426,120 @@
   .GoogleButton-logo {
     width: 18px;
     height: 18px;
+  }
+
+  /*
+   * PropertyFlowSelector
+   * ----------------------------------------------------------------------- */
+
+  .PropertyFlowSelector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  }
+
+  .Pane {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #dadce0;
+    height: 400px;
+  }
+
+  .Pane:last-child {
+    border-right: none;
+  }
+
+  .PaneHeader {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dadce0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .PaneTitle {
+    font-weight: 600;
+    color: #3c4043;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .SearchBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .SearchIcon {
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    height: 16px;
+    fill: #7f868d;
+    pointer-events: none;
+  }
+
+  .SearchInput {
+    width: 100%;
+    padding: 6px 12px 6px 32px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .SearchInput:focus {
+    border-color: var(--accent);
+  }
+
+  .SelectorList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+
+  .SelectorListItem {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f3f4;
+    transition: background-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .SelectorListItem:hover,
+  .SelectorListItem:focus {
+    background-color: #f8f9fa;
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .SelectorListItem.is-selected {
+    background-color: color-mix(in hsl, var(--accent), transparent 90%);
+    border-left: 4px solid var(--accent);
+    padding-left: calc(1rem - 4px);
+  }
+
+  .SelectorListItem-title {
+    font-weight: 500;
+    color: #3c4043;
+    font-size: 0.95rem;
+  }
+
+  .SelectorListItem-subtitle {
+    font-size: 0.8rem;
+    color: #7f868d;
   }
 }

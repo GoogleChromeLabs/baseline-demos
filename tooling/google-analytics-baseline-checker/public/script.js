@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const schema = {
+export const schema = {
   metric: {
     USERS: 'Active users',
   },
@@ -174,6 +174,11 @@ function lookupBrowser(row, columns) {
 }
 
 function processData(rawData) {
+  const data = parseData(rawData);
+  renderReport(data);
+}
+
+export function renderReport(data) {
   // This only looks at Safari because Safari is a one of the Core baseline
   // browsers, so there couldn't have been a Baseline year without a Safari
   // release. Looking through all Browsers is unnecessary, and Safari has the
@@ -194,8 +199,6 @@ function processData(rawData) {
   baselineTargetCounts['Newly Available'] = 0;
 
   let unknownCount = 0;
-
-  const data = parseData(rawData);
   let total = 0;
 
   for (const row of data.rows) {
