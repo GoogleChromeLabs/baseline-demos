@@ -288,6 +288,39 @@ document.getElementById('auth-button').addEventListener('click', () => {
   tokenClient.requestAccessToken();
 });
 
+function signOut() {
+  if (accessToken) {
+    try {
+      google.accounts.oauth2.revoke(accessToken, () => {
+        console.log('Google Access Token revoked.');
+      });
+    } catch (e) {
+      console.error('Error revoking token:', e);
+    }
+  }
+
+  accessToken = null;
+
+  const authSection = document.querySelector('.AuthSection');
+  authSection.classList.remove('is-connected', 'has-properties', 'is-loading', 'has-error');
+
+  // Clear status and lists
+  document.getElementById('auth-status').innerText = '';
+  document.getElementById('account-list').innerHTML = '';
+  document.getElementById('property-list').innerHTML = '';
+
+  // Clear selected property inputs/values
+  document.getElementById('selected-property-id').value = '';
+  document.getElementById('account-search').value = '';
+  document.getElementById('property-search').value = '';
+
+  // Hide report section
+  document.getElementById('report-section').hidden = true;
+  document.getElementById('report-container').innerHTML = '';
+}
+
+document.getElementById('signout-button').addEventListener('click', signOut);
+
 document.getElementById('generate-report-button').addEventListener('click', () => {
   const propertyId = document.getElementById('selected-property-id').value;
   const dateRangeSelect = document.getElementById('date-range-select');

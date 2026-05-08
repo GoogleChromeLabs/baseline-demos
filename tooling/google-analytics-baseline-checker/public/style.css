@@ -369,7 +369,8 @@
   .AuthSection #auth-status,
   .AuthSection .PropertyFlowSelector,
   .AuthSection .Select,
-  .AuthSection #generate-report-button {
+  .AuthSection #generate-report-button,
+  .AuthSection #signout-button {
     display: none;
   }
 
@@ -388,8 +389,12 @@
     display: block;
   }
 
-  .AuthSection.is-connected .GoogleButton {
+  .AuthSection.is-connected #auth-button {
     display: none;
+  }
+
+  .AuthSection.is-connected #signout-button {
+    display: inline-flex;
   }
 
   /*
