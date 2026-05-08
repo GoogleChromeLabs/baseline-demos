@@ -204,7 +204,7 @@ async function fetchReportData(propertyId, days) {
   const statusEl = document.getElementById('auth-status');
   statusEl.innerText = 'Fetching report data...';
   
-  const endDate = new Date().toISOString().slice(0, 10);
+  const endDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   
   try {
@@ -264,8 +264,12 @@ async function fetchReportData(propertyId, days) {
       row.metricValues[0].value,
     ]);
 
-    const startDateFormatted = new Date(startDate).toLocaleDateString();
-    const endDateFormatted = new Date(endDate).toLocaleDateString();
+    const formatDateISO = (isoString) => {
+      const [year, month, day] = isoString.split('-');
+      return new Date(Number(year), Number(month) - 1, Number(day)).toLocaleDateString();
+    };
+    const startDateFormatted = formatDateISO(startDate);
+    const endDateFormatted = formatDateISO(endDate);
 
     renderReport({
       property: propertyDisplayName,

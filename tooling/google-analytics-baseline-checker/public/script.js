@@ -39,11 +39,6 @@ function formatDate(dateString) {
   ).toLocaleDateString();
 }
 
-async function fetchJSON(url) {
-  const response = await fetch(url);
-  return await response.json();
-}
-
 async function fetchData(url) {
   const response = await fetch(url);
   return await response.text();
@@ -58,7 +53,10 @@ function parseData(data) {
     RegExp.$2,
   ];
 
-  const lines = rawLines.filter((l) => l.match(/^\w/));
+  const lines = rawLines.filter((l) => {
+    const trimmed = l.trim();
+    return trimmed && !trimmed.startsWith('#') && !trimmed.includes('Grand total');
+  });
 
   if (lines[0].includes(',')) {
     const msg =
@@ -279,15 +277,11 @@ export function renderReport(data) {
   resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
-const browserMapping = await fetchJSON(
+const browserMapping = await (await fetch(
   'https://web-platform-dx.github.io/baseline-browser-mapping/with_downstream/all_versions_object_with_supports.json'
-);
-
-
+)).json();
 
 document.getElementById('example-report').addEventListener('click', (event) => {
   event.preventDefault();
   fetchData('web-dev-baseline-export.tsv').then(processData);
 });
-
-
