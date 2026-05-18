@@ -202,6 +202,13 @@ function setupSearch(searchInputId, listId) {
 
 async function fetchReportData(propertyId, days) {
   const statusEl = document.getElementById('auth-status');
+  const btn = document.getElementById('generate-report-button');
+
+  if (btn) {
+    btn.setAttribute('aria-disabled', 'true');
+    btn.innerText = 'Loading...';
+  }
+
   statusEl.innerText = 'Fetching report data...';
 
   const endDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -282,6 +289,11 @@ async function fetchReportData(propertyId, days) {
   } catch (error) {
     console.error('Error fetching report data:', error);
     statusEl.innerText = `Error fetching report data: ${error.message}`;
+  } finally {
+    if (btn) {
+      btn.removeAttribute('aria-disabled');
+      btn.innerText = 'Generate Report';
+    }
   }
 }
 
@@ -326,6 +338,11 @@ function signOut() {
 document.getElementById('signout-button').addEventListener('click', signOut);
 
 document.getElementById('generate-report-button').addEventListener('click', () => {
+  const btn = document.getElementById('generate-report-button');
+  if (btn && btn.getAttribute('aria-disabled') === 'true') {
+    return;
+  }
+
   const propertyId = document.getElementById('selected-property-id').value;
   const dateRangeSelect = document.getElementById('date-range-select');
   const days = parseInt(dateRangeSelect.value, 10);
@@ -340,7 +357,7 @@ document.getElementById('generate-report-button').addEventListener('click', () =
     }, 2000);
 
     const statusEl = document.getElementById('auth-status');
-    statusEl.innerText = 'Please select a GA property first.';
+    statusEl.innerText = 'Please select a Google Analytics property first.';
     statusEl.style.color = '#ea4335';
     setTimeout(() => {
       statusEl.innerText = 'Connected to Google Analytics!';

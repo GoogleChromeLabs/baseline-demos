@@ -369,6 +369,12 @@
     background-color: color-mix(in hsl, var(--accent), black 30%);
   }
 
+  .Button[aria-disabled="true"] {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
   .Select {
     background-color: #fff;
     border: 1px solid #ccc;
