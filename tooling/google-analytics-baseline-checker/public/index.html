@@ -112,12 +112,21 @@
         </div>
         <input type="hidden" id="selected-property-id" name="propertyId">
         <select id="date-range-select" class="Select">
-          <option value="30">Last 30 days</option>
-          <option value="60">Last 60 days</option>
-          <option value="90">Last 90 days</option>
-          <option value="180">Last 180 days</option>
-          <option value="360">Last 360 days</option>
+          <option value="7">Last 7 days</option>
+          <option value="28" selected>Last 28 days</option>
+          <option value="custom">Custom range</option>
         </select>
+        <div id="custom-date-container" class="CustomDateContainer" hidden>
+          <div class="DateInputGroup">
+            <label for="start-date-input">Start Date</label>
+            <input type="date" id="start-date-input" class="DateInput" />
+          </div>
+          <div class="DateInputGroup">
+            <label for="end-date-input">End Date</label>
+            <input type="date" id="end-date-input" class="DateInput" />
+          </div>
+        </div>
+        <p id="date-picker-error" class="DatePickerError" hidden></p>
         <button id="generate-report-button" class="Button">Generate Report</button>
       </div>
 

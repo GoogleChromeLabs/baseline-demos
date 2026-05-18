@@ -385,12 +385,74 @@
     width: 100%;
     max-width: 300px;
     margin-top: 0.5rem;
+    min-height: 48px;
+  }
+
+  .CustomDateContainer {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 0.5rem;
+  }
+
+  .CustomDateContainer[hidden] {
+    display: none !important;
+  }
+
+  .DateInputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .DateInputGroup label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #5f6368;
+    text-align: left;
+    display: inline-block;
+  }
+
+  .DateInput {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 1rem;
+    padding: 0.5em;
+    width: 100%;
+    min-height: 48px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .DateInput:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(28, 110, 243, 0.2);
+  }
+
+  .DatePickerError {
+    color: #ea4335;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .DatePickerError[hidden] {
+    display: none !important;
   }
 
   /* State Management */
   .AuthSection #auth-status,
   .AuthSection .PropertyFlowSelector,
   .AuthSection .Select,
+  .AuthSection .CustomDateContainer,
+  .AuthSection .DatePickerError,
   .AuthSection #generate-report-button,
   .AuthSection #signout-button {
     display: none;
@@ -407,7 +469,17 @@
   }
 
   .AuthSection.has-properties .Select,
+  .AuthSection.has-properties .CustomDateContainer,
+  .AuthSection.has-properties .DatePickerError,
   .AuthSection.has-properties #generate-report-button {
+    display: block;
+  }
+
+  .AuthSection.has-properties .CustomDateContainer:not([hidden]) {
+    display: flex;
+  }
+
+  .AuthSection.has-properties .DatePickerError:not([hidden]) {
     display: block;
   }
 

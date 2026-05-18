@@ -200,7 +200,7 @@ function setupSearch(searchInputId, listId) {
   });
 }
 
-async function fetchReportData(propertyId, days) {
+async function fetchReportData(propertyId, startDate, endDate) {
   const statusEl = document.getElementById('auth-status');
   const btn = document.getElementById('generate-report-button');
 
@@ -210,9 +210,6 @@ async function fetchReportData(propertyId, days) {
   }
 
   statusEl.innerText = 'Fetching report data...';
-
-  const endDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-  const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
   try {
     const response = await fetch(`https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`, {
@@ -337,16 +334,102 @@ function signOut() {
 
 document.getElementById('signout-button').addEventListener('click', signOut);
 
+function formatLocalDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function setDefaultDates() {
+  const endDateInput = document.getElementById('end-date-input');
+  const startDateInput = document.getElementById('start-date-input');
+  
+  if (endDateInput && startDateInput) {
+    const end = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const start = new Date(Date.now() - 28 * 24 * 60 * 60 * 1000);
+    
+    const formattedEnd = formatLocalDate(end);
+    const formattedStart = formatLocalDate(start);
+    
+    endDateInput.value = formattedEnd;
+    startDateInput.value = formattedStart;
+    
+    endDateInput.max = formattedEnd;
+    startDateInput.max = formattedEnd;
+  }
+}
+
+// Set up date range select event listeners
+const dateRangeSelect = document.getElementById('date-range-select');
+const customDateContainer = document.getElementById('custom-date-container');
+const datePickerError = document.getElementById('date-picker-error');
+
+if (dateRangeSelect && customDateContainer) {
+  dateRangeSelect.addEventListener('change', () => {
+    if (dateRangeSelect.value === 'custom') {
+      customDateContainer.hidden = false;
+      setDefaultDates();
+    } else {
+      customDateContainer.hidden = true;
+      if (datePickerError) {
+        datePickerError.innerText = '';
+        datePickerError.hidden = true;
+      }
+    }
+  });
+
+  const startDateInput = document.getElementById('start-date-input');
+  const endDateInput = document.getElementById('end-date-input');
+
+  if (startDateInput && endDateInput) {
+    const clearOrValidateCustomDates = () => {
+      const start = startDateInput.value;
+      const end = endDateInput.value;
+
+      if (start && end) {
+        if (new Date(start) <= new Date(end)) {
+          if (datePickerError) {
+            datePickerError.innerText = '';
+            datePickerError.hidden = true;
+          }
+        } else {
+          if (datePickerError) {
+            datePickerError.innerText = 'Start date cannot be after end date.';
+            datePickerError.hidden = false;
+          }
+        }
+      }
+    };
+
+    startDateInput.addEventListener('change', () => {
+      if (startDateInput.value) {
+        endDateInput.min = startDateInput.value;
+      }
+      clearOrValidateCustomDates();
+    });
+    endDateInput.addEventListener('change', () => {
+      if (endDateInput.value) {
+        startDateInput.max = endDateInput.value;
+      }
+      clearOrValidateCustomDates();
+    });
+  }
+}
+
 document.getElementById('generate-report-button').addEventListener('click', () => {
   const btn = document.getElementById('generate-report-button');
   if (btn && btn.getAttribute('aria-disabled') === 'true') {
     return;
   }
 
-  const propertyId = document.getElementById('selected-property-id').value;
-  const dateRangeSelect = document.getElementById('date-range-select');
-  const days = parseInt(dateRangeSelect.value, 10);
+  // Clear existing date picker errors before starting validation
+  if (datePickerError) {
+    datePickerError.innerText = '';
+    datePickerError.hidden = true;
+  }
 
+  const propertyId = document.getElementById('selected-property-id').value;
   if (!propertyId) {
     const selectorEl = document.getElementById('property-flow-selector');
     selectorEl.style.borderColor = '#ea4335';
@@ -367,5 +450,35 @@ document.getElementById('generate-report-button').addEventListener('click', () =
     return;
   }
 
-  fetchReportData(propertyId, days);
+  let startDate, endDate;
+
+  if (dateRangeSelect && dateRangeSelect.value === 'custom') {
+    const startDateInput = document.getElementById('start-date-input');
+    const endDateInput = document.getElementById('end-date-input');
+    
+    startDate = startDateInput ? startDateInput.value : '';
+    endDate = endDateInput ? endDateInput.value : '';
+
+    if (!startDate || !endDate) {
+      if (datePickerError) {
+        datePickerError.innerText = 'Please specify both start and end dates for the custom range.';
+        datePickerError.hidden = false;
+      }
+      return;
+    }
+
+    if (new Date(startDate) > new Date(endDate)) {
+      if (datePickerError) {
+        datePickerError.innerText = 'Start date cannot be after end date.';
+        datePickerError.hidden = false;
+      }
+      return;
+    }
+  } else if (dateRangeSelect) {
+    const days = parseInt(dateRangeSelect.value, 10);
+    endDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  }
+
+  fetchReportData(propertyId, startDate, endDate);
 });
