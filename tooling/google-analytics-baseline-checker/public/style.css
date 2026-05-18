@@ -186,6 +186,23 @@
     margin: 0 auto 2rem;
   }
 
+  .Note-info {
+    background-color: #e8f0fe;
+    border: 1px solid #c2e7ff;
+    color: #0b57d0;
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    font-style: normal;
+    font-size: 0.9rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  .Note-info a {
+    color: #0a52be;
+    font-weight: 600;
+  }
+
   /*
    * Importer
    * ----------------------------------------------------------------------- */
