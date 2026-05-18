@@ -72,16 +72,16 @@ async function fetchProperties(accountId) {
 async function loadAccounts() {
   const statusEl = document.getElementById('auth-status');
   const authSection = document.querySelector('.AuthSection');
-  
+
   authSection.classList.add('is-loading');
   statusEl.innerText = 'Loading accounts...';
-  
+
   try {
     const accounts = await fetchAccounts();
     const accountListEl = document.getElementById('account-list');
     accountListEl.innerHTML = '';
     accountListEl.setAttribute('role', 'listbox');
-    
+
     accounts.forEach(account => {
       const li = document.createElement('li');
       li.className = 'SelectorListItem';
@@ -99,7 +99,7 @@ async function loadAccounts() {
         });
         li.classList.add('is-selected');
         li.setAttribute('aria-selected', 'true');
-        
+
         await loadProperties(account.name);
       };
       li.addEventListener('click', selectAccount);
@@ -111,13 +111,13 @@ async function loadAccounts() {
       });
       accountListEl.appendChild(li);
     });
-    
+
     authSection.classList.remove('is-loading');
     authSection.classList.add('has-properties');
     statusEl.innerText = 'Connected to Google Analytics!';
-    
+
     setupSearch('account-search', 'account-list');
-    
+
   } catch (error) {
     console.error('Error loading accounts:', error);
     authSection.classList.remove('is-loading');
@@ -130,16 +130,16 @@ async function loadProperties(accountId) {
   const propertyListEl = document.getElementById('property-list');
   propertyListEl.innerHTML = '<li>Loading properties...</li>';
   propertyListEl.setAttribute('role', 'listbox');
-  
+
   try {
     const properties = await fetchProperties(accountId);
     propertyListEl.innerHTML = '';
-    
+
     if (properties.length === 0) {
       propertyListEl.innerHTML = '<li>No properties found for this account.</li>';
       return;
     }
-    
+
     properties.forEach(property => {
       const li = document.createElement('li');
       li.className = 'SelectorListItem';
@@ -157,7 +157,7 @@ async function loadProperties(accountId) {
         });
         li.classList.add('is-selected');
         li.setAttribute('aria-selected', 'true');
-        
+
         document.getElementById('selected-property-id').value = property.name;
       };
       li.addEventListener('click', selectProperty);
@@ -169,9 +169,9 @@ async function loadProperties(accountId) {
       });
       propertyListEl.appendChild(li);
     });
-    
+
     setupSearch('property-search', 'property-list');
-    
+
   } catch (error) {
     console.error('Error loading properties:', error);
     propertyListEl.innerHTML = `<li>Error loading properties: ${error.message}</li>`;
@@ -181,11 +181,11 @@ async function loadProperties(accountId) {
 function setupSearch(searchInputId, listId) {
   const searchInput = document.getElementById(searchInputId);
   const list = document.getElementById(listId);
-  
+
   searchInput.addEventListener('input', () => {
     const filter = searchInput.value.toLowerCase();
     const items = list.getElementsByClassName('SelectorListItem');
-    
+
     Array.from(items).forEach(item => {
       const titleEl = item.querySelector('.SelectorListItem-title');
       const subtitleEl = item.querySelector('.SelectorListItem-subtitle');
@@ -203,10 +203,10 @@ function setupSearch(searchInputId, listId) {
 async function fetchReportData(propertyId, days) {
   const statusEl = document.getElementById('auth-status');
   statusEl.innerText = 'Fetching report data...';
-  
+
   const endDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-  
+
   try {
     const response = await fetch(`https://analyticsdata.googleapis.com/v1beta/${propertyId}:runReport`, {
       method: 'POST',
@@ -216,14 +216,14 @@ async function fetchReportData(propertyId, days) {
       },
       body: JSON.stringify({
         dimensions: [
-          {"name": "browser"},
-          {"name": "browserVersion"},
-          {"name": "deviceCategory"},
-          {"name": "operatingSystem"},
-          {"name": "operatingSystemVersion"}
+          { "name": "browser" },
+          { "name": "browserVersion" },
+          { "name": "deviceCategory" },
+          { "name": "operatingSystem" },
+          { "name": "operatingSystemVersion" }
         ],
         metrics: [
-          {"name": "activeUsers"}
+          { "name": "activeUsers" }
         ],
         dateRanges: [
           {
@@ -233,16 +233,16 @@ async function fetchReportData(propertyId, days) {
         ]
       })
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(`Failed to fetch report data: ${response.status} ${errorData.error?.message || response.statusText}`);
     }
-    
+
     const responseData = await response.json();
     console.log('Report data received:', responseData);
     statusEl.innerText = 'Report data fetched successfully!';
-    
+
     const selectedEl = document.querySelector('#property-list .SelectorListItem.is-selected');
     const propertyDisplayName = selectedEl ? selectedEl.querySelector('.SelectorListItem-title').innerText : propertyId;
 
@@ -278,7 +278,7 @@ async function fetchReportData(propertyId, days) {
       startDate: startDateFormatted,
       endDate: endDateFormatted,
     });
-    
+
   } catch (error) {
     console.error('Error fetching report data:', error);
     statusEl.innerText = `Error fetching report data: ${error.message}`;
@@ -329,7 +329,7 @@ document.getElementById('generate-report-button').addEventListener('click', () =
   const propertyId = document.getElementById('selected-property-id').value;
   const dateRangeSelect = document.getElementById('date-range-select');
   const days = parseInt(dateRangeSelect.value, 10);
-  
+
   if (!propertyId) {
     const selectorEl = document.getElementById('property-flow-selector');
     selectorEl.style.borderColor = '#ea4335';
@@ -338,7 +338,7 @@ document.getElementById('generate-report-button').addEventListener('click', () =
       selectorEl.style.borderColor = '';
       selectorEl.style.boxShadow = '';
     }, 2000);
-    
+
     const statusEl = document.getElementById('auth-status');
     statusEl.innerText = 'Please select a GA property first.';
     statusEl.style.color = '#ea4335';
@@ -346,9 +346,9 @@ document.getElementById('generate-report-button').addEventListener('click', () =
       statusEl.innerText = 'Connected to Google Analytics!';
       statusEl.style.color = '';
     }, 3000);
-    
+
     return;
   }
-  
+
   fetchReportData(propertyId, days);
 });
