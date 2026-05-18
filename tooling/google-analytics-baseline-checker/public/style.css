@@ -50,7 +50,7 @@
    * Container
    * ----------------------------------------------------------------------- */
 
-   .Container {
+  .Container {
     max-width: 48rem;
     margin: 0 auto;
     padding: 0 1em;
@@ -60,7 +60,7 @@
    * Header
    * ----------------------------------------------------------------------- */
 
-   .Header {
+  .Header {
     background: #f8f8f8;
     padding: 2rem 2rem 3rem;
     text-align: center;
@@ -89,6 +89,7 @@
       display: flex;
       place-content: center;
     }
+
     .Header-titlePrefix {
       border-right: 1px solid #ccc;
       margin-right: 1rem;
@@ -100,7 +101,7 @@
    * Footer
    * ----------------------------------------------------------------------- */
 
-   .Footer {
+  .Footer {
     background: #f8f8f8;
     display: flow-root;
     padding-top: 3rem;
@@ -110,7 +111,7 @@
    * Instructions
    * ----------------------------------------------------------------------- */
 
-   .Instructions {
+  .Instructions {
     contain: paint;
     padding-left: 2em;
   }
@@ -157,7 +158,7 @@
    * SubHeading
    * ----------------------------------------------------------------------- */
 
-   .SubHeading {
+  .SubHeading {
     font-size: 1.667rem;
     font-weight: 300;
     margin: 3rem 0 2rem;
@@ -172,7 +173,7 @@
    * Note
    * ----------------------------------------------------------------------- */
 
-   .Note {
+  .Note {
     color: #777;
     font-size: 0.9em;
     font-style: italic;
@@ -206,7 +207,7 @@
    * Importer
    * ----------------------------------------------------------------------- */
 
-   .Importer {
+  .Importer {
     border: 3px dashed #ccc;
     border-radius: 8px;
     color: #888;
@@ -232,7 +233,7 @@
    * Steps
    * ----------------------------------------------------------------------- */
 
-   .Steps {
+  .Steps {
     display: grid;
     grid-template-columns: auto auto;
     margin-bottom: 4rem;
@@ -255,7 +256,7 @@
    * ReportSection
    * ----------------------------------------------------------------------- */
 
-   .ReportSection {
+  .ReportSection {
     padding: 1em;
     margin: -1em;
     border-radius: .5em;
@@ -265,7 +266,7 @@
    * Report
    * ----------------------------------------------------------------------- */
 
-   .Report {
+  .Report {
     border-collapse: collapse;
     margin-top: 1.5rem;
     width: 100%;
@@ -308,9 +309,9 @@
     background-repeat: no-repeat;
     background-size: 10000% 100%;
     background-image: linear-gradient(to left,
-      hsl(150deg 70% 45%) 0%,
-      hsl(45 100% 85%) 10%,
-      hsl(0deg 100% 65%));
+        hsl(150deg 70% 45%) 0%,
+        hsl(45 100% 85%) 10%,
+        hsl(0deg 100% 65%));
     background-position-x: var(--percent);
   }
 
@@ -515,7 +516,7 @@
 
   .GoogleButton:hover {
     background-color: #f8f9fa;
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
   }
 
   .GoogleButton:active {
@@ -541,7 +542,7 @@
     width: 100%;
     max-width: 800px;
     margin-top: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   }
 
   .Pane {
@@ -618,6 +619,7 @@
     flex-direction: column;
     gap: 2px;
   }
+
   .SelectorListItem:hover,
   .SelectorListItem:focus {
     background-color: #f8f9fa;
