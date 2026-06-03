@@ -187,21 +187,6 @@
     margin: 0 auto 2rem;
   }
 
-  .Note-warning {
-    background-color: #fff8e1;
-    border: 1px solid #ffe082;
-    color: #b36f00;
-    border-radius: 6px;
-    padding: 0.75rem 1.25rem;
-    font-style: normal;
-    font-size: 0.9rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-  }
-
-  .Note-warning:has(~ .AuthSection.is-connected) {
-    display: none;
-  }
 
   /*
    * Importer
