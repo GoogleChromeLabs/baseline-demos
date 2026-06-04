@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const schema = {
+export const schema = {
   metric: {
     USERS: 'Active users',
   },
@@ -39,11 +39,6 @@ function formatDate(dateString) {
   ).toLocaleDateString();
 }
 
-async function fetchJSON(url) {
-  const response = await fetch(url);
-  return await response.json();
-}
-
 async function fetchData(url) {
   const response = await fetch(url);
   return await response.text();
@@ -58,7 +53,10 @@ function parseData(data) {
     RegExp.$2,
   ];
 
-  const lines = rawLines.filter((l) => l.match(/^\w/));
+  const lines = rawLines.filter((l) => {
+    const trimmed = l.trim();
+    return trimmed && !trimmed.startsWith('#') && !trimmed.includes('Grand total');
+  });
 
   if (lines[0].includes(',')) {
     const msg =
@@ -174,6 +172,11 @@ function lookupBrowser(row, columns) {
 }
 
 function processData(rawData) {
+  const data = parseData(rawData);
+  renderReport(data);
+}
+
+export function renderReport(data) {
   // This only looks at Safari because Safari is a one of the Core baseline
   // browsers, so there couldn't have been a Baseline year without a Safari
   // release. Looking through all Browsers is unnecessary, and Safari has the
@@ -194,8 +197,6 @@ function processData(rawData) {
   baselineTargetCounts['Newly Available'] = 0;
 
   let unknownCount = 0;
-
-  const data = parseData(rawData);
   let total = 0;
 
   for (const row of data.rows) {
@@ -276,76 +277,11 @@ function processData(rawData) {
   resultsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
-const browserMapping = await fetchJSON(
+const browserMapping = await (await fetch(
   'https://web-platform-dx.github.io/baseline-browser-mapping/with_downstream/all_versions_object_with_supports.json'
-);
-
-function handleImport(file) {
-  const reader = new FileReader();
-  reader.addEventListener('load', (event) => processData(event.target.result));
-  reader.readAsText(file);
-}
-
-document.getElementById('input').addEventListener('change', ({target}) => {
-  if (target.files.length > 0) {
-    handleImport(target.files[0]);
-  }
-});
+)).json();
 
 document.getElementById('example-report').addEventListener('click', (event) => {
   event.preventDefault();
   fetchData('web-dev-baseline-export.tsv').then(processData);
 });
-
-const dropZone = document.getElementById('drop-zone');
-
-// --- Prevent default browser behavior for drag events ---
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
-  document.body.addEventListener(eventName, preventDefaults, false);
-});
-
-function preventDefaults(e) {
-  e.preventDefault();
-  e.stopPropagation();
-}
-
-// --- Highlight drop zone when item is dragged over it ---
-dropZone.addEventListener('dragenter', handleDragEnter);
-dropZone.addEventListener('dragover', handleDragOver);
-dropZone.addEventListener('dragleave', handleDragLeave);
-dropZone.addEventListener('drop', handleDrop);
-
-function handleDragEnter(e) {
-  highlight(e);
-}
-
-function handleDragOver(e) {
-  preventDefaults(e);
-  highlight(e);
-}
-
-function handleDragLeave(e) {
-  unhighlight(e);
-}
-
-function highlight(e) {
-  dropZone.classList.add('Importer--active');
-}
-
-function unhighlight(e) {
-  dropZone.classList.remove('Importer--active');
-}
-
-function handleDrop(e) {
-  preventDefaults(e);
-  unhighlight(e);
-  console.log('DROP!');
-
-  const dt = e.dataTransfer;
-  const files = dt.files;
-  if (files.length) {
-    setTimeout(() => {
-      handleImport(files[0]);
-    }, 500);
-  }
-}

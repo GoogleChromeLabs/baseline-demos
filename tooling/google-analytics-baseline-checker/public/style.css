@@ -50,7 +50,7 @@
    * Container
    * ----------------------------------------------------------------------- */
 
-   .Container {
+  .Container {
     max-width: 48rem;
     margin: 0 auto;
     padding: 0 1em;
@@ -60,7 +60,7 @@
    * Header
    * ----------------------------------------------------------------------- */
 
-   .Header {
+  .Header {
     background: #f8f8f8;
     padding: 2rem 2rem 3rem;
     text-align: center;
@@ -89,6 +89,7 @@
       display: flex;
       place-content: center;
     }
+
     .Header-titlePrefix {
       border-right: 1px solid #ccc;
       margin-right: 1rem;
@@ -100,7 +101,7 @@
    * Footer
    * ----------------------------------------------------------------------- */
 
-   .Footer {
+  .Footer {
     background: #f8f8f8;
     display: flow-root;
     padding-top: 3rem;
@@ -110,7 +111,7 @@
    * Instructions
    * ----------------------------------------------------------------------- */
 
-   .Instructions {
+  .Instructions {
     contain: paint;
     padding-left: 2em;
   }
@@ -157,7 +158,7 @@
    * SubHeading
    * ----------------------------------------------------------------------- */
 
-   .SubHeading {
+  .SubHeading {
     font-size: 1.667rem;
     font-weight: 300;
     margin: 3rem 0 2rem;
@@ -172,7 +173,7 @@
    * Note
    * ----------------------------------------------------------------------- */
 
-   .Note {
+  .Note {
     color: #777;
     font-size: 0.9em;
     font-style: italic;
@@ -186,28 +187,12 @@
     margin: 0 auto 2rem;
   }
 
-  .Note-info {
-    background-color: #e8f0fe;
-    border: 1px solid #c2e7ff;
-    color: #0b57d0;
-    border-radius: 6px;
-    padding: 0.75rem 1.25rem;
-    font-style: normal;
-    font-size: 0.9rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-  }
-
-  .Note-info a {
-    color: #0a52be;
-    font-weight: 600;
-  }
 
   /*
    * Importer
    * ----------------------------------------------------------------------- */
 
-   .Importer {
+  .Importer {
     border: 3px dashed #ccc;
     border-radius: 8px;
     color: #888;
@@ -233,7 +218,7 @@
    * Steps
    * ----------------------------------------------------------------------- */
 
-   .Steps {
+  .Steps {
     display: grid;
     grid-template-columns: auto auto;
     margin-bottom: 4rem;
@@ -256,7 +241,7 @@
    * ReportSection
    * ----------------------------------------------------------------------- */
 
-   .ReportSection {
+  .ReportSection {
     padding: 1em;
     margin: -1em;
     border-radius: .5em;
@@ -266,7 +251,7 @@
    * Report
    * ----------------------------------------------------------------------- */
 
-   .Report {
+  .Report {
     border-collapse: collapse;
     margin-top: 1.5rem;
     width: 100%;
@@ -309,9 +294,9 @@
     background-repeat: no-repeat;
     background-size: 10000% 100%;
     background-image: linear-gradient(to left,
-      hsl(150deg 70% 45%) 0%,
-      hsl(45 100% 85%) 10%,
-      hsl(0deg 100% 65%));
+        hsl(150deg 70% 45%) 0%,
+        hsl(45 100% 85%) 10%,
+        hsl(0deg 100% 65%));
     background-position-x: var(--percent);
   }
 
@@ -331,5 +316,316 @@
     border: 1px solid #ccc;
     width: 100%;
     aspect-ratio: 16 / 9;
+  }
+
+  /*
+   * AuthSection
+   * ----------------------------------------------------------------------- */
+
+  .AuthSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem auto;
+  }
+
+  #auth-status {
+    margin-bottom: 0;
+  }
+
+  .Button {
+    background-color: var(--accent);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75em 1.5em;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+
+  .Button:hover {
+    background-color: color-mix(in hsl, var(--accent), black 15%);
+  }
+
+  .Button:active {
+    background-color: color-mix(in hsl, var(--accent), black 30%);
+  }
+
+  .Button[aria-disabled="true"] {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .Select {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 1rem;
+    padding: 0.5em;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 0.5rem;
+    min-height: 48px;
+  }
+
+  .CustomDateContainer {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 0.5rem;
+  }
+
+  .CustomDateContainer[hidden] {
+    display: none !important;
+  }
+
+  .DateInputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .DateInputGroup label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #5f6368;
+    text-align: left;
+    display: inline-block;
+  }
+
+  .DateInput {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 1rem;
+    padding: 0.5em;
+    width: 100%;
+    min-height: 48px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .DateInput:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(28, 110, 243, 0.2);
+  }
+
+  .DatePickerError {
+    color: #ea4335;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .DatePickerError[hidden] {
+    display: none !important;
+  }
+
+  /* State Management */
+  .AuthSection #auth-status,
+  .AuthSection .PropertyFlowSelector,
+  .AuthSection .Select,
+  .AuthSection .CustomDateContainer,
+  .AuthSection .DatePickerError,
+  .AuthSection #generate-report-button,
+  .AuthSection #signout-button {
+    display: none;
+  }
+
+  .AuthSection.has-error #auth-status,
+  .AuthSection.is-loading #auth-status,
+  .AuthSection.is-connected #auth-status {
+    display: block;
+  }
+
+  .AuthSection.has-properties .PropertyFlowSelector {
+    display: grid;
+  }
+
+  .AuthSection.has-properties .Select,
+  .AuthSection.has-properties .CustomDateContainer,
+  .AuthSection.has-properties .DatePickerError,
+  .AuthSection.has-properties #generate-report-button {
+    display: block;
+  }
+
+  .AuthSection.has-properties .CustomDateContainer:not([hidden]) {
+    display: flex;
+  }
+
+  .AuthSection.has-properties .DatePickerError:not([hidden]) {
+    display: block;
+  }
+
+  .AuthSection.is-connected #auth-button {
+    display: none;
+  }
+
+  .AuthSection.is-connected #signout-button {
+    display: inline-flex;
+  }
+
+  /*
+   * GoogleButton
+   * ----------------------------------------------------------------------- */
+
+  .GoogleButton {
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    color: #3c4043;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    padding: 0 12px;
+    text-align: center;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .GoogleButton:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  }
+
+  .GoogleButton:active {
+    background-color: #f1f3f4;
+  }
+
+  .GoogleButton-logo {
+    width: 18px;
+    height: 18px;
+  }
+
+  /*
+   * PropertyFlowSelector
+   * ----------------------------------------------------------------------- */
+
+  .PropertyFlowSelector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .Pane {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #dadce0;
+    height: 400px;
+  }
+
+  .Pane:last-child {
+    border-right: none;
+  }
+
+  .PaneHeader {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dadce0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .PaneTitle {
+    font-weight: 600;
+    color: #3c4043;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .SearchBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .SearchIcon {
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    height: 16px;
+    fill: #7f868d;
+    pointer-events: none;
+  }
+
+  .SearchInput {
+    width: 100%;
+    padding: 6px 12px 6px 32px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .SearchInput:focus {
+    border-color: var(--accent);
+  }
+
+  .SelectorList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+
+  .SelectorListItem {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f3f4;
+    transition: background-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .SelectorListItem:hover,
+  .SelectorListItem:focus {
+    background-color: #f8f9fa;
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .SelectorListItem.is-selected {
+    background-color: color-mix(in hsl, var(--accent), transparent 90%);
+    border-left: 4px solid var(--accent);
+    padding-left: calc(1rem - 4px);
+  }
+
+  .SelectorListItem-title {
+    font-weight: 500;
+    color: #3c4043;
+    font-size: 0.95rem;
+  }
+
+  .SelectorListItem-subtitle {
+    font-size: 0.8rem;
+    color: #7f868d;
   }
 }
