@@ -87,10 +87,17 @@ async function loadAccounts() {
       li.dataset.accountId = account.name;
       li.setAttribute('tabindex', '0');
       li.setAttribute('role', 'option');
-      li.innerHTML = `
-        <span class="SelectorListItem-title">${account.displayName}</span>
-        <span class="SelectorListItem-subtitle">${account.name}</span>
-      `;
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'SelectorListItem-title';
+      titleSpan.textContent = account.displayName;
+
+      const subtitleSpan = document.createElement('span');
+      subtitleSpan.className = 'SelectorListItem-subtitle';
+      subtitleSpan.textContent = account.name;
+
+      li.append(titleSpan, subtitleSpan);
+
       const selectAccount = async () => {
         document.querySelectorAll('#account-list .SelectorListItem').forEach(el => {
           el.classList.remove('is-selected');
@@ -145,10 +152,17 @@ async function loadProperties(accountId) {
       li.dataset.propertyId = property.name;
       li.setAttribute('tabindex', '0');
       li.setAttribute('role', 'option');
-      li.innerHTML = `
-        <span class="SelectorListItem-title">${property.displayName}</span>
-        <span class="SelectorListItem-subtitle">${property.name}</span>
-      `;
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'SelectorListItem-title';
+      titleSpan.textContent = property.displayName;
+
+      const subtitleSpan = document.createElement('span');
+      subtitleSpan.className = 'SelectorListItem-subtitle';
+      subtitleSpan.textContent = property.name;
+
+      li.append(titleSpan, subtitleSpan);
+
       const selectProperty = () => {
         document.querySelectorAll('#property-list .SelectorListItem').forEach(el => {
           el.classList.remove('is-selected');
@@ -173,7 +187,10 @@ async function loadProperties(accountId) {
 
   } catch (error) {
     console.error('Error loading properties:', error);
-    propertyListEl.innerHTML = `<li>Error loading properties: ${error.message}</li>`;
+    propertyListEl.innerHTML = '';
+    const li = document.createElement('li');
+    li.textContent = `Error loading properties: ${error.message}`;
+    propertyListEl.appendChild(li);
   }
 }
 

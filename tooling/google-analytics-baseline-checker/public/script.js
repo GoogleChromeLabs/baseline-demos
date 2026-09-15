@@ -27,6 +27,16 @@ export const schema = {
   },
 };
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function toPercent(num) {
   return (Math.round(num * 10000) / 100).toFixed(1);
 }
@@ -234,7 +244,7 @@ export function renderReport(data) {
   document.getElementById('report-container').innerHTML = `
     <div class="Report">
       <p class="Report-meta">
-        <strong>${data.property}</strong><br>${data.startDate} – ${data.endDate}
+        <strong>${escapeHtml(data.property)}</strong><br>${escapeHtml(data.startDate)} – ${escapeHtml(data.endDate)}
       </p>
       <table class="Report-table">
         <tr>
