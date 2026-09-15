@@ -32,7 +32,6 @@ function initAuth() {
         return;
       }
       accessToken = response.access_token;
-      console.log('Token received:', accessToken);
       authSection.classList.add('is-connected');
       document.getElementById('auth-status').innerText = 'Connected to Google Analytics!';
 
